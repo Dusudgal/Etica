@@ -1,0 +1,10 @@
+spring:
+  config:
+    import:
+      - classpath:/yaml/application-secret.yml
+  application:
+    name: eticaPlanner
+  servlet:
+    encoding:
+      charset: UTF-8
+      force: true

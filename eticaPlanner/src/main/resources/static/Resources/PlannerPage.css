@@ -1,0 +1,60 @@
+/* 전체 화면을 채우는 컨테이너 */
+.container {
+    display: flex;
+    flex-direction: row; /* 가로 방향으로 나열 */
+    height: 100vh; /* 화면 전체 높이 */
+    margin: 0;
+    overflow: hidden; /* 내용이 컨테이너를 넘칠 경우 숨김 처리 */
+}
+
+/* 각 줄 스타일 */
+.row {
+    flex: 1; /* 기본적으로 각 줄이 동일한 비율로 공간을 차지하도록 설정 */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #ccc; /* 줄 사이에 경계선 추가 */
+    font-size: 1.5rem;
+    color: #333;
+}
+
+/* 지도 화면 크기 조정 */
+.large {
+    flex: 3;
+}
+
+/* 각 줄에 다른 배경색 추가 (선택 사항) */
+.row:nth-child(1) {
+    background-color: #f8d7da;
+}
+
+.row:nth-child(2) {
+    background-color: #d4edda;
+}
+
+.row:nth-child(4) {
+    background-color: #d1ecf1;
+}
+
+.large {
+    background-color: #cce5ff;
+}
+
+/* 기존 스타일에 추가 */
+.touristSpotListUl {
+    height: 300px; /* 원하는 높이 설정 */
+    overflow-y: auto; /* 수직 스크롤 활성화 */
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    border: 1px solid #ccc; /* 테두리 추가 (선택사항) */
+    background-color: #f9f9f9; /* 배경색 (선택사항) */
+}
+
+.touristSpotSearch {
+    margin-right: 10px;
+}
+
+.touristSpotClick {
+    padding: 5px 10px;
+}
