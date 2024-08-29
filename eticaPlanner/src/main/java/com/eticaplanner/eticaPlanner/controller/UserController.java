@@ -8,9 +8,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/User")
 public class UserController {
 
+    // 로그인
     @GetMapping("/sign-in-view")
     public String SignInView(){
-        System.out.println("[UserController] index() 테스트");
-        return "User/User";
+        return "User/signIn";
+    }
+
+    // 회원가입
+    @GetMapping("/sign-up-view")
+    public String SignUpView(){
+        return "User/signUp";
     }
 }
