@@ -13,7 +13,7 @@
 <div class="container">
     <div class="user-container">
         <div class="header">
-            <div>회원 정보를 입력해주세요</div>
+            <div>회원 정보를 입력해주세요!</div>
         </div>
         <div class="user-info">
             <div class="user-info-email">
