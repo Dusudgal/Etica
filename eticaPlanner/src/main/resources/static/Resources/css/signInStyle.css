@@ -3,9 +3,14 @@
     margin: 0;
     border: none;
 }
+
+h2 {
+    font-size: large;
+}
 body{
     font-size: 14px;
     font-family: 'Roboto', sans-serif;
+    justify-content: center;
 }
 
 .login-wrapper{
