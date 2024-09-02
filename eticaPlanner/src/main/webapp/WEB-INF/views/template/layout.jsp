@@ -14,6 +14,7 @@
 
     <%-- 내가 만든 스타일시트 --%>
     <link rel="stylesheet" href="<c:url value='/Resources/css/style.css' />" type="text/css">
+    <jsp:include page="/WEB-INF/views/MyPage/js/myPage_js.jsp" />
 </head>
 <body>
 <div id="wrap">

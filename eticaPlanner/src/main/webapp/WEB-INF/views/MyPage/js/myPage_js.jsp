@@ -11,20 +11,21 @@ document.addEventListener("DOMContentLoaded",() => {
         document.body.classList.toggle("menu-open");
     });
 
+        const myPageContentsLi = document.querySelectorAll(".mypagecontentsli");
+        
+        myPageContentsLi.forEach(li => {
+            li.addEventListener("mouseover",() => {
+                li.style.backgroundColor = "rgb(235, 235, 235)";
+            });
+            
+            li.addEventListener("mouseout",() => {
+                li.style.backgroundColor = "";
+            });
+            
+        })
+        
 });
-document.addEventListener("DOMContentLoaded",() => {
-    const myPageContentsLi = document.querySelectorAll(".mypagecontentsli");
-    
-    myPageContentsLi.forEach(li => {
-        li.addEventListener("mouseover",() => {
-            li.style.backgroundColor = "rgb(235, 235, 235)";
-        });
 
-        li.addEventListener("mouseout",() => {
-            li.style.backgroundColor = "";
-        });
 
-    })
 
-})
 </script>
