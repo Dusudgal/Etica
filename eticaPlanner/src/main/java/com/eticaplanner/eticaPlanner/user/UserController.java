@@ -1,4 +1,4 @@
-package com.eticaplanner.eticaPlanner.controller;
+package com.eticaplanner.eticaPlanner.user;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -6,28 +6,25 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/User")
+@RequestMapping("/user")
 public class UserController {
 
-    /* 기존 로그인 
-    @GetMapping("/sign-in-view")
-    public String SignInView(){
-        return "User/signIn";
+    /**
+     * 회원가입 화면
+     * @param model
+     * @return
+     */
+    @GetMapping("/sign-up-view")
+    public String SignUpView(Model model){
+        model.addAttribute("viewName", "User/signUp");
+        return "template/layout";
     }
-    */
     
-    // 변경 로그인
+    // 로그인
     @GetMapping("/sign-in-view")
     public String SignInView(Model model){
         model.addAttribute("viewName", "User/signIn");
         return "template/layout";
-    }
-    
-    // 추후 구현 예정
-    // 회원가입
-    @GetMapping("/sign-up-view")
-    public String SignUpView(){
-        return "User/signUp";
     }
 
     /* 추후 구현 예정
