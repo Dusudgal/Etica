@@ -1,121 +1,172 @@
 * {
-    box-sizing: border-box;
-    font-family: "Noto Sans CJK KR";
-    font-style: normal;
+    padding: 0;
+    margin: 0;
+    border: none;
 }
 
 body {
-    display: flex;
-    flex-direction: row;
-    place-items: center;
+    font-size: 14px;
+    font-family: 'Roboto', sans-serif;
+    justify-content: center;
 }
 
 .container {
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 670px;
-    height: 960px;
+    width: 650px;
+    height: auto;
+    padding: 30px;
     margin-top: 60px;
     margin-bottom: 60px;
-    background: #ffffff;
-    border: 3px solid #F7B5CA;
+    background: #f2f2f2;
+    border: 3px solid #f2f2f2;
     border-radius: 20px;
 }
 
-.user-container {
+.member-container {
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 470px;
-    height: 818px;
-    margin-top: 72px;
-    margin-bottom: 70px;
+    width: 100%;
 }
 
 .header {
-    width: 466px;
-    height: 94px;
+    width: 100%;
     font-weight: 700;
     font-size: 32px;
     line-height: 47px;
-    color: #F7B5CA;
+    color: #666;
+    text-align: center;
+    margin-bottom: 20px;
 }
 
 .user-info {
-    margin-top: 39px;
+    width: 100%;
 }
 
-.user-info div {
-    margin-top: 21px;
+.user-info-item {
+    margin-bottom: 20px;
+}
+
+.user-info-item div {
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 24px;
+    color: #666;
 }
 
 .user-info input {
     font-weight: 400;
     font-size: 16px;
     line-height: 24px;
-    color: #797979;
+    color: #666;
     border: none;
     border-bottom: 1px solid #cfcfcf;
-    width: 466px;
-    margin-top: 21px;
+    width: calc(100% - 120px);
+    padding: 8px;
+    box-sizing: border-box;
 }
 
-/*.user-info-email input {*/
-/*    border-bottom: 1px solid #F7B5CA;*/
-/*}*/
+.user-info input:focus {
+    border-bottom: 1px solid #F7B5CA;
+}
+
+/* 아이디 입력란의 높이 조정 */
+.user-info-item input#loginId {
+    height: 40px; /* 비밀번호 입력란과 같은 높이 */
+}
+
+/* 중복확인 버튼 스타일 */
+#loginIdCheckBtn {
+    background-color: #F7B5CA;
+    color: #ffffff; /* 텍스트 색상 */
+    border: 1px solid #F7B5CA;
+    width: 25%;
+    margin-left: 30px;
+    cursor: pointer;
+}
+
+.label {
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 24px;
+    color: #666666; /* 회색으로 변경 */
+}
+
+.input-wrapper {
+    margin-top: 5px;
+}
+
+.user-info input {
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    color: #666666; /* 회색으로 변경 */
+    border: none;
+    border-bottom: 1px solid #cfcfcf;
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+}
+
+.feedback {
+    font-size: 14px;
+    line-height: 21px;
+    margin-top: 5px;
+}
+
+.feedback.text-danger {
+    color: #ff0000;
+}
+
+.feedback.text-success {
+    color: #00ff00;
+}
 
 .gender {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    width: 140px;
-    height: 23.94px;
-    margin-top: 50px;
+    justify-content: center;
+    margin: 20px 0;
 }
 
 .gender input {
-    width: 20px;
-    height: 19.95px;
-    background: #ebebeb;
-    border: 1px solid #d2d2d2;
+    margin-right: 5px;
 }
 
 .gender label {
     font-weight: 400;
     font-size: 16px;
     line-height: 24px;
+    margin-right: 20px;
 }
 
 .agree-check {
-    width: 454px;
-    height: 21.06px;
-    margin-top: 52.05px;
     font-weight: 400;
-    font-size: 18px;
+    font-size: 14px;
     line-height: 21px;
-    color: #000000;
+    margin-top: 20px;
 }
 
-.btn {
-    display: flex;
-    flex-direction: column;
-    margin-top: 60px;
-    width: 470px;
-    height: 106px;
-    border-top: 1px solid #e6e6e6;
+.agree-check input {
+    margin-right: 5px;
+}
+
+#signUpForm > input::placeholder{
+    color: #D2D2D2;
 }
 
 button {
-    margin-top: 30px;
-    width: 470px;
-    height: 75px;
-    font-weight: 500;
+    width: 100%;
+    height: 50px;
+    font-weight: 400;
     font-size: 18px;
     line-height: 27px;
     text-align: center;
     color: #ffffff;
     background: #F7B5CA;
-    border: 1px solid #F7B5CA;
+    border: none;
     border-radius: 10px;
+    cursor: pointer;
 }
