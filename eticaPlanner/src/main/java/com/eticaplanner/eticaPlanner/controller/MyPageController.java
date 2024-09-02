@@ -18,4 +18,5 @@ public class MyPageController {
 
         return this.nextPage;
     }
+    
 }
