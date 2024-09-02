@@ -5,7 +5,7 @@
         <meta charset="UTF-8">
         <title>MyPage</title>
         <link rel="stylesheet" href="${pageContext.request.contextPath}/Resources/css/myPage.css">
-        <jsp:include page="/WEB-INF/views/MyPage/myPage_js.jsp" />
+        <jsp:include page="/WEB-INF/views/MyPage/js/myPage_js.jsp" />
     </head>
     <body>
         <div class="main-container">
