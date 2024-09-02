@@ -120,6 +120,7 @@
 
             if(!loginId){
                 alert("아이디를 입력해주세요.");
+                console.log("아이디 없음");
                 return false;
             }
             if(!password || !confirmPassword){
@@ -147,11 +148,11 @@
                 return false;
             }
             if(birth.length !== 6){
-                alert("올바른 생년월일(YYMMDD) 6자리를 입력해주세요.)
+                alert("올바른 생년월일(YYMMDD) 6자리를 입력해주세요.");
                 return false;
             }
             if(!gender){
-                alert("성별을 선택해주세요.")
+                alert("성별을 선택해주세요.");
                 return false;
             }
             if(!agree){

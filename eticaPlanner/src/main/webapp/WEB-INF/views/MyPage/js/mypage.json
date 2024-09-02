@@ -1,0 +1,65 @@
+{
+    "sections": [
+      {
+        "id": "change-information",
+        "title": "내 정보 수정",
+        "elements": [
+          {
+            "type": "table",
+            "class": "middle-table",
+            "rows": [
+              {
+                "th": "아이디",
+                "td": "1234"
+              },
+              {
+                "th": "비밀번호",
+                "td": "1234"
+              },
+              {
+                "th": "닉네임",
+                "td": "1234"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "change-password",
+        "title": "비밀번호 변경",
+        "elements": [
+          {
+            "type": "input",
+            "attributes": {
+              "type": "password",
+              "placeholder": "현재 비밀번호"
+            }
+          },
+          {
+            "type": "input",
+            "attributes": {
+              "type": "password",
+              "placeholder": "변경 비밀번호"
+            }
+          },
+          {
+            "type": "input",
+            "attributes": {
+              "type": "password",
+              "placeholder": "비밀번호 확인"
+            }
+          }
+        ]
+      },
+      {
+        "id": "travel-planner",
+        "title": "여행 플래너 보기",
+        "elements": [
+          {
+            "type": "header",
+            "text": "여행 플래너"
+          }
+        ]
+      }
+    ]
+  }
