@@ -26,7 +26,7 @@ public class UserRestController {
      */
     @RequestMapping("/is-duplicated-id")
     public Map<String, Object> isDuplicatedId(
-            @RequestParam String user_id) {
+            @RequestParam("user_id") String user_id) {
         // DB 조회 - SELECT
         UserEntity user = userService.getUserEntityByUserId(user_id);
 
@@ -41,30 +41,21 @@ public class UserRestController {
         return result;
     }
 
-    /**
-     *  회원가입 API
-     * @param loginId
-     * @param password
-     * @param name
-     * @param phone
-     * @param birth
-     * @param gender
-     * @return
-     */
+    //회원가입 API
     @PostMapping("/sign-up")
     public Map<String, Object> signUp(
-            @RequestParam String loginId,
-            @RequestParam String password,
-            @RequestParam String name,
-            @RequestParam String phone,
-            @RequestParam String birth,
-            @RequestParam String gender){
+            @RequestParam("user_id") String user_id,
+            @RequestParam("user_password") String user_password,
+            @RequestParam("user_name") String user_name,
+            @RequestParam("user_phone") String user_phone,
+            @RequestParam("user_birth") String user_birth,
+            @RequestParam("user_gender") String user_gender){
 
         // password hashing
-        String hashedPassword = EncryptUtils.sha256(password);
+        String hashed_password = EncryptUtils.sha256(user_password);
 
         // db insert
-        Integer userId = userService.addUser(loginId, hashedPassword, name, phone, birth, gender);
+        Integer userId = userService.addUser(user_id, hashed_password, user_name, user_phone, user_birth, user_gender);
 
         // 응답값
         Map<String, Object> result = new HashMap<>();
@@ -81,17 +72,25 @@ public class UserRestController {
 
     @PostMapping("/sign-in")
     public Map<String, Object> signIn(
-            @RequestParam("userName") String userName,
-            @RequestParam("userPassword") String userPassword){
+            @RequestParam("user_id") String user_id,
+            @RequestParam("user_password") String user_password){
 
         // 비밀번호 hashing
-        String hashedPassword = EncryptUtils.sha256(userPassword);
+        String hashed_password = EncryptUtils.sha256(user_password);
+
         // db조회(userName, 해싱된 비밀번호)
-        
+        UserEntity user = userService.getUserEntityByUserIdPassword(user_id, hashed_password);
+
         // 응답값
         Map<String, Object> result = new HashMap<>();
-        result.put("code", 200);
-        result.put("result", "성공");
+        if(user != null){ // 성공
+            // 로그인 처리
+            result.put("code", 200);
+            result.put("result", "성공");
+        } else { // 로그인 불가
+            result.put("code", 300);
+            result.put("error_message", "존재하지않는 사용자입니다.");
+        }
         return result;
     }
 }
