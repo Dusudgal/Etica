@@ -3,6 +3,8 @@ package com.eticaplanner.eticaPlanner.user;
 import com.eticaplanner.eticaPlanner.common.EncryptUtils;
 import com.eticaplanner.eticaPlanner.user.entity.UserEntity;
 import com.eticaplanner.eticaPlanner.user.service.UserService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -41,7 +43,16 @@ public class UserRestController {
         return result;
     }
 
-    //회원가입 API
+    /**
+     * 회원가입 API
+     * @param user_id
+     * @param user_password
+     * @param user_name
+     * @param user_phone
+     * @param user_birth
+     * @param user_gender
+     * @return
+     */
     @PostMapping("/sign-up")
     public Map<String, Object> signUp(
             @RequestParam("user_id") String user_id,
@@ -70,10 +81,12 @@ public class UserRestController {
         return result;
     }
 
+    // 로그인 API
     @PostMapping("/sign-in")
     public Map<String, Object> signIn(
             @RequestParam("user_id") String user_id,
-            @RequestParam("user_password") String user_password){
+            @RequestParam("user_password") String user_password,
+            HttpServletRequest request){
 
         // 비밀번호 hashing
         String hashed_password = EncryptUtils.sha256(user_password);
@@ -85,6 +98,12 @@ public class UserRestController {
         Map<String, Object> result = new HashMap<>();
         if(user != null){ // 성공
             // 로그인 처리
+            // 로그인 정보를 세션에 담는다.(사용자 마다)
+            HttpSession session = request.getSession();
+            session.setAttribute("user_no", user.getUserNo());
+            session.setAttribute("user_id", user.getUserId());
+            session.setAttribute("user_name", user.getUserName());
+
             result.put("code", 200);
             result.put("result", "성공");
         } else { // 로그인 불가
