@@ -1,4 +1,4 @@
-package com.eticaplanner.eticaPlanner.controller;
+package com.eticaplanner.eticaPlanner.mypage;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,6 +23,7 @@ public class MyPageController {
     }
 //    @GetMapping("/mypage")
 //    public String mypage() {
+//        System.out.println("[MyPageController] mypage");
 //        this.nextPage = "MyPage/myPage";
 //
 //        return this.nextPage;

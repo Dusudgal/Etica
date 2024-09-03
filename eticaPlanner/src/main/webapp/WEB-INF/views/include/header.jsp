@@ -5,7 +5,7 @@
 
     <%-- logo --%>
     <div>
-        <h1 class="ml-5">ETICA</h1>
+        <h1 class="ml-5" style="padding-left: 30px;">ETICA</h1>
     </div>
 
     <%-- 로그인 정보 --%>
