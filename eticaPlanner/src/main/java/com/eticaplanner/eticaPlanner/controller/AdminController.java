@@ -1,6 +1,7 @@
 package com.eticaplanner.eticaPlanner.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,9 +22,10 @@ public class AdminController {
 
     //로그인 성공,실패
     @PostMapping("/loginconfirm")
-    public String adminloginform(){
+    public String adminloginform(Model model){
         System.out.println("[AdminController]AdminloginConfirm()");
-        this.nextPage = "Admin/login_ok";
+        model.addAttribute("viewName","Admin/login_ok");
+        this.nextPage = "template/layout";
         return this.nextPage;
     }
 
