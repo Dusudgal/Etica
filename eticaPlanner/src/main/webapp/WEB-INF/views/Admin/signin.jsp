@@ -12,7 +12,7 @@
     <div class="container">
         <div class="login-wrapper">
             <h2>ETICA ADMIN</h2>
-            <form method="post" action="#" id="admin-login">
+            <form method="post" action="<c:url value='/Admin/loginconfirm'/>" id="admin-login">
                 <input type="text" name="adminid" placeholder="아이디를 입력하세요.">
                 <input type="password" name="adminpassword" placeholder="비밀번호를 입력하세요.">
             <input type="submit" value="로그인">
