@@ -145,12 +145,16 @@ body {
 .agree-check {
     font-weight: 400;
     font-size: 14px;
-    line-height: 21px;
-    margin-top: 20px;
+    line-height: 5px;
+    margin-top: 10px;
 }
 
 .agree-check input {
     margin-right: 5px;
+}
+
+#agreeCheck {
+    margin-bottom: 20px;
 }
 
 #signUpForm > input::placeholder{

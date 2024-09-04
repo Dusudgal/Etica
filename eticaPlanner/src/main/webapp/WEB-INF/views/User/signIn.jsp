@@ -18,7 +18,7 @@
             <input type="password" name="user_password" placeholder="비밀번호를 입력해주세요.">
             <label for="remember-check">
                 <input type="checkbox" id="remember-check">아이디 저장하기
-                <a href="/user/sign-up-view">회원가입 하러가기</a>
+                <a href="/user/sign-up-view" class="goToJoin ml-5">회원가입 하러가기</a>
             </label>
             <input type="submit" value="login">
         </form>
@@ -51,9 +51,9 @@
             .done(function (data){ // response
                 if(data.code === 200){
                     // 로그인 성공시 이동할 곳
-                    //location.href = "";
+                    location.href = "/";
                     // 아직 구현이 덜 돼서 제자리걸음...
-                    location.reload();
+                    //location.reload();
                 } else {
                     alert(data.error_message);
                 }
