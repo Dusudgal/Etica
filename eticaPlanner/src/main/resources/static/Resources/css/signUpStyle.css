@@ -5,7 +5,7 @@
 }
 
 body {
-    /* font-size: 14px; */
+    font-size: 14px;
     font-family: 'Roboto', sans-serif;
     justify-content: center;
 }
@@ -24,7 +24,7 @@ body {
     border-radius: 20px;
 }
 
-#member-container {
+.member-container {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -78,7 +78,7 @@ body {
 }
 
 /* 중복확인 버튼 스타일 */
-#loginIdCheckBtn {
+#login_id_check_btn {
     background-color: #F7B5CA;
     color: #ffffff; /* 텍스트 색상 */
     border: 1px solid #F7B5CA;
@@ -124,18 +124,18 @@ body {
     color: #00ff00;
 }
 
-.gender {
+.user_gender {
     display: flex;
     align-items: center;
     justify-content: center;
     margin: 20px 0;
 }
 
-.gender input {
+.user_gender input {
     margin-right: 5px;
 }
 
-.gender label {
+.user_gender label {
     font-weight: 400;
     font-size: 16px;
     line-height: 24px;
@@ -145,12 +145,16 @@ body {
 .agree-check {
     font-weight: 400;
     font-size: 14px;
-    line-height: 21px;
-    margin-top: 20px;
+    line-height: 5px;
+    margin-top: 10px;
 }
 
 .agree-check input {
     margin-right: 5px;
+}
+
+#agreeCheck {
+    margin-bottom: 20px;
 }
 
 #signUpForm > input::placeholder{
