@@ -5,15 +5,19 @@
 
     <%-- logo --%>
     <div>
-        <h1 class="ml-5">ETICA</h1>
+        <h1><a href="/" class="logo">ETICA</a></h1>
     </div>
 
     <%-- 로그인 정보 --%>
     <div>
         <%-- 로그인 시 --%>
-            <span>김회원님 안녕하세요</span>
-            <a href="/user/sign-out" class="mr-5">로그아웃</a>
+            <c:if test="${not empty user_no}">
+                <span class="mr-5">${user_name}님 안녕하세요!</span>
+                <a href="/user/sign-out" class="mr-5">로그아웃</a>
+            </c:if>
         <%-- 비로그인 시 --%>
-        <%-- 구현예정--%>
+            <c:if test="${empty user_no}">
+                <a href="/user/sign-in-view" class="mr-5">로그인</a>
+            </c:if>
     </div>
 </div>
