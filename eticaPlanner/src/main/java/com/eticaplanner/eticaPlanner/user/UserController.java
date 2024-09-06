@@ -17,6 +17,7 @@ public class UserController {
      */
     @GetMapping("/sign-up-view")
     public String SignUpView(Model model){
+        System.out.println("[UserController] SignUpView");
         model.addAttribute("viewName", "User/signUp");
         return "template/layout";
     }
@@ -28,6 +29,7 @@ public class UserController {
      */
     @GetMapping("/sign-in-view")
     public String SignInView(Model model){
+        System.out.println("[UserController] SignInView");
         model.addAttribute("viewName", "User/signIn");
         return "template/layout";
     }
