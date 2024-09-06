@@ -40,7 +40,6 @@ public class UserController {
     @RequestMapping("/sign-out")
     public String SignOut(HttpSession session){
         // 세션에 담긴 값 지우고
-        session.removeAttribute("user_no");
         session.removeAttribute("user_id");
         session.removeAttribute("user_name");
         // redirect 로그인 화면으로 이동

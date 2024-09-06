@@ -100,7 +100,6 @@ public class UserRestController {
             // 로그인 처리
             // 로그인 정보를 세션에 담는다.(사용자 마다)
             HttpSession session = request.getSession();
-            session.setAttribute("user_no", user.getUserNo());
             session.setAttribute("user_id", user.getUserId());
             session.setAttribute("user_name", user.getUserName());
 
