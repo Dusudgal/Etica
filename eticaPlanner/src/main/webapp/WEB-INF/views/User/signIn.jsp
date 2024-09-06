@@ -14,11 +14,11 @@
     <div class="login-wrapper">
         <h2>로그인</h2>
         <form id="loginForm" method="post" action="/user/sign-in">
-            <input type="text" name="userName" placeholder="아이디를 입력해주세요.">
-            <input type="password" name="userPassword" placeholder="비밀번호를 입력해주세요.">
+            <input type="text" name="user_id" placeholder="아이디를 입력해주세요.">
+            <input type="password" name="user_password" placeholder="비밀번호를 입력해주세요.">
             <label for="remember-check">
                 <input type="checkbox" id="remember-check">아이디 저장하기
-                <a href="/user/sign-up-view">회원가입 하러가기</a>
+                <a href="/user/sign-up-view" class="goToJoin ml-5">회원가입 하러가기</a>
             </label>
             <input type="submit" value="login">
         </form>
@@ -30,14 +30,14 @@
         $("#loginForm").on('submit', function (e){
             e.preventDefault();
             //alert("로그인");
-            let userName = $("input[name=userName]").val().trim();
-            let userPassword = $("input[name=userPassword]").val();
+            let user_id = $("input[name=user_id]").val().trim();
+            let user_password = $("input[name=user_password]").val();
 
-            if(!userName){
+            if(!user_id){
                 alert("아이디를 입력해주세요.");
                 return false;
             }
-            if(!userPassword){
+            if(!user_password){
                 alert("비밀번호를 입력해주세요.");
                 return false;
             }
@@ -51,14 +51,13 @@
             .done(function (data){ // response
                 if(data.code === 200){
                     // 로그인 성공시 이동할 곳
-                    //location.href = "";
+                    location.href = "/";
                     // 아직 구현이 덜 돼서 제자리걸음...
-                    location.reload();
+                    //location.reload();
                 } else {
                     alert(data.error_message);
                 }
             });
-            ;
         });
     })
 </script>
