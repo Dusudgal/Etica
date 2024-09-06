@@ -262,7 +262,7 @@ body {
     color: #D2D2D2;
 }
 
-button {
+button:not(.phonenumber-confirm) {
     width: 100%;
     height: 50px;
     font-weight: 400;

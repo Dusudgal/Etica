@@ -12,15 +12,16 @@ import java.time.ZonedDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
+@Setter
 @Builder
 @Table(name="user")
 @Entity
 public class MyPageEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id//primary key
+    @GeneratedValue(strategy = GenerationType.IDENTITY)// auto_increment
     @Column(name = "user_no")
-    private int userNO;
+    private int userNo;
 
     @Column(name = "user_id", nullable = false, unique = true)
     private String userId;
