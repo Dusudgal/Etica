@@ -16,7 +16,7 @@ public class UserController {
      * @return
      */
     @GetMapping("/sign-up-view")
-    public String SignUpView(Model model){
+    public String signUpView(Model model){
         model.addAttribute("viewName", "User/signUp");
         return "template/layout";
     }
@@ -27,7 +27,7 @@ public class UserController {
      * @return
      */
     @GetMapping("/sign-in-view")
-    public String SignInView(Model model){
+    public String signInView(Model model){
         model.addAttribute("viewName", "User/signIn");
         return "template/layout";
     }
@@ -38,13 +38,13 @@ public class UserController {
      * @return
      */
     @RequestMapping("/sign-out")
-    public String SignOut(HttpSession session){
+    public String signOut(HttpSession session){
         // 세션에 담긴 값 지우고
         session.removeAttribute("user_id");
         session.removeAttribute("user_name");
+        session.removeAttribute("user_nickname");
         // redirect 로그인 화면으로 이동
         return "redirect:/user/sign-in-view";
     }
 
-     
 }
