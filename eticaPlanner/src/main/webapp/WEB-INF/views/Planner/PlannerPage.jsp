@@ -6,13 +6,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>세로로 세 줄 나누기</title>
+    <title>Etica Travel Planner</title>
     <link rel="stylesheet" type="text/css" href="<c:url value='/Resources/PlannerPage.css' />">
 </head>
 <body>
-    <button>저장</button>
+    <label>제목 : <input type="text" id="TourTitle"> </label>
+    <label>여행 첫째 날짜: <input type="date" id="startDate"> </label>
+    <label>여행 마지막 날짜: <input type="date" id="endDate"> </label>
+    <button class="saveData">저장</button>
     <div class="container">
-        <div class="row">일정 일수</div>
+        <div class="row">일정 일수: <span id="duration">0</span>일
+            <div id="dayButtons"></div>
+        </div>
         <div class="row">일정 메모
             <ul class="touristSpotMemo">
             </ul>
