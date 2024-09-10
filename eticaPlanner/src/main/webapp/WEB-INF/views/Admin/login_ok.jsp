@@ -10,14 +10,13 @@
 </head>
 <body>
     <div class="head">
-        <h3>Etica Admin Page</h3>
         <div class="menu">
             <ul>
-                <li><a href="#main">홈페이지</a></li>
-                <li><a href="#add">여행지 추가</a></li>
-                <li><a href="#edit">여행지 수정</a></li>
+                <li><a href="<c:url value='/'/>">홈페이지</a></li>
+                <li><a href="<c:url value='/Admin/add_travel'/>">여행지 추가</a></li>
+                <li><a href="<c:url value='/Admin/modify_travel'/>">여행지 수정</a></li>
                 <li><a href="<c:url value='/Admin/modifyprofile'/>">내 정보 수정</a></li>
-                <li><a href="#logout">로그아웃</a></li>
+                <li><a href="<c:url value='/Admin/logout'/>">로그아웃</a></li>
             </ul>
         </div>
     </div>

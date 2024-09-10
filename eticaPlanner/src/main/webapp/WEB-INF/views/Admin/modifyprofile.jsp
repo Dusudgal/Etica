@@ -10,20 +10,25 @@
 </head>
 <body>
     <jsp:include page="login_ok.jsp"/>
+    <div class=head>
     <div class=container>
         <h2>내 정보 수정</h2>
         <form method="post" action="*" id="modifyform">
             <div>
                 <label for="admin_id">아이디</label>
-                <input type="text" id="admin_id" name="admin_id">
+                <input type="text" id="admin_id" name="admin_id" value="${admin.adminId}" readonly />
             </div>
              <div>
                 <label for="admin_name">이름</label>
-                <input type="text" id="admin_name" name="admin_name">
+                <input type="text" id="admin_name" name="admin_name" value="${admin.adminName}">
+            </div>
+            <div>
+                 <label for="admin_phone">전화번호</label>
+                 <input type="text" id="admin_phone" name="admin_phone" value="${admin.adminPhone}">
             </div>
             <div>
                 <label for="admin_email">이메일</label>
-                <input type="email" id="admin_email" name="admin_email">
+                <input type="email" id="admin_email" name="admin_email" value="${admin.adminEmail}">
             </div>
             <div>
                 <label for="password">새 비밀번호</label>
@@ -35,6 +40,7 @@
             </div>
             <button type="submit">수정하기</button>
         </form>
+    </div>
     </div>
 </body>
 </html>

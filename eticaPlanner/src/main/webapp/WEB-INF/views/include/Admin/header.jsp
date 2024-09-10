@@ -5,14 +5,13 @@
 
     <%-- logo --%>
     <div>
-        <h1 class="ml-5" style="padding-left: 30px;"><a href="/" style="color : black">ETICA</a></h1>
+        <h1 class="ml-5" style="padding-left: px; font-weight:bold;"><a href="/" style="color : black">ETICA ADMIN</a></h1>
     </div>
 
     <%-- 로그인 정보 --%>
     <div>
         <%-- 로그인 시 --%>
-            <span>김회원님 안녕하세요</span>
-            <a href="/user/sign-out" class="mr-5">로그아웃</a>
+            <span class="name-message">[관리자] ${sessionScope.loginedAdminVo.adminName} 님 안녕하세요</span>
         <%-- 비로그인 시 --%>
         <%-- 구현예정--%>
     </div>
