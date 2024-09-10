@@ -4,7 +4,7 @@
 //import org.springframework.ui.Model;
 //import org.springframework.web.bind.annotation.GetMapping;
 //import org.springframework.web.bind.annotation.RequestMapping;
-//구현예정!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+//구현예정!!!!!!!!!!!!!!!!!!!
 //@Controller
 //@RequestMapping("/login")
 //public class KakaoLoginPageController {
