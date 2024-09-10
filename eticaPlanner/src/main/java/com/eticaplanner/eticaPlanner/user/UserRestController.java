@@ -1,15 +1,13 @@
 package com.eticaplanner.eticaPlanner.user;
 
 import com.eticaplanner.eticaPlanner.common.EncryptUtils;
+import com.eticaplanner.eticaPlanner.user.dto.UserDto;
 import com.eticaplanner.eticaPlanner.user.entity.UserEntity;
 import com.eticaplanner.eticaPlanner.user.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -44,29 +42,62 @@ public class UserRestController {
     }
 
     /**
-     * 회원가입 API
-     * @param user_id
-     * @param user_password
-     * @param user_name
-     * @param user_phone
-     * @param user_birth
-     * @param user_gender
+     * 닉네임 중복확인 API
+     * @param user_nickname
      * @return
      */
+    @RequestMapping("is-duplicated-nickname")
+    public Map<String, Object> isDuplicatedNickName(
+            @RequestParam("user_nickname") String user_nickname){
+
+        // DB 조회 - SELECT
+        UserEntity user = userService.getUserEntityByUserNickname(user_nickname);
+
+        Map<String, Object> result = new HashMap<>();
+        if(user != null){
+            result.put("code", 200);
+            result.put("is_duplicated_nickname", true);
+        } else {
+            result.put("code", 200);
+            result.put("is_duplicated_nickname", false);
+        }
+        return result;
+    }
+
+
+    /**
+     * 핸드폰 번호 중복확인 API
+     * @param user_phone
+     * @return
+     */
+    @RequestMapping("is-duplicated-phone")
+    public Map<String, Object> isDuplicatedPhone(
+            @RequestParam("user_phone") String user_phone){
+
+        // DB 조회 - SELECT
+        UserEntity user = userService.getUserEntityByUserPhone(user_phone);
+
+        Map<String, Object> result = new HashMap<>();
+        if(user != null){
+            result.put("code", 200);
+            result.put("is_duplicated_phone", true);
+        } else {
+            result.put("code", 200);
+            result.put("is_duplicated_phone", false);
+        }
+        return result;
+    }
+
+    // 회원가입 API
     @PostMapping("/sign-up")
-    public Map<String, Object> signUp(
-            @RequestParam("user_id") String user_id,
-            @RequestParam("user_password") String user_password,
-            @RequestParam("user_name") String user_name,
-            @RequestParam("user_phone") String user_phone,
-            @RequestParam("user_birth") String user_birth,
-            @RequestParam("user_gender") String user_gender){
+    public Map<String, Object> signUp(@RequestBody UserDto userDto){
 
         // password hashing
-        String hashed_password = EncryptUtils.sha256(user_password);
+        // UserService에서 처리
+        // UserDto에는 원래 비밀번호가 담기고, UserEntity는 해싱된 비밀번호가 저장됨
 
         // db insert
-        Integer userId = userService.addUser(user_id, hashed_password, user_name, user_phone, user_birth, user_gender);
+        Integer userId = userService.addUser(userDto);
 
         // 응답값
         Map<String, Object> result = new HashMap<>();
@@ -83,16 +114,13 @@ public class UserRestController {
 
     // 로그인 API
     @PostMapping("/sign-in")
-    public Map<String, Object> signIn(
-            @RequestParam("user_id") String user_id,
-            @RequestParam("user_password") String user_password,
-            HttpServletRequest request){
+    public Map<String, Object> signIn(@RequestBody UserDto userDto, HttpServletRequest request){
 
         // 비밀번호 hashing
-        String hashed_password = EncryptUtils.sha256(user_password);
+        // 마찬가지로 service에서 처리
 
-        // db조회(userName, 해싱된 비밀번호)
-        UserEntity user = userService.getUserEntityByUserIdPassword(user_id, hashed_password);
+        // db조회(user_id, 해싱된 비밀번호)
+        UserEntity user = userService.getUserEntityByUserIdPassword(userDto);
 
         // 응답값
         Map<String, Object> result = new HashMap<>();
@@ -100,9 +128,9 @@ public class UserRestController {
             // 로그인 처리
             // 로그인 정보를 세션에 담는다.(사용자 마다)
             HttpSession session = request.getSession();
-            session.setAttribute("user_no", user.getUserNo());
             session.setAttribute("user_id", user.getUserId());
             session.setAttribute("user_name", user.getUserName());
+            session.setAttribute("user_nickname", user.getUserNickname());
 
             result.put("code", 200);
             result.put("result", "성공");
