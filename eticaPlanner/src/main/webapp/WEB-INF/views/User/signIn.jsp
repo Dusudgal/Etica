@@ -19,6 +19,10 @@
             <label for="remember-check">
                 <input type="checkbox" id="remember-check">아이디 저장하기
                 <a href="/user/sign-up-view" class="goToJoin ml-5">회원가입 하러가기</a>
+                <!--
+                    <a href="/user/sign-up-view">회원가입 하러가기</a>
+                -->
+
             </label>
             <input type="submit" value="login">
         </form>

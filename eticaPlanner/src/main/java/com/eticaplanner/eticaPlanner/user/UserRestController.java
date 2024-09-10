@@ -91,14 +91,12 @@ public class UserRestController {
     // 회원가입 API
     @PostMapping("/sign-up")
     public Map<String, Object> signUp(@RequestBody UserDto userDto){
-
         // password hashing
         // UserService에서 처리
         // UserDto에는 원래 비밀번호가 담기고, UserEntity는 해싱된 비밀번호가 저장됨
 
         // db insert
         Integer userId = userService.addUser(userDto);
-
         // 응답값
         Map<String, Object> result = new HashMap<>();
         if(userId != null){
