@@ -24,6 +24,7 @@
                     </div>
                     <div class="input-wrapper">
                         <input type="text" id="user_id" name="user_id" class="form-control" placeholder="아이디를 입력해 주세요." />
+
                         <div id="id_check_length" class="feedback text-danger d-none">ID를 4자 이상 입력해주세요.</div>
                         <div id="id_check_duplicated" class="feedback text-danger d-none">이미 사용중인 ID입니다.</div>
                         <div id="id_check_ok" class="feedback text-success d-none">사용 가능한 ID입니다.</div>
@@ -166,7 +167,6 @@
                 alert("서버 요청에 실패했습니다.");
             })
         })
-
         // 핸드폰 번호에 숫자만 입력되도록 제한
         $("#user_phone").on('input', function() {
             this.value = this.value.replace(/[^0-9]/g, ''); // 숫자만 허용
@@ -272,7 +272,6 @@
 
             // AJAX: 화면이동X, 응답값 JSON
             let url = $(this).attr("action");
-
             $.ajax({
                 url : url
                 ,type: 'POST'

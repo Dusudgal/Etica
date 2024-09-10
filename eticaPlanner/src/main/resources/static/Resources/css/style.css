@@ -9,5 +9,9 @@ h1 {padding-left: 50px;}
 /* Section */
 .contents {min-height:300px;}
 
-/* Footer */
+/*
+ Footer
+header {height:100px; background: #F7B5CA; color:black;}
+.contents {min-height:300px;}
+*/
 footer {height:100px;}
