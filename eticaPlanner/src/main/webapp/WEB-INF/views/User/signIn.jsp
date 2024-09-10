@@ -30,35 +30,46 @@
         $("#loginForm").on('submit', function (e){
             e.preventDefault();
             //alert("로그인");
-            let user_id = $("input[name=user_id]").val().trim();
-            let user_password = $("input[name=user_password]").val();
 
-            if(!user_id){
-                alert("아이디를 입력해주세요.");
+            // 폼 데이터 JSON으로 변환
+            let form_data = {
+                user_id : $("input[name=user_id]").val().trim(),
+                user_password : $("input[name=user_password]").val(),
+            };
+
+            if (!form_data.user_id) {
+                alert("아이디를 입력해 주세요.");
                 return false;
             }
-            if(!user_password){
-                alert("비밀번호를 입력해주세요.");
+            if (!form_data.user_password) {
+                alert("비밀번호를 입력해 주세요.");
                 return false;
             }
 
+            // AJAX: 화면이동X, 응답값 JSON
             let url = $(this).attr('action');
             console.log(url);
-            let params = $(this).serialize();
-            console.log(params);
 
-            $.post(url, params) // request
-            .done(function (data){ // response
-                if(data.code === 200){
-                    // 로그인 성공시 이동할 곳
-                    location.href = "/";
-                    // 아직 구현이 덜 돼서 제자리걸음...
-                    //location.reload();
-                } else {
-                    alert(data.error_message);
+            $.ajax({
+                url: url,
+                type: 'POST',
+                contentType: 'application/json', // 서버가 JSON 형식으로 데이터를 받도록 지정
+                data: JSON.stringify(form_data), // JSON 문자열로 변환
+                success: function(data) {
+                    // {"code":200, "result":"성공"}
+                    if (data.code === 200) {
+                        alert("로그인 성공! 환영합니다.");
+                        location.href = "/"; // 메인페이지로 이동
+                    } else {
+                        alert(data.error_message);
+                    }
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    console.error("Request failed:", textStatus, errorThrown);
+                    alert("서버 요청에 실패했습니다.");
                 }
             });
         });
-    })
+    });
 </script>
 </html>
