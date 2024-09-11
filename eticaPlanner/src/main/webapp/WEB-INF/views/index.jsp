@@ -19,9 +19,11 @@
     </div>
      <div class="button-container">
          <div class="button-container">
-            <a href="/User/sign-in-view" class="button">login 버튼</a>
+            <a href="/user/sign-in-view" class="button">login 버튼</a>
             <a href="/Review/ReviewIndex" class="button">Review 버튼</a>
             <a href="/Planner/PlannerPage" class="button">Planner 버튼</a>
+            <a href="/MyPage/mypage" class="button">MyPage 버튼</a>
+            <a href="/MyPage/mypage?userId=${user.userId}">My Page</a>
          </div>
      </div>
 </body>

@@ -1,0 +1,176 @@
+* {
+    padding: 0;
+    margin: 0;
+    border: none;
+}
+
+body {
+    font-size: 14px;
+    font-family: 'Roboto', sans-serif;
+    justify-content: center;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 650px;
+    height: auto;
+    padding: 30px;
+    margin-top: 60px;
+    margin-bottom: 60px;
+    background: #f2f2f2;
+    border: 3px solid #f2f2f2;
+    border-radius: 20px;
+}
+
+.member-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.header {
+    width: 100%;
+    font-weight: 700;
+    font-size: 32px;
+    line-height: 47px;
+    color: #666;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.user-info {
+    width: 100%;
+}
+
+.user-info-item {
+    margin-bottom: 20px;
+}
+
+.user-info-item div {
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 24px;
+    color: #666;
+}
+
+.user-info input {
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    color: #666;
+    border: none;
+    border-bottom: 1px solid #cfcfcf;
+    width: calc(100% - 120px);
+    padding: 8px;
+    box-sizing: border-box;
+}
+
+.user-info input:focus {
+    border-bottom: 1px solid #F7B5CA;
+}
+
+/* 아이디 입력란의 높이 조정 */
+.user-info-item input#loginId {
+    height: 40px; /* 비밀번호 입력란과 같은 높이 */
+}
+
+/* 중복확인 버튼 스타일 */
+#login_id_check_btn {
+    background-color: #F7B5CA;
+    color: #ffffff; /* 텍스트 색상 */
+    border: 1px solid #F7B5CA;
+    width: 25%;
+    margin-left: 30px;
+    cursor: pointer;
+}
+
+.label {
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 24px;
+    color: #666666; /* 회색으로 변경 */
+}
+
+.input-wrapper {
+    margin-top: 5px;
+}
+
+.user-info input {
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    color: #666666; /* 회색으로 변경 */
+    border: none;
+    border-bottom: 1px solid #cfcfcf;
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+}
+
+.feedback {
+    font-size: 14px;
+    line-height: 21px;
+    margin-top: 5px;
+}
+
+.feedback.text-danger {
+    color: #ff0000;
+}
+
+.feedback.text-success {
+    color: #00ff00;
+}
+
+.user_gender {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 20px 0;
+}
+
+.user_gender input {
+    margin-right: 5px;
+}
+
+.user_gender label {
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    margin-right: 20px;
+}
+
+.agree-check {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 5px;
+    margin-top: 10px;
+}
+
+.agree-check input {
+    margin-right: 5px;
+}
+
+#agreeCheck {
+    margin-bottom: 20px;
+}
+
+#signUpForm > input::placeholder{
+    color: #D2D2D2;
+}
+
+button {
+    width: 100%;
+    height: 50px;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 27px;
+    text-align: center;
+    color: #ffffff;
+    background: #F7B5CA;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+}
