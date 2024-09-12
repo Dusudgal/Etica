@@ -22,7 +22,7 @@
             <ul class="touristSpotMemo">
             </ul>
         </div>
-        <div class="row large">지도</div>
+        <div class="row large" id="map" >지도</div>
         <div class="row">
             <h3>관광지 리스트 검색</h3>
             <div class="listSearch">
