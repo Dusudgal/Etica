@@ -5,7 +5,6 @@ import lombok.Setter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 
-@Getter
 @Setter
 @Configuration
 public class ApiComponent {
@@ -13,7 +12,13 @@ public class ApiComponent {
     @Value("${api_keys.tour_key}")
     private String apikey;
 
-    public String apikey(){
+    @Value("${api_keys.kakao_javascriptkey}")
+    private String kakao_scriptkey;
+
+    public String map_apikey() { return kakao_scriptkey; }
+
+    public String tour_apikey(){
         return apikey;
     }
+
 }
