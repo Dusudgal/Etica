@@ -2,10 +2,16 @@ package com.eticaplanner.eticaPlanner.PlannerPage.controller;
 
 import com.eticaplanner.eticaPlanner.PlannerPage.dto.PlannerDTO;
 import com.eticaplanner.eticaPlanner.PlannerPage.service.PlannerService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -19,7 +25,7 @@ public class PlannerController {
     Map<String , String> PlannerOk;
 
     @Autowired
-    public PlannerController(PlannerService planService, ApiComponent apikeys) {
+    public PlannerController(PlannerService planService, ApiComponent apikeys ) {
         this.planService = planService;
         this.apikeys = apikeys;
     }
@@ -28,6 +34,8 @@ public class PlannerController {
     public ModelAndView plannerPage(){
         System.out.println("[PlannerController] PlannerPage");
         mav = new ModelAndView("Planner/PlannerPage");
+        String map_key = apikeys.map_apikey();
+        mav.addObject("map_key" , map_key);
         return mav;
     }
 
@@ -43,11 +51,29 @@ public class PlannerController {
         return PlannerOk ;
     }
 
-    public Map<String , String> tour_Apikey(){
-        System.out.println("[PlannerController] ApiKeySearch");
+    @PostMapping("TourApiSearch")
+    public ResponseEntity<Map> tourApiSearch(@RequestBody Map<String, String> encodingdata){
+        System.out.println("[PlannerController] tourApiSearch");
 
-        PlannerOk = new HashMap<>();
-        PlannerOk.put("Message" , "Ok");
-        return PlannerOk;
+        RestTemplate restTemplate = new RestTemplate();
+
+        // api 호출시 받아올때 빈맵일수 있으니 초기화를 Map.of()로 한것
+        Map response = Map.of();
+
+        String Tour_key = apikeys.tour_apikey();
+        int PageNumber = 1;
+        int numOfRows = 30;
+        String keyword = encodingdata.get("keyword");
+        String url = String.format("https://apis.data.go.kr/B551011/KorService1/searchKeyword1?numOfRows=%s&pageNo=%s&MobileOS=ETC&MobileApp=etica&_type=json&listYN=Y&arrange=A&keyword=%s&serviceKey=%s",
+                numOfRows, PageNumber , keyword , Tour_key);
+        try{
+            URI uri = new URI(url);
+            response = restTemplate.getForObject(uri , Map.class);
+        }catch(URISyntaxException uriException){
+            System.out.println(uriException.getMessage());
+        }
+
+        System.out.println(response);
+        return ResponseEntity.ok(response);
     }
 }
