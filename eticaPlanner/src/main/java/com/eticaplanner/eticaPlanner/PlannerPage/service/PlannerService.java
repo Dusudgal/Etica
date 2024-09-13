@@ -34,7 +34,7 @@ public class PlannerService {
         this.travelDetailPlanRepository = travelDetailPlanRepository;
     }
 
-    public Boolean planCreate(PlannerDTO data){
+    public Boolean planCreate(PlannerDTO data, String userid){
         System.out.println("[PlannerService] PlanCreate");
         TravelTitlePlanDTO tourTitleData = data.getTourTitleData();
         List<TravelDetailDTO> tourMemoData = data.getTourMemoData();
@@ -45,9 +45,9 @@ public class PlannerService {
             System.out.println("Start Date: " + tourTitleData.getStartDate());
             System.out.println("End Date: " + tourTitleData.getEndDate());
 
-            TravelTitlePlan savedata = travelTitlePlanRepository.save(TravelTitlePlanConverter.travelTitlePlanDTOToEntity(tourTitleData , "admin"));
+            TravelTitlePlan savedata = travelTitlePlanRepository.save(TravelTitlePlanConverter.travelTitlePlanDTOToEntity(tourTitleData , userid));
             if(savedata.getPlanNo() != null){
-                List<TravelDetailPlanEntity> travelDetailPlans = TravelTitlePlanConverter.travelDetailDTOToEntity(tourMemoData, savedata.getPlanNo(), "admin");
+                List<TravelDetailPlanEntity> travelDetailPlans = TravelTitlePlanConverter.travelDetailDTOToEntity(tourMemoData, savedata.getPlanNo(), userid);
 
                 // TravelDetailPlanEntity 저장
                 List<TravelDetailPlanEntity> detailSaveData = travelDetailPlanRepository.saveAll(travelDetailPlans);
