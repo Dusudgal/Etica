@@ -2,10 +2,11 @@ package com.eticaplanner.eticaPlanner.PlannerPage.controller;
 
 import com.eticaplanner.eticaPlanner.PlannerPage.dto.PlannerDTO;
 import com.eticaplanner.eticaPlanner.PlannerPage.service.PlannerService;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.eticaplanner.eticaPlanner.user.dto.UserDto;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
@@ -39,16 +40,39 @@ public class PlannerController {
         return mav;
     }
 
+    @GetMapping("PlannerSaveSuccess")
+    public ModelAndView PlannerSaveSuccess(){
+        System.out.println("[PlannerController] PlannerSaveSuccess");
+        mav = new ModelAndView("Planner/PlanSaveSuccessPage");
+        return mav;
+    }
+
+    @GetMapping("PlannerSavefail")
+    public ModelAndView PlannerSaveFail(){
+        System.out.println("[PlannerController] PlannerSaveFail");
+        mav = new ModelAndView("Planner/PlanSavefail");
+        return mav;
+    }
+
     @PostMapping("PlannerSaveData")
-    public Map<String , String> plannerSaveData(@RequestBody PlannerDTO planDto){
+    public ResponseEntity<String> plannerSaveData(@RequestBody PlannerDTO planDto , HttpSession session){
         System.out.println("[PlannerController] PlannerSaveData");
         PlannerOk = new HashMap<>();
 
-        Boolean CreateResult = planService.planCreate(planDto);
+        String loginUser = (String)session.getAttribute("user_id");
+
+        if(loginUser == null || loginUser.isEmpty()){
+            return ResponseEntity.ok("login_fail");
+        }
+
+        Boolean CreateResult = planService.planCreate(planDto , loginUser);
 
         System.out.println(CreateResult ? "성공" : "실패");
-        PlannerOk.put("Message" , "Ok");
-        return PlannerOk ;
+
+        if(CreateResult){
+            return ResponseEntity.ok("success");
+        }
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("failure");
     }
 
     @PostMapping("TourApiSearch")
@@ -64,16 +88,18 @@ public class PlannerController {
         int PageNumber = 1;
         int numOfRows = 30;
         String keyword = encodingdata.get("keyword");
+
         String url = String.format("https://apis.data.go.kr/B551011/KorService1/searchKeyword1?numOfRows=%s&pageNo=%s&MobileOS=ETC&MobileApp=etica&_type=json&listYN=Y&arrange=A&keyword=%s&serviceKey=%s",
                 numOfRows, PageNumber , keyword , Tour_key);
+
         try{
             URI uri = new URI(url);
+            System.out.println(uri);
             response = restTemplate.getForObject(uri , Map.class);
+
         }catch(URISyntaxException uriException){
             System.out.println(uriException.getMessage());
         }
-
-        System.out.println(response);
         return ResponseEntity.ok(response);
     }
 }

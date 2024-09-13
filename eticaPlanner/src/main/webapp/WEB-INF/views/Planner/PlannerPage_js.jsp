@@ -70,7 +70,7 @@
     }
 
     function tourBtnClick(e){
-        //버튼 위에 부모인 li태그 밑에 있는 정보를 불러오기 위한 tourli
+        //버튼 위에 부모인 li태그에서 자식의 정보를 불러오기 위한 tourli
         const tourli = e.target.closest('li');
 
         const tourData = {
@@ -88,23 +88,37 @@
             else if(child.tagName === 'H4') tourData.titleText = child.textContent.trim();
             else if(child.tagName === 'P') tourData.address = child.textContent.trim();
         });
-        const newli = document.createElement('li');
-        createtag(newli , tourData.titleText , tourData.imgSrc , tourData.address );
-        const newinputText = document.createElement('input');
-        newinputText.type = 'text';
-        newli.appendChild(newinputText);
-        tourList.appendChild(newli);
+        const li = document.createElement('li');
+        createtag(li , tourData.titleText , tourData.imgSrc , tourData.address );
+
+        const input = document.createElement('input');
+        input.type = 'text';
+        li.appendChild(input);
+
+        const button = document.createElement('input');
+        button.type = "button";
+        button.class = "img-button";
+        button.value = "삭제";
+        button.addEventListener('click', deleteTourMemo);
+        li.appendChild(button);
+
+        tourList.appendChild(li);
     }
 
+    function deleteTourMemo(e){
+        const tourli = e.target.closest('li');
+        tourli.parentElement.removeChild(tourli);
+
+    }
     function createtag( li , h4Text , imgsrc , pText ){
         const title = document.createElement('H4');
-        const newimg = document.createElement('img');
+        const img = document.createElement('img');
         const newP = document.createElement('p');
         newP.textContent = pText;
         title.textContent = h4Text;
-        newimg.src = imgsrc;
-        newimg.onerror = () => newimg.style.display='none';
-        li.appendChild(newimg);
+        img.src = imgsrc;
+        img.onerror = () => newimg.style.display='none';
+        li.appendChild(img);
         li.appendChild(title);
         li.appendChild(newP);
     }
@@ -138,9 +152,9 @@
             tourTitleData : tourTitleData,
             tourMemoData : tourMemodata
         }
-        SaveSebData(data);
+        SavePlanData(data);
     }
-    async function SaveSebData(data){
+    async function SavePlanData(data){
         if(tour_title.value === ""){
             return alert("제목을 입력해주세요");
         }
@@ -152,11 +166,20 @@
                     body : JSON.stringify(data)
                 });
 
-                const resData = await response.json();
-
-                if(!response.ok){
-                    console.error('요청실패' , resData);
-                    throw new Error(`오류 \${response.status}: \${resData.message || '알 수 없는 오류'}`);
+                if (response.ok) {
+                    const result = await response.text();
+                    if (result === "login_fail") {
+                        window.location.href = '/user/sign-in-view';
+                    } else if(result === "success") {
+                        // 성공 시 페이지 리디렉션
+                        window.location.href = '/Planner/PlannerSaveSuccess';
+                    }else {
+                        // 실패 시 페이지 리디렉션
+                        alert("서버에 저장이 실패하셨습니다.");
+                    }
+                } else {
+                // 서버 오류 시 페이지 리디렉션
+                    window.location.href = '/Planner/PlannerSavefail';
                 }
             }catch(error){
                 console.error('요청실패' , error);
@@ -165,6 +188,8 @@
             return console.log("저장할 데이터가 없습니다.");
         }
     }
+
+    // 여행 일자를 클릭시에 버튼을 생성해서 일자별로 볼수있게 만들어주는 함수
     document.addEventListener("DOMContentLoaded", function() {
         const durationSpan = document.getElementById('duration');
         const dayButtonsContainer = document.getElementById('dayButtons');
@@ -197,75 +222,77 @@
             }
         }
 
-    function updateDayButtons(days) {
-        if (dayButtonsContainer) {
-            dayButtonsContainer.innerHTML = ''; // 기존 버튼 제거
+        function updateDayButtons(days) {
+            if (dayButtonsContainer) {
+                dayButtonsContainer.innerHTML = ''; // 기존 버튼 제거
 
-            for (let i = 1; i <= days; i++) {
-                const button = document.createElement('button');
-                button.textContent = `\${i}일차`;
-                button.addEventListener('click', () => showDayList(i));
-                dayButtonsContainer.appendChild(button);
+                for (let i = 1; i <= days; i++) {
+                    const button = document.createElement('button');
+                    button.textContent = `\${i}일차`;
+                    button.addEventListener('click', () => showDayList(i));
+                    dayButtonsContainer.appendChild(button);
+                }
             }
         }
-    }
 
-    function updateTourMemoList(days) {
-        if (tourMemoContainer) {
-            tourMemoContainer.innerHTML = ''; // 기존 ul 태그 제거
+        function updateTourMemoList(days) {
+            if (tourMemoContainer) {
+                tourMemoContainer.innerHTML = ''; // 기존 ul 태그 제거
 
-            for (let i = 1; i <= days; i++) {
-                const newUl = document.createElement('ul');
-                newUl.classList.add('touristSpotMemo');
-                newUl.setAttribute('data-date', i); // 각 ul에 날짜 설정
-                newUl.style.display = 'none'; // 초기에는 숨김
-                tourMemoContainer.appendChild(newUl);
+                for (let i = 1; i <= days; i++) {
+                    const newUl = document.createElement('ul');
+                    newUl.classList.add('touristSpotMemo');
+                    newUl.setAttribute('data-date', i); // 각 ul에 날짜 설정
+                    newUl.style.display = 'none'; // 초기에는 숨김
+                    tourMemoContainer.appendChild(newUl);
+                }
             }
         }
-    }
 
-    function clearDayButtons() {
-        if (dayButtonsContainer) {
-            dayButtonsContainer.innerHTML = '';
-        }
-    }
-
-    function clearTourMemoLists() {
-        if (tourMemoContainer) {
-            tourMemoContainer.innerHTML = '';
-        }
-    }
-
-    function showDayList(day) {
-        const allLists = document.querySelectorAll('.row:nth-child(2) .touristSpotMemo');
-        allLists.forEach(ul => {
-            if (parseInt(ul.getAttribute('data-date')) === day) {
-                ul.style.display = 'block'; // 해당 날짜의 ul 태그 보이기
-                tourList = ul;
-            } else {
-                ul.style.display = 'none'; // 다른 날짜의 ul 태그 숨기기
+        function clearDayButtons() {
+            if (dayButtonsContainer) {
+                dayButtonsContainer.innerHTML = '';
             }
+        }
+
+        function clearTourMemoLists() {
+            if (tourMemoContainer) {
+                tourMemoContainer.innerHTML = '';
+            }
+        }
+
+        function showDayList(day) {
+            const allLists = document.querySelectorAll('.row:nth-child(2) .touristSpotMemo');
+            allLists.forEach(ul => {
+                if (parseInt(ul.getAttribute('data-date')) === day) {
+                    ul.style.display = 'block'; // 해당 날짜의 ul 태그 보이기
+                    tourList = ul;
+                } else {
+                    ul.style.display = 'none'; // 다른 날짜의 ul 태그 숨기기
+                }
+            });
+        }
+
+        startDateInput.addEventListener('change', updateDuration);
+        endDateInput.addEventListener('change', updateDuration);
+
+        const touristSpotClick = document.querySelector('.touristSpotClick');
+        if (touristSpotClick) {
+            touristSpotClick.addEventListener('click', but);
+        }
+
+        const saveDataButton = document.querySelector('.saveData');
+        if (saveDataButton) {
+            saveDataButton.addEventListener('click', SaveData);
+        }
         });
-    }
 
-    startDateInput.addEventListener('change', updateDuration);
-    endDateInput.addEventListener('change', updateDuration);
+        // 카카오 map을 띄우는 곳
+        var mapcontainer = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
+        var options = { //지도를 생성할 때 필요한 기본 옵션
+	        center: new kakao.maps.LatLng(33.450701, 126.570667), //지도의 중심좌표.
+	        level: 3 //지도의 레벨(확대, 축소 정도)
+        };
 
-    const touristSpotClick = document.querySelector('.touristSpotClick');
-    if (touristSpotClick) {
-        touristSpotClick.addEventListener('click', but);
-    }
-
-    const saveDataButton = document.querySelector('.saveData');
-    if (saveDataButton) {
-        saveDataButton.addEventListener('click', SaveData);
-    }
-});
-    var mapcontainer = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
-    var options = { //지도를 생성할 때 필요한 기본 옵션
-	    center: new kakao.maps.LatLng(33.450701, 126.570667), //지도의 중심좌표.
-	    level: 3 //지도의 레벨(확대, 축소 정도)
-    };
-
-    var map = new kakao.maps.Map(mapcontainer, options); //지도 생성 및 객체 리턴
+        var map = new kakao.maps.Map(mapcontainer, options); //지도 생성 및 객체 리턴
 </script>
