@@ -25,6 +25,7 @@
 
             </label>
             <input type="submit" value="login">
+            <a href="/kakao-sign-in-view" class="button">카카오 버튼</a>
         </form>
     </div>
 </div>

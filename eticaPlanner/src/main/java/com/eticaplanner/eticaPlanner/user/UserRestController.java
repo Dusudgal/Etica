@@ -51,6 +51,7 @@ public class UserRestController {
             @RequestParam("user_nickname") String user_nickname){
 
         // DB 조회 - SELECT
+        // 240913 피드백 => Entity 대신에 Dto로 변경하기
         UserEntity user = userService.getUserEntityByUserNickname(user_nickname);
 
         Map<String, Object> result = new HashMap<>();
