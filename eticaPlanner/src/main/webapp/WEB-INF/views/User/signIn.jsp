@@ -19,19 +19,20 @@
             <label for="remember-check">
                 <input type="checkbox" id="remember-check">아이디 저장하기
                 <a href="/user/sign-up-view" class="goToJoin ml-5">회원가입 하러가기</a>
-                <!--
-                    <a href="/user/sign-up-view">회원가입 하러가기</a>
-                -->
+
 
             </label>
-            <input type="submit" value="login">
-            <a href="/kakao-sign-in-view" class="button">카카오 버튼</a>
+            <input type="submit" value="로그인">
+            <button type="button" id="kakaoLoginButton">
+                <img src="<c:url value='/Resources/kakao_login_medium_wide.png' />" alt="카카오 로그인" width="320px">
+            </button>
         </form>
     </div>
 </div>
 </body>
 <script>
     $(document).ready(function (){
+        // 일반 로그인 버튼
         $("#loginForm").on('submit', function (e){
             e.preventDefault();
             //alert("로그인");
@@ -74,6 +75,15 @@
                     alert("서버 요청에 실패했습니다.");
                 }
             });
+        });
+        // 카카오로그인 버튼
+        $("#kakaoLoginButton").on('click', function () {
+            fetch('/user/kakao-login')
+                .then(response => response.json())
+                .then(data => {
+                    window.location.href = data.kakaoLoginUrl;
+                })
+                .catch(error => console.error('Error:', error));
         });
     });
 </script>
