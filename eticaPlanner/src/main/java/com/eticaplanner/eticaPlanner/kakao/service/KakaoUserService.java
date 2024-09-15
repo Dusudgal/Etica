@@ -54,7 +54,7 @@ public class KakaoUserService {
 
             JSONObject jsonObject = new JSONObject(responseBody);
             
-            // Save user info to the database
+            // 사용자 정보를 db에 저장
             saveUserInfo(jsonObject);
 
             return jsonObject.toString();

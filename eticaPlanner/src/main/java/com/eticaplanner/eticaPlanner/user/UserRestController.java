@@ -1,6 +1,6 @@
 package com.eticaplanner.eticaPlanner.user;
 
-import com.eticaplanner.eticaPlanner.common.EncryptUtils;
+import com.eticaplanner.eticaPlanner.kakao.service.KakaoUserService;
 import com.eticaplanner.eticaPlanner.user.dto.UserDto;
 import com.eticaplanner.eticaPlanner.user.entity.UserEntity;
 import com.eticaplanner.eticaPlanner.user.service.UserService;
@@ -18,6 +18,9 @@ public class UserRestController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private KakaoUserService kakaoUserService;
 
     /**
      * 아이디 중복확인 API
@@ -89,7 +92,11 @@ public class UserRestController {
         return result;
     }
 
-    // 회원가입 API
+    /**
+     * 회원가입 API
+     * @param userDto
+     * @return
+     */
     @PostMapping("/sign-up")
     public Map<String, Object> signUp(@RequestBody UserDto userDto){
         // password hashing
@@ -111,7 +118,13 @@ public class UserRestController {
         return result;
     }
 
-    // 로그인 API
+    /**
+     *
+     * 로그인 API
+     * @param userDto
+     * @param request
+     * @return
+     */
     @PostMapping("/sign-in")
     public Map<String, Object> signIn(@RequestBody UserDto userDto, HttpServletRequest request){
 
@@ -139,4 +152,15 @@ public class UserRestController {
         }
         return result;
     }
+
+    // 카카오 로그인 URL을 반환하는 API
+    @GetMapping("/kakao-login")
+    public Map<String, String> getKakaoLoginUrl() {
+        String kakaoLoginUrl = kakaoUserService.getKakaoLoginUrl();
+        Map<String, String> response = new HashMap<>();
+        response.put("kakaoLoginUrl", kakaoLoginUrl);
+        return response;
+    }
+
+
 }

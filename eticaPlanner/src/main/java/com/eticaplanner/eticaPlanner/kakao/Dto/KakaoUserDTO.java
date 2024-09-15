@@ -9,6 +9,6 @@ import lombok.*;
 @Builder
 public class KakaoUserDTO {
     private String kakaoId;
-    private String nickname;
-    private String email;
+    private String kakaoNickname;
+    private String kakaoEmail;
 }
