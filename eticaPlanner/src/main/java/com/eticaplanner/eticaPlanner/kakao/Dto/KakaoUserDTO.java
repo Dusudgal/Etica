@@ -11,4 +11,5 @@ public class KakaoUserDTO {
     private String kakaoId;
     private String kakaoNickname;
     private String kakaoEmail;
+
 }
