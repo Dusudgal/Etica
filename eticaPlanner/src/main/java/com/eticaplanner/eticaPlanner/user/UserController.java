@@ -1,8 +1,6 @@
 package com.eticaplanner.eticaPlanner.user;
 
-import com.eticaplanner.eticaPlanner.kakao.Dto.KakaoUserDTO;
 import com.eticaplanner.eticaPlanner.kakao.service.KakaoUserService;
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import jdk.jfr.Description;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,35 +57,27 @@ public class UserController {
      * 오류가 발생한 경우, 오류 메시지를 모델에 추가하여 로그인 페이지로 돌아갑니다.
      * @param code
      * @param model
-     * @param request
      * @return
      */
     @Description("회원이 소셜 로그인을 마치면 자동으로 실행되는 API입니다. " +
             "인가 코드를 이용하여 사용자의 정보를 확인하고 서비스에 회원가입합니다.")
     @GetMapping("/oauth/callback")
-    public String handleOAuthCallback(@RequestParam("code") String code, Model model, HttpServletRequest request) {
+    public String handleOAuthCallback(@RequestParam("code") String code, Model model) {
         System.out.println("카카오에서 받은 인증 코드: " + code);
 
         try {
-            // 인가코드를 이용해 액세스 토큰 가져오기
             String accessToken = kakaoUserService.getAccessToken(code);
             System.out.println("받은 액세스 토큰: " + accessToken);
 
             // 액세스 토큰을 사용하여 사용자 정보 가져오기
-            KakaoUserDTO kakaoUser  = kakaoUserService.getUserInfo(accessToken);
-            System.out.println("사용자 정보: " + kakaoUser);
-
-            // 카카오 사용자 정보를 세션에 저장
-            HttpSession session = request.getSession();
-            session.setAttribute("kakao_id", kakaoUser.getKakaoId());
-            session.setAttribute("kakao_nickname", kakaoUser.getKakaoNickname());
-            session.setAttribute("kakao_email", kakaoUser.getKakaoEmail());
+            String userInfo = kakaoUserService.getUserInfo(accessToken);
+            System.out.println("사용자 정보: " + userInfo);
 
             // 사용자 정보를 모델에 추가하고 성공 페이지로 리다이렉트
-            model.addAttribute("kakaoUser", kakaoUser);
+            model.addAttribute("userInfo", userInfo);
             model.addAttribute("viewName", "User/signIn");
             System.out.println("카카오 정보 받아오기 테스트");
-            return "redirect:/"; // 성공 페이지로 리다이렉트
+            return "redirect:/"; //redirect를 반드시 해야한다...! 가 아니라.. 보내줄 view이름을 적어야한다.
         } catch (HttpClientErrorException e) {
             // HTTP 요청 중 발생한 오류 처리
             System.out.println("HTTP 오류 발생: " + e.getStatusCode() + " - " + e.getResponseBodyAsString());
@@ -103,27 +93,19 @@ public class UserController {
         return "template/layout";
     }
 
-    // 일반 로그아웃, 카카오 로그아웃 API
+    /**
+     * 일반 로그아웃 API
+     * @param session
+     * @return
+     */
     @RequestMapping("/sign-out")
     public String signOut(HttpSession session){
-        // 세션에서 카카오 엑세스 토큰 가져오기(로그인 시 저장된 토큰)
-        String kakakoAccessToken = (String) session.getAttribute("kakakoAccessToken");
-        
-        // 카카오 로그아웃 처리 (카카오 토근이 있을 때만 실행)
-        if(kakakoAccessToken != null){
-            kakaoUserService.kakaoLogout(kakakoAccessToken);
-            session.removeAttribute("kakaoAccessToken"); // 토큰 삭제
-        }
-
         // 세션에 담긴 값 지우고
         session.removeAttribute("user_id");
         session.removeAttribute("user_name");
         session.removeAttribute("user_nickname");
-        session.removeAttribute("kakao_id");
-        session.removeAttribute("kakao_nickname");
-        session.removeAttribute("kakao_email");
-
         // redirect 로그인 화면으로 이동
         return "redirect:/user/sign-in-view";
     }
+
 }

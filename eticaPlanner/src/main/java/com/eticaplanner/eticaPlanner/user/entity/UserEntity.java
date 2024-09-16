@@ -41,8 +41,8 @@ public class UserEntity {
     @Column(name = "user_gender")
     private String userGender;
 
-    @Column(name = "user_email")
-    private String userEmail;
+    @Column(name = "user_image_path")
+    private String userImagePath;
 
     @UpdateTimestamp
     @Column(name = "user_created_at", updatable = false)

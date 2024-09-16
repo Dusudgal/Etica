@@ -16,5 +16,5 @@ public class UserDto {
     private String user_phone; // 사용자 전화번호
     private String user_birth; // 사용자 생년월일
     private String user_gender; // 사용자 성별
-    private String user_email; // 사용자 이메일
+    private String user_image_path; // 사용자 이미지 경로
 }

@@ -56,11 +56,6 @@
                     <div class="mb-2">생년월일(YYMMDD)</div>
                     <input type="text" id="user_birth" name="user_birth" class="form-control" placeholder="생년월일을 입력해 주세요." />
                 </div>
-                <div class="user-info-item">
-                    <div class="mb-2">이메일</div>
-                    <input type="email" id="user_email" name="user_email" class="form-control" placeholder="이메일을 입력해 주세요." />
-                    <div id="email_check_result" class="feedback"></div>
-                </div>
             </div>
             <div class="user_gender">
                 <input type="radio" id="male" name="user_gender" value="male"/>
@@ -172,33 +167,6 @@
                 alert("서버 요청에 실패했습니다.");
             })
         })
-
-        // 이메일 중복확인
-        $("#user_email").on('input', function (){
-            let user_email = $("#user_email").val().trim();
-
-            if(user_email.length === 0){
-                $("#email_check_result").text('');
-                return;
-            }
-
-            $.get("/user/is-duplicated-email",{"user_email":user_email}) // request
-                .done(function (data){ // response
-                    if(data.code === 200){
-                        if(data.is_duplicated_email){ // 중복
-                            $("#email_check_result").text("이미 사용 중인 이메일입니다.").css('color', 'red');
-                        } else { // 중복x
-                            $("#email_check_result").text("사용 가능한 이메일입니다.").css('color', 'green');
-                        }
-                    } else {
-                        alert(data.error_message);
-                    }
-                })
-                .fail(function(jqXHR, textStatus, errorThrown){
-                    console.error("Request failed:", textStatus, errorThrown);
-                    alert("서버 요청에 실패했습니다.");
-                })
-        })
         // 핸드폰 번호에 숫자만 입력되도록 제한
         $("#user_phone").on('input', function() {
             this.value = this.value.replace(/[^0-9]/g, ''); // 숫자만 허용
@@ -225,7 +193,6 @@
                 user_phone : $("#user_phone").val().trim(),
                 user_birth : $("#user_birth").val().trim(),
                 user_gender : $("input[name='user_gender']:checked").val(),
-                user_email : $("#user_email").val(),
                 agree : $("#agree").prop('checked')
             }
 
@@ -285,10 +252,6 @@
 
             if (month < 1 || month > 12 || day < 1 || day > 31) {
                 alert("월(M)일(D)을 올바른 형식으로 입력하신 후 다시 시도해 주세요.")
-                return false;
-            }
-            if(!form_data.user_email){
-                alert("이메일을 입력해 주세요.");
                 return false;
             }
             if(!form_data.user_gender){
