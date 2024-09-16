@@ -1,0 +1,14 @@
+diff a/eticaPlanner/src/main/java/com/eticaplanner/eticaPlanner/kakao/service/KakaoUserService.java b/eticaPlanner/src/main/java/com/eticaplanner/eticaPlanner/kakao/service/KakaoUserService.java	(rejected hunks)
+@@ -54,8 +54,10 @@
+ 
+             JSONObject jsonObject = new JSONObject(responseBody);
+             
+-            // 사용자 정보를 db에 저장 및 dto반환
+-            return saveUserInfo(jsonObject);
++            // 사용자 정보를 db에 저장
++            saveUserInfo(jsonObject);
++
++            return jsonObject.toString();
+         } catch (HttpClientErrorException e) {
+             System.err.println("Error fetching user info: " + e.getStatusCode() + " " + e.getResponseBodyAsString());
+             throw new RuntimeException("Failed to get user info", e);

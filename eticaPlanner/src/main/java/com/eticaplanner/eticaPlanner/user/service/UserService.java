@@ -25,6 +25,10 @@ public class UserService {
         return userRepository.findByUserPhone(user_phone);
     }
 
+    public UserEntity getUserEntityByUserEmail(String user_email){
+        return userRepository.findByUserPhone(user_email);
+    }
+
     public Integer addUser(UserDto userDto){
        // 비밀번호 해싱
        String hashed_password = EncryptUtils.sha256(userDto.getUser_password());
@@ -38,7 +42,7 @@ public class UserService {
                        .userPhone(userDto.getUser_phone())
                        .userBirth(userDto.getUser_birth())
                        .userGender(userDto.getUser_gender())
-                       .userImagePath(userDto.getUser_image_path())
+                       .userEmail(userDto.getUser_email())
                        .build()
        );
 

@@ -1,4 +1,5 @@
 package com.eticaplanner.eticaPlanner.kakao.service;
+import com.eticaplanner.eticaPlanner.kakao.Dto.KakaoUserDTO;
 import com.eticaplanner.eticaPlanner.kakao.Entity.KakaoUserEntity;
 import com.eticaplanner.eticaPlanner.kakao.Repository.KakaoUserRepository;
 import org.json.JSONObject;
@@ -37,7 +38,7 @@ public class KakaoUserService {
         return new RestTemplate();
     }
 
-    public String getUserInfo(String accessToken) {
+    public KakaoUserDTO getUserInfo(String accessToken) {
         String url = "https://kapi.kakao.com/v2/user/me";
         HttpHeaders headers = new HttpHeaders();
         headers.set("Authorization", "Bearer " + accessToken);
@@ -54,10 +55,8 @@ public class KakaoUserService {
 
             JSONObject jsonObject = new JSONObject(responseBody);
             
-            // 사용자 정보를 db에 저장
-            saveUserInfo(jsonObject);
-
-            return jsonObject.toString();
+            // 사용자 정보를 db에 저장 및 dto반환
+            return saveUserInfo(jsonObject);
         } catch (HttpClientErrorException e) {
             System.err.println("Error fetching user info: " + e.getStatusCode() + " " + e.getResponseBodyAsString());
             throw new RuntimeException("Failed to get user info", e);
@@ -104,7 +103,7 @@ public class KakaoUserService {
         return "https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=" + clientId + "&redirect_uri=" + redirectUri;
     }
 
-    private void saveUserInfo(JSONObject jsonObject) {
+    private KakaoUserDTO saveUserInfo(JSONObject jsonObject) {
         // JSON에서 사용자 정보 추출
         Long kakaoId = jsonObject.getLong("id");
         String nickname = jsonObject.getJSONObject("properties").getString("nickname");
@@ -115,19 +114,43 @@ public class KakaoUserService {
 
         // 데이터베이스에서 사용자가 이미 존재하는지 확인
         Optional<KakaoUserEntity> existingUser = kakaoUserRepository.findByKakaoId(kakaoId);
-
+        KakaoUserEntity kakaoUser;
         if (existingUser.isPresent()) {
             // 사용자가 이미 존재하는 경우, 기존 사용자 정보 출력
-            System.out.println("이미 존재하는 사용자: " + existingUser.get().getNickname());
+            kakaoUser = existingUser.get();
+            System.out.println("이미 존재하는 사용자: " + kakaoUser.getNickname());
         } else {
             // 새로운 KakaoUserEntity 객체를 생성하고 데이터베이스에 저장
-            KakaoUserEntity newUser = KakaoUserEntity.builder()
+            kakaoUser = KakaoUserEntity.builder()
                     .kakaoId(kakaoId)
                     .nickname(nickname)
                     .email(email)
                     .build();
-            kakaoUserRepository.save(newUser);
-            System.out.println("새로운 사용자 저장됨: " + newUser.getNickname());
+            kakaoUserRepository.save(kakaoUser);
+            System.out.println("새로운 사용자 저장됨: " + kakaoUser.getNickname());
+        }
+        // dto를 반환
+        return KakaoUserDTO.builder()
+                .kakaoId(String.valueOf(kakaoId))
+                .kakaoNickname(nickname)
+                .kakaoEmail(email)
+                .build();
+    }
+    public void kakaoLogout(String accessToken) {
+        String url = "https://kapi.kakao.com/v1/user/logout";
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization", "Bearer " + accessToken);
+
+        RestTemplate restTemplate = createRestTemplate();
+        HttpEntity<String> entity = new HttpEntity<>(headers);
+
+        try {
+            restTemplate.exchange(url, HttpMethod.POST, entity, String.class);
+            System.out.println("카카오 로그아웃 성공");
+        } catch (HttpClientErrorException e) {
+            System.err.println("Error during Kakao logout: " + e.getStatusCode() + " " + e.getResponseBodyAsString());
+        } catch (Exception e) {
+            System.err.println("Unexpected error during Kakao logout: " + e.getMessage());
         }
     }
 }
