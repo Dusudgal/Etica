@@ -92,6 +92,25 @@ public class UserRestController {
         return result;
     }
 
+    // 이메일 중복확인
+    @RequestMapping("is-duplicated-email")
+    public Map<String, Object> isDuplicatedEmail(
+            @RequestParam("user_email") String user_email){
+
+        // DB 조회 - SELECT
+        UserEntity user = userService.getUserEntityByUserEmail(user_email);
+
+        Map<String, Object> result = new HashMap<>();
+        if(user != null){
+            result.put("code", 200);
+            result.put("is_duplicated_email", true);
+        } else {
+            result.put("code", 200);
+            result.put("is_duplicated_email", false);
+        }
+        return result;
+    }
+
     /**
      * 회원가입 API
      * @param userDto
