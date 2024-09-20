@@ -1,6 +1,6 @@
 package com.eticaplanner.eticaPlanner.user;
 
-import com.eticaplanner.eticaPlanner.common.EncryptUtils;
+import com.eticaplanner.eticaPlanner.kakao.service.KakaoUserService;
 import com.eticaplanner.eticaPlanner.user.dto.UserDto;
 import com.eticaplanner.eticaPlanner.user.entity.UserEntity;
 import com.eticaplanner.eticaPlanner.user.service.UserService;
@@ -18,6 +18,9 @@ public class UserRestController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private KakaoUserService kakaoUserService;
 
     /**
      * 아이디 중복확인 API
@@ -51,6 +54,7 @@ public class UserRestController {
             @RequestParam("user_nickname") String user_nickname){
 
         // DB 조회 - SELECT
+        // 240913 피드백 => Entity 대신에 Dto로 변경하기
         UserEntity user = userService.getUserEntityByUserNickname(user_nickname);
 
         Map<String, Object> result = new HashMap<>();
@@ -88,7 +92,30 @@ public class UserRestController {
         return result;
     }
 
-    // 회원가입 API
+    // 이메일 중복확인
+    @RequestMapping("is-duplicated-email")
+    public Map<String, Object> isDuplicatedEmail(
+            @RequestParam("user_email") String user_email){
+
+        // DB 조회 - SELECT
+        UserEntity user = userService.getUserEntityByUserEmail(user_email);
+
+        Map<String, Object> result = new HashMap<>();
+        if(user != null){
+            result.put("code", 200);
+            result.put("is_duplicated_email", true);
+        } else {
+            result.put("code", 200);
+            result.put("is_duplicated_email", false);
+        }
+        return result;
+    }
+
+    /**
+     * 회원가입 API
+     * @param userDto
+     * @return
+     */
     @PostMapping("/sign-up")
     public Map<String, Object> signUp(@RequestBody UserDto userDto){
         // password hashing
@@ -110,7 +137,13 @@ public class UserRestController {
         return result;
     }
 
-    // 로그인 API
+    /**
+     *
+     * 로그인 API
+     * @param userDto
+     * @param request
+     * @return
+     */
     @PostMapping("/sign-in")
     public Map<String, Object> signIn(@RequestBody UserDto userDto, HttpServletRequest request){
 
@@ -138,4 +171,15 @@ public class UserRestController {
         }
         return result;
     }
+
+    // 카카오 로그인 URL을 반환하는 API
+    @GetMapping("/kakao-login")
+    public Map<String, String> getKakaoLoginUrl() {
+        String kakaoLoginUrl = kakaoUserService.getKakaoLoginUrl();
+        Map<String, String> response = new HashMap<>();
+        response.put("kakaoLoginUrl", kakaoLoginUrl);
+        return response;
+    }
+
+
 }
