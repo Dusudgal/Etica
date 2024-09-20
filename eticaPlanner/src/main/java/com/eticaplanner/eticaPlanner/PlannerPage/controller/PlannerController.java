@@ -1,8 +1,11 @@
 package com.eticaplanner.eticaPlanner.PlannerPage.controller;
 
 import com.eticaplanner.eticaPlanner.PlannerPage.dto.PlannerDTO;
+import com.eticaplanner.eticaPlanner.PlannerPage.dto.TravelDetailDTO;
+import com.eticaplanner.eticaPlanner.PlannerPage.dto.TravelTitlePlanDTO;
 import com.eticaplanner.eticaPlanner.PlannerPage.service.PlannerService;
-import com.eticaplanner.eticaPlanner.user.dto.UserDto;
+import com.eticaplanner.eticaPlanner.SessionDto;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -101,5 +104,35 @@ public class PlannerController {
             System.out.println(uriException.getMessage());
         }
         return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("ModifyPlan")
+    public ModelAndView ModifyPlanner(HttpSession uerSession , TravelTitlePlanDTO planDTO){
+        System.out.println("[PlannerController] ModifyPlanner");
+        mav = new ModelAndView("Planner/ModifyPlannerPage");
+        //SessionDto userInfo = (SessionDto)uerSession.getAttribute("userInfo");
+
+        //PlannerDTO planDetailDTO = planService.SelectPlan(userInfo.getUser_id() , userInfo.getUser_name());
+        PlannerDTO planDetailDTO = planService.SelectPlan("dddd" , planDTO.getTour_title());
+        String map_key = apikeys.map_apikey();
+        mav.addObject("map_key" , map_key);
+        //json 데이터로 넘겨주기 위해 사용하는 objectMapper
+        ObjectMapper objectMapper = new ObjectMapper();
+        String planData = "";
+        try {
+            planData = objectMapper.writeValueAsString(planDetailDTO);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        mav.addObject("planData", planData);
+
+        return mav;
+    }
+
+    @GetMapping("PlannerIndex")
+    public ModelAndView PlannerIndex(){
+        System.out.println("[PlannerController] PlannerIndex");
+        mav = new ModelAndView("Planner/PlannerIndex");
+        return mav;
     }
 }

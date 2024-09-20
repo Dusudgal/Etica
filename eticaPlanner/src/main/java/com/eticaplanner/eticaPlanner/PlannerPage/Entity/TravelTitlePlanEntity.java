@@ -5,9 +5,10 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -15,7 +16,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "Travel_Title_Plan")
-public class TravelTitlePlan {
+public class TravelTitlePlanEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -37,22 +38,12 @@ public class TravelTitlePlan {
     @Column(name = "plan_agree", columnDefinition = "TINYINT(1) DEFAULT 0")
     private Boolean planAgree = false;
 
+    @CreationTimestamp
     @Column(name = "plan_create_day")
     private LocalDate planCreateDay;
 
+    @UpdateTimestamp
     @Column(name = "plan_modify_day")
     private LocalDate planModifyDay;
-
-    @PrePersist
-    protected void onCreate() {
-        if (planCreateDay == null) {
-            planCreateDay = LocalDate.now();
-        }
-    }
-
-    @PreUpdate
-    protected void onUpdate() {
-        planModifyDay = LocalDate.now();
-    }
 
 }

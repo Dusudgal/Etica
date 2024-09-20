@@ -27,7 +27,7 @@
 /* 각 줄에 다른 배경색 추가 (선택 사항) */
 .row:nth-child(1) {
     background-color: #f8d7da;
-    flex: 0.5;
+    flex: 1;
 }
 .row:nth-child(2) {
     flex: 1;
@@ -157,4 +157,8 @@ input.img-button {
 .touristSpotMemo li p {
     font-size: 0.8rem; /* 본문 텍스트 글자 크기 설정 */
     margin: 0; /* 본문과 주변 요소 간의 간격 제거 */
+}
+
+body{
+    margin : 0px;
 }

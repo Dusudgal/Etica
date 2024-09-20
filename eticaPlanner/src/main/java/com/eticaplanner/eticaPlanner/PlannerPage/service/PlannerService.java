@@ -1,8 +1,8 @@
 package com.eticaplanner.eticaPlanner.PlannerPage.service;
 
 import com.eticaplanner.eticaPlanner.PlannerPage.Entity.TravelDetailPlanEntity;
-import com.eticaplanner.eticaPlanner.PlannerPage.Entity.TravelTitlePlan;
-import com.eticaplanner.eticaPlanner.PlannerPage.Entity.TravelTitlePlanConverter;
+import com.eticaplanner.eticaPlanner.PlannerPage.Entity.TravelTitlePlanEntity;
+import com.eticaplanner.eticaPlanner.PlannerPage.Entity.TravelPlanConverter;
 import com.eticaplanner.eticaPlanner.PlannerPage.Repository.TravelDetailPlanRepository;
 import com.eticaplanner.eticaPlanner.PlannerPage.Repository.TravelTitlePlanRepository;
 import com.eticaplanner.eticaPlanner.PlannerPage.dto.PlannerDTO;
@@ -11,12 +11,9 @@ import com.eticaplanner.eticaPlanner.PlannerPage.dto.TravelTitlePlanDTO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
-import java.util.function.Function;
 
 @AllArgsConstructor
 @Service
@@ -45,9 +42,9 @@ public class PlannerService {
             System.out.println("Start Date: " + tourTitleData.getStartDate());
             System.out.println("End Date: " + tourTitleData.getEndDate());
 
-            TravelTitlePlan savedata = travelTitlePlanRepository.save(TravelTitlePlanConverter.travelTitlePlanDTOToEntity(tourTitleData , userid));
+            TravelTitlePlanEntity savedata = travelTitlePlanRepository.save(TravelPlanConverter.travelTitlePlanDTOToEntity(tourTitleData , userid));
             if(savedata.getPlanNo() != null){
-                List<TravelDetailPlanEntity> travelDetailPlans = TravelTitlePlanConverter.travelDetailDTOToEntity(tourMemoData, savedata.getPlanNo(), userid);
+                List<TravelDetailPlanEntity> travelDetailPlans = TravelPlanConverter.travelDetailDTOToEntity(tourMemoData, savedata.getPlanNo(), userid);
 
                 // TravelDetailPlanEntity 저장
                 List<TravelDetailPlanEntity> detailSaveData = travelDetailPlanRepository.saveAll(travelDetailPlans);
@@ -66,5 +63,29 @@ public class PlannerService {
             else return result;
         } else return result;
         return result;
+    }
+
+    public PlannerDTO SelectPlan(String userId , String planTitle) {
+        System.out.println("[PlannerService] SelectPlan");
+        TravelTitlePlanDTO userTitlePlanInfo = TravelPlanConverter.travelTitlePlanEntityToDTO(travelTitlePlanRepository.findByUserIdAndPlanTitle(userId , planTitle));
+        if(userTitlePlanInfo != null){
+            List<TravelDetailDTO> userPlanDetailInfo = TravelPlanConverter.travelDetailEntityToDTO(travelDetailPlanRepository.findByPlanNoAndUserId(userTitlePlanInfo.getPlanNO() , userId));
+            // 로그 출력 (저장된 데이터 확인)
+            for (TravelDetailDTO item : userPlanDetailInfo) {
+                System.out.println("일수: " + item.getDate());
+                System.out.println("이미지 주소: " + item.getImgSrc());
+                System.out.println("관광지 주소: " + item.getAddr());
+                System.out.println("관광지 이름: " + item.getTitle());
+                System.out.println("관광 플랜 메모: " + item.getInputValue());
+            }
+
+            PlannerDTO userSelectinfo = new PlannerDTO();
+            userSelectinfo.setTourMemoData(userPlanDetailInfo);
+            userSelectinfo.setTourTitleData(userTitlePlanInfo);
+            return userSelectinfo;
+        }else{
+            System.out.println("해당 플랜 정보를 찾을수가 없습니다.");
+            return null;
+        }
     }
 }

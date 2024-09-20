@@ -1,5 +1,6 @@
 package com.eticaplanner.eticaPlanner.user;
 
+import com.eticaplanner.eticaPlanner.SessionDto;
 import com.eticaplanner.eticaPlanner.common.EncryptUtils;
 import com.eticaplanner.eticaPlanner.user.dto.UserDto;
 import com.eticaplanner.eticaPlanner.user.entity.UserEntity;
@@ -129,6 +130,11 @@ public class UserRestController {
             session.setAttribute("user_id", user.getUserId());
             session.setAttribute("user_name", user.getUserName());
             session.setAttribute("user_nickname", user.getUserNickname());
+
+//            SessionDto userSession = new SessionDto();
+//            userSession.setUser_name(user.getUserId());
+//            userSession.setUser_nickname(user.getUserName());
+//            session.setAttribute("userInfo" , userSession );
 
             result.put("code", 200);
             result.put("result", "성공");
