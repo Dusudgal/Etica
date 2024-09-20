@@ -7,6 +7,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class TravelTitlePlanDTO {
+    private int planNO;
     private String tour_title;
     private String startDate;
     private String endDate;

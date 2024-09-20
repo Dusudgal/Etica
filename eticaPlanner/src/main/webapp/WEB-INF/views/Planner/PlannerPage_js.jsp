@@ -4,7 +4,7 @@
 <script type="text/javascript" src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=${map_key}"></script>
 
 <script type="text/javascript">
-    document.querySelector('.touristSpotClick').addEventListener('click' , but);
+    document.querySelector('.touristSpotClick').addEventListener('click' , findtouristSpot);
     // 검색하는 관광지 Ul 태그
     const touristUl = document.querySelector('.touristSpotListUl');
     // 메모하기 위한 관광지 Ul 태그
@@ -18,7 +18,7 @@
     let tourList = "";
 
         // 관광지 검색 api 사용
-        async function but(){
+        async function findtouristSpot(){
             const searchString = document.querySelector('.touristSpotSearch');
             const codeString = searchString.value;
             const encodedString = encodeURIComponent(codeString);
@@ -169,7 +169,11 @@
                 if (response.ok) {
                     const result = await response.text();
                     if (result === "login_fail") {
-                        window.location.href = '/user/sign-in-view';
+                        if(confirm("현재 로그인되어있지 않습니다. ") == ture){
+                            window.location.href = '/user/sign-in-view';
+                        }else{
+                            return false;
+                        }
                     } else if(result === "success") {
                         // 성공 시 페이지 리디렉션
                         window.location.href = '/Planner/PlannerSaveSuccess';
@@ -278,7 +282,7 @@
 
         const touristSpotClick = document.querySelector('.touristSpotClick');
         if (touristSpotClick) {
-            touristSpotClick.addEventListener('click', but);
+            touristSpotClick.addEventListener('click', findtouristSpot);
         }
 
         const saveDataButton = document.querySelector('.saveData');
