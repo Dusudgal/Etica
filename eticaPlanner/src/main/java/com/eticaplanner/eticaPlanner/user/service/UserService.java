@@ -13,20 +13,33 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    public UserEntity getUserEntityByUserId(String user_id){
-        return userRepository.findByUserId(user_id);
+    public UserDto  getUserDtoByUserId(String user_id){
+        return convertToDto(userRepository.findByUserId(user_id));
     }
 
-    public UserEntity getUserEntityByUserNickname(String user_nickname){
-        return userRepository.findByUserNickname(user_nickname);
+    public UserDto  getUserDtoByUserNickname(String user_nickname){
+        return convertToDto(userRepository.findByUserNickname(user_nickname));
     }
 
-    public UserEntity getUserEntityByUserPhone(String user_phone){
-        return userRepository.findByUserPhone(user_phone);
+    public UserDto  getUserDtoByUserPhone(String user_phone){
+        return convertToDto(userRepository.findByUserPhone(user_phone));
     }
 
-    public UserEntity getUserEntityByUserEmail(String user_email){
-        return userRepository.findByUserPhone(user_email);
+    public UserDto  getUserDtoByUserEmail(String user_email){
+        return convertToDto(userRepository.findByUserEmail(user_email));
+    }
+
+    // entity를 dto로 변환(필요한 필드:아이디, 닉네임, 핸드폰, 이메일만 변환)
+    private UserDto convertToDto(UserEntity userEntity){
+        if(userEntity == null){
+            return null;
+        }
+        return UserDto.builder()
+                .user_id(userEntity.getUserId())
+                .user_nickname(userEntity.getUserNickname())
+                .user_phone(userEntity.getUserPhone())
+                .user_email(userEntity.getUserEmail())
+                .build();
     }
 
     public Integer addUser(UserDto userDto){
@@ -49,9 +62,9 @@ public class UserService {
         return userEntity == null ? null : userEntity.getUserNo();
     }
 
-    public UserEntity getUserEntityByUserIdPassword(UserDto userDto){
+    public UserDto getUserDtoByUserIdPassword(UserDto userDto){
         // 비밀번호 해싱
         String hashed_password = EncryptUtils.sha256(userDto.getUser_password());
-        return userRepository.findByUserIdAndUserPassword(userDto.getUser_id(), hashed_password);
+        return convertToDto(userRepository.findByUserIdAndUserPassword(userDto.getUser_id(), hashed_password));
     }
 }
