@@ -1,10 +1,12 @@
 package com.eticaplanner.eticaPlanner.kakao.service;
-import com.eticaplanner.eticaPlanner.kakao.Dto.KakaoUserDTO;
-import com.eticaplanner.eticaPlanner.kakao.Entity.KakaoUserEntity;
-import com.eticaplanner.eticaPlanner.kakao.Repository.KakaoUserRepository;
+import com.eticaplanner.eticaPlanner.kakao.dto.KakaoUserDto;
+import com.eticaplanner.eticaPlanner.kakao.entity.KakaoUserEntity;
+import com.eticaplanner.eticaPlanner.kakao.repository.KakaoUserRepository;
+import lombok.Getter;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
@@ -20,25 +22,32 @@ public class KakaoUserService {
     private final String clientId;
     private final String clientSecret;
     private final String redirectUri;
+    @Getter
+    private final String logoutRedirectUri;
     private final KakaoUserRepository kakaoUserRepository;
+    private final RestTemplate restTemplate;
 
     @Autowired
     public KakaoUserService(
             @Value("${kakao.api.key}") String clientId,
             @Value("${kakao.api.secret}") String clientSecret,
             @Value("${kakao.redirect.uri}") String redirectUri,
-            KakaoUserRepository kakaoUserRepository) {
+            @Value("${logout.redirect.uri}") String logoutRedirectUri,
+            KakaoUserRepository kakaoUserRepository,
+            RestTemplateBuilder restTemplateBuilder) {
         this.clientId = clientId;
         this.clientSecret = clientSecret;
+        this.logoutRedirectUri = logoutRedirectUri;
         this.redirectUri = redirectUri;
         this.kakaoUserRepository = kakaoUserRepository;
+        this.restTemplate = restTemplateBuilder.build();
     }
 
     private RestTemplate createRestTemplate() {
         return new RestTemplate();
     }
 
-    public KakaoUserDTO getUserInfo(String accessToken) {
+    public KakaoUserDto getUserInfo(String accessToken) {
         String url = "https://kapi.kakao.com/v2/user/me";
         HttpHeaders headers = new HttpHeaders();
         headers.set("Authorization", "Bearer " + accessToken);
@@ -103,7 +112,7 @@ public class KakaoUserService {
         return "https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=" + clientId + "&redirect_uri=" + redirectUri;
     }
 
-    private KakaoUserDTO saveUserInfo(JSONObject jsonObject) {
+    private KakaoUserDto saveUserInfo(JSONObject jsonObject) {
         // JSON에서 사용자 정보 추출
         Long kakaoId = jsonObject.getLong("id");
         String nickname = jsonObject.getJSONObject("properties").getString("nickname");
@@ -130,27 +139,28 @@ public class KakaoUserService {
             System.out.println("새로운 사용자 저장됨: " + kakaoUser.getNickname());
         }
         // dto를 반환
-        return KakaoUserDTO.builder()
-                .kakaoId(String.valueOf(kakaoId))
-                .kakaoNickname(nickname)
-                .kakaoEmail(email)
+        return KakaoUserDto.builder()
+                .kakao_id(String.valueOf(kakaoId))
+                .kakao_nickname(nickname)
+                .kakao_email(email)
                 .build();
     }
+
+    // 카카오 로그아웃 메서드
     public void kakaoLogout(String accessToken) {
         String url = "https://kapi.kakao.com/v1/user/logout";
         HttpHeaders headers = new HttpHeaders();
         headers.set("Authorization", "Bearer " + accessToken);
-
-        RestTemplate restTemplate = createRestTemplate();
-        HttpEntity<String> entity = new HttpEntity<>(headers);
+        HttpEntity<String> request = new HttpEntity<>(headers);
 
         try {
-            restTemplate.exchange(url, HttpMethod.POST, entity, String.class);
-            System.out.println("카카오 로그아웃 성공");
-        } catch (HttpClientErrorException e) {
-            System.err.println("Error during Kakao logout: " + e.getStatusCode() + " " + e.getResponseBodyAsString());
+            ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.POST, request, String.class);
+            // 로그아웃 성공 여부 확인
+            System.out.println("카카오 로그아웃 API 호출 후 응답 상태: " + response.getStatusCode());
+            System.out.println("응답 본문: " + response.getBody());
         } catch (Exception e) {
-            System.err.println("Unexpected error during Kakao logout: " + e.getMessage());
+            System.out.println("카카오 로그아웃 처리 중 오류 발생: " + e.getMessage());
         }
     }
+
 }

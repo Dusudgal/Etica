@@ -1,4 +1,4 @@
-package com.eticaplanner.eticaPlanner.kakao.Entity;
+package com.eticaplanner.eticaPlanner.kakao.entity;
 
 import jakarta.persistence.*;
 import lombok.*;

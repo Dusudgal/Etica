@@ -1,4 +1,4 @@
-package com.eticaplanner.eticaPlanner.kakao.Dto;
+package com.eticaplanner.eticaPlanner.kakao.dto;
 
 import lombok.*;
 
@@ -7,9 +7,9 @@ import lombok.*;
 @Getter
 @Setter
 @Builder
-public class KakaoUserDTO {
-    private String kakaoId;
-    private String kakaoNickname;
-    private String kakaoEmail;
+public class KakaoUserDto {
+    private String kakao_id;
+    private String kakao_nickname;
+    private String kakao_email;
 
 }
