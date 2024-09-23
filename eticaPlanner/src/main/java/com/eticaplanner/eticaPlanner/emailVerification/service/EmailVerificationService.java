@@ -1,60 +1,44 @@
-//package com.eticaplanner.eticaPlanner.emailVerification.service;
-//
-//import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.data.redis.core.RedisTemplate;
-//import org.springframework.mail.SimpleMailMessage;
-//import org.springframework.mail.javamail.JavaMailSender;
-//import org.springframework.stereotype.Service;
-//
-//import java.util.UUID;
-//import java.util.concurrent.TimeUnit;
-//
-//@Service
-//public class EmailVerificationService {
-//
-//    @Autowired
-//    private RedisTemplate<String, Object> redisTemplate;
-//
-//    @Autowired
-//    private JavaMailSender javaMailSender;
-//
-//    // Redis에 저장할 만료 시간 설정(5분)
-//    private static final long EXPIRATION_TIME = 5 * 60L; // 초 단위로 설정
-//
-//    // 토큰 생성 후 Redis에 저장하는 메서드
-//    public String addToken(int userId, String purpose) {
-//        String token = UUID.randomUUID().toString();
-//
-//        // Redis에 userId와 토큰을 저장하며, 만료 시간을 설정
-//        String key = "emailVerification:" + userId + ":" + purpose;
-//        redisTemplate.opsForValue().set(key, token, EXPIRATION_TIME, TimeUnit.SECONDS);
-//
-//        return token;
-//    }
-//
-//    // 이메일 전송 메서드
-//    public void sendEmail(String email, String subject, String text) {
-//        SimpleMailMessage message = new SimpleMailMessage();
-//        message.setTo(email);
-//        message.setSubject(subject);
-//        message.setText(text);
-//        javaMailSender.send(message);
-//    }
-//
-//    // 이메일 인증 확인 메서드 (Redis에서 토큰을 확인)
-//    public boolean verifyEmail(int userId, String token, String purpose) {
-//        String key = "emailVerification:" + userId + ":" + purpose;
-//
-//        // Redis에서 토큰 조회
-//        String storedToken = (String) redisTemplate.opsForValue().get(key);
-//
-//        // Redis에 해당하는 토큰이 없거나, 토큰이 일치하지 않으면 실패
-//        if (storedToken == null || !storedToken.equals(token)) {
-//            return false;
-//        }
-//
-//        // 성공적으로 인증되었으므로 Redis에서 해당 토큰 삭제
-//        redisTemplate.delete(key);
-//        return true;
-//    }
-//}
+package com.eticaplanner.eticaPlanner.emailVerification.service;
+
+import com.eticaplanner.eticaPlanner.emailVerification.entity.EmailVerificationEntity;
+import com.eticaplanner.eticaPlanner.emailVerification.repository.EmailVerificationRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.stereotype.Service;
+
+import java.util.UUID;
+
+@Service
+public class EmailVerificationService {
+
+    @Autowired
+    private EmailVerificationRepository emailVerificationRepository;
+
+    // 이메일 인증 여부 확인
+    public boolean isEmailVerified(int user_id){
+        // 이메일 인증 엔티티 조회(null이면 인증 완료)
+        EmailVerificationEntity verification = emailVerificationRepository.findByUserId(user_id);
+        return verification == null;
+    }
+    /* 구현중!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    // 이메일 인증 토큰 생성
+    public String createVerificationToken(int user_id, String purpose){
+        String token = UUID.randomUUID().toString();
+        EmailVerificationEntity emailVerification = EmailVerificationEntity.builder()
+                .userId(user_id)
+                .token(token)
+                .purpose(purpose)
+                .build();
+        EmailVerificationRepository.save(emailVerification);
+        return token;
+    }
+     */
+
+    // 이메일 발송
+    public void sendVerificationEmail(String email, String subject, String text){
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setTo(email);
+        message.setSubject(subject);
+        message.setText(text);
+    }
+}
