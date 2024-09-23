@@ -1,6 +1,7 @@
 package com.eticaplanner.eticaPlanner.user;
 
 import com.eticaplanner.eticaPlanner.SessionDto;
+import com.eticaplanner.eticaPlanner.emailVerification.service.EmailVerificationService;
 import com.eticaplanner.eticaPlanner.kakao.service.KakaoUserService;
 import com.eticaplanner.eticaPlanner.user.dto.UserDto;
 import com.eticaplanner.eticaPlanner.user.service.UserService;
@@ -21,6 +22,9 @@ public class UserRestController {
 
     @Autowired
     private KakaoUserService kakaoUserService;
+
+    @Autowired
+    private EmailVerificationService emailVerificationSerive;
 
     // 아이디 중복확인 API
     @RequestMapping("/is-duplicated-id")
@@ -101,14 +105,24 @@ public class UserRestController {
     // 회원가입 API
     @PostMapping("/sign-up")
     public Map<String, Object> signUp(@RequestBody UserDto userDto){
+
+        Map<String, Object> result = new HashMap<>();
+
+        // 이메일 인증 확인
+        boolean is_email_verified = emailVerificationSerive.isEmailVerified(Integer.parseInt(userDto.getUser_email()));
+        if(!is_email_verified){ // 인증이 안됐다면
+            result.put("code", 400);
+            result.put("error_message", "이메일 인증이 필요합니다. 이메일을 확인하세요");
+            return result;
+        }
+
         // password hashing
         // UserService에서 처리
         // UserDto에는 원래 비밀번호가 담기고, UserEntity는 해싱된 비밀번호가 저장됨
-
         // db insert
         Integer userId = userService.addUser(userDto);
+
         // 응답값
-        Map<String, Object> result = new HashMap<>();
         if(userId != null){
             result.put("code", 200);
             result.put("result", "성공");

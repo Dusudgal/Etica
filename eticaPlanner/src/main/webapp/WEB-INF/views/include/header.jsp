@@ -19,7 +19,7 @@
             <%-- 카카오 로그인 시 --%>
             <c:if test="${not empty sessionScope.sessionInfo.kakao_id}">
                 <span class="mr-5">${sessionScope.sessionInfo.kakao_nickname}님 안녕하세요!</span>
-                <a href="#" id="kakaoLogoutButton" class="mr-5">카카오 로그아웃</a>
+                <%--<a href="#" id="kakaoLogoutButton" class="mr-5">카카오 로그아웃</a>-->
             </c:if>
 
             <%-- 비로그인 시 --%>
@@ -28,7 +28,7 @@
             </c:if>
         </div>
 </div>
-
+<%--
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         const kakaoLogoutButton = document.getElementById('kakaoLogoutButton');
@@ -43,3 +43,4 @@
         }
     });
 </script>
+-->
