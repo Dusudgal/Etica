@@ -107,14 +107,14 @@ public class UserRestController {
     public Map<String, Object> signUp(@RequestBody UserDto userDto){
 
         Map<String, Object> result = new HashMap<>();
-
-        // 이메일 인증 확인
+        /*
+        // 이메일 인증 확인                                                          //여기서 정수로 변환하면 회원가입때 에러남
         boolean is_email_verified = emailVerificationSerive.isEmailVerified(Integer.parseInt(userDto.getUser_email()));
         if(!is_email_verified){ // 인증이 안됐다면
             result.put("code", 400);
             result.put("error_message", "이메일 인증이 필요합니다. 이메일을 확인하세요");
             return result;
-        }
+        }*/
 
         // password hashing
         // UserService에서 처리
