@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<jsp:include page="./APIkeys/Sc_key.jsp"/>
+<script type="text/javascript" src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=${map_key}"></script>
 
 <script type="text/javascript">
     document.querySelector('.touristSpotClick').addEventListener('click' , but);
@@ -10,7 +10,6 @@
     // 메모하기 위한 관광지 Ul 태그
     //메모 관광지 ul태그를 감싸는 div 태그
     const tourMemoListDiv = document.querySelector('.row:nth-child(2)');
-    const app_key = Api_keys.Tour_api_key;
     document.querySelector('.saveData').addEventListener('click' , SaveData);
     const startDateInput = document.getElementById('startDate');
     const endDateInput = document.getElementById('endDate');
@@ -22,19 +21,23 @@
         async function but(){
             const searchString = document.querySelector('.touristSpotSearch');
             const codeString = searchString.value;
-            const PageNumber = 1;
-            const numOfRows = 30;
             const encodedString = encodeURIComponent(codeString);
-            const url = `https://apis.data.go.kr/B551011/KorService1/searchKeyword1?numOfRows=\${numOfRows}&pageNo=\${PageNumber}&MobileOS=ETC&MobileApp=1&_type=json&listYN=Y&arrange=A&keyword=\${encodedString}&contentTypeId=12&serviceKey=\${app_key} `;
+            const data = { 'keyword' : encodedString };
             try {
-                const response = await fetch( url ,
-                {  method: 'GET' });
+                const response = await fetch( '/Planner/TourApiSearch' ,
+                    {  method: 'POST' ,
+                    headers : { 'Content-Type' : 'application/json' } ,
+                    body: JSON.stringify({
+                        keyword : encodedString
+                    })
+                });
                 if (!response.ok) {
-                    throw new Error('Network response was not ok');
+                    throw new Error("데이터를 받아오지 못하고있습니다.");
                 }
-
                 const jsonResponse = await response.json();
                 const jsondata = jsonResponse.response?.body?.items?.item || [];
+                console.log(jsonResponse.response.body.items);
+                console.log(jsondata);
 
                 // 데이터를 검색했는데 데이터가 있는 경우
                 if (Array.isArray(jsondata) && jsondata.length > 0) {
@@ -69,14 +72,13 @@
     function tourBtnClick(e){
         //버튼 위에 부모인 li태그 밑에 있는 정보를 불러오기 위한 tourli
         const tourli = e.target.closest('li');
+
         const tourData = {
             imgSrc : null,
             titleText : null,
             address : null
         };
-        if(tour_title.value === ""){
-            return alert("제목을 입력해주세요");
-        }
+
         if(!tourList){
             return alert("날짜를 입력해주세요");
         }
@@ -101,6 +103,7 @@
         newP.textContent = pText;
         title.textContent = h4Text;
         newimg.src = imgsrc;
+        newimg.onerror = () => newimg.style.display='none';
         li.appendChild(newimg);
         li.appendChild(title);
         li.appendChild(newP);
@@ -135,22 +138,22 @@
             tourTitleData : tourTitleData,
             tourMemoData : tourMemodata
         }
-        console.log(tourTitleData);
-        console.log(tourMemodata);
         SaveSebData(data);
     }
     async function SaveSebData(data){
-        console.log(data);
+        if(tour_title.value === ""){
+            return alert("제목을 입력해주세요");
+        }
         if(data.tourMemoData.length > 0 && data.tourTitleData){
             try{
                 const response = await fetch('/Planner/PlannerSaveData' , {
                     method : 'POST',
-                    headers : {
-                        'content-Type' : 'application/json'
-                    },
+                    headers : { 'content-Type' : 'application/json' },
                     body : JSON.stringify(data)
                 });
+
                 const resData = await response.json();
+
                 if(!response.ok){
                     console.error('요청실패' , resData);
                     throw new Error(`오류 \${response.status}: \${resData.message || '알 수 없는 오류'}`);
@@ -258,5 +261,11 @@
         saveDataButton.addEventListener('click', SaveData);
     }
 });
+    var mapcontainer = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
+    var options = { //지도를 생성할 때 필요한 기본 옵션
+	    center: new kakao.maps.LatLng(33.450701, 126.570667), //지도의 중심좌표.
+	    level: 3 //지도의 레벨(확대, 축소 정도)
+    };
 
+    var map = new kakao.maps.Map(mapcontainer, options); //지도 생성 및 객체 리턴
 </script>

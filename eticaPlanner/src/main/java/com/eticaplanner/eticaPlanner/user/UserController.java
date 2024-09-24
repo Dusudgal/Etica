@@ -177,8 +177,8 @@ public class UserController {
             System.out.println("현재 쿠키가 없습니다.");
         }
 
-        // redirect 로그인 화면으로 이동 // 일단 회원가입으로 임시이동
-        return "redirect:/user/sign-up-view";
+        // redirect 로그인 화면으로 이동 // 일단 회원가입으로 임시이동 => 다시 로그인으로 변경
+        return "redirect:/user/sign-in-view";
     }
 
     @GetMapping("/logout")

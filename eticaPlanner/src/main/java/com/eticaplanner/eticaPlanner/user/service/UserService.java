@@ -46,14 +46,14 @@ public class UserService {
     }
 
     public Integer addUser(UserDto userDto){
-
+        /*
        // 이메일 인증 확인
         boolean isEmailVerified = emailVerificationService.isEmailVerified(Integer.parseInt(userDto.getUser_id()));
         if(!isEmailVerified){
             // 객체의 상태가 호출된 메서드를 수행하기에 적절하지 않을 때 발생시킬 수 있는 예외
             // 예를 들어, 체스 게임을 진행하는데 체스판이 생성되지않은 경우 등
             throw new IllegalStateException("이메일 인증이 필요합니다.");
-        }
+        }*/
 
        // 비밀번호 해싱
        String hashed_password = EncryptUtils.sha256(userDto.getUser_password());
