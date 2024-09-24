@@ -1,10 +1,8 @@
 package com.eticaplanner.eticaPlanner.PlannerPage.controller;
 
 import com.eticaplanner.eticaPlanner.PlannerPage.dto.PlannerDTO;
-import com.eticaplanner.eticaPlanner.PlannerPage.dto.TravelDetailDTO;
 import com.eticaplanner.eticaPlanner.PlannerPage.dto.TravelTitlePlanDTO;
 import com.eticaplanner.eticaPlanner.PlannerPage.service.PlannerService;
-import com.eticaplanner.eticaPlanner.SessionDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -97,7 +96,6 @@ public class PlannerController {
 
         try{
             URI uri = new URI(url);
-            System.out.println(uri);
             response = restTemplate.getForObject(uri , Map.class);
 
         }catch(URISyntaxException uriException){
@@ -105,15 +103,28 @@ public class PlannerController {
         }
         return ResponseEntity.ok(response);
     }
+    @GetMapping("SelectPlanTitle")
+    public ResponseEntity<List<TravelTitlePlanDTO>> SelectPlanTitle(HttpSession session){
+        System.out.println("[PlannerController] SelectPlanTitle");
+        String sessionId = (String) session.getAttribute("user_id");
+        List<TravelTitlePlanDTO> plandto = planService.SelectPlanTitle(sessionId);
+
+        if (plandto != null && !plandto.isEmpty()) {
+            return ResponseEntity.ok(plandto);
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+    }
 
     @PostMapping("ModifyPlan")
-    public ModelAndView ModifyPlanner(HttpSession uerSession , TravelTitlePlanDTO planDTO){
+    public ModelAndView modifyPlanner(HttpSession userSession , @ModelAttribute TravelTitlePlanDTO planDTO){
         System.out.println("[PlannerController] ModifyPlanner");
         mav = new ModelAndView("Planner/ModifyPlannerPage");
         //SessionDto userInfo = (SessionDto)uerSession.getAttribute("userInfo");
+        String userInfo = (String) userSession.getAttribute("user_id");
 
         //PlannerDTO planDetailDTO = planService.SelectPlan(userInfo.getUser_id() , userInfo.getUser_name());
-        PlannerDTO planDetailDTO = planService.SelectPlan("dddd" , planDTO.getTour_title());
+        System.out.println(planDTO.getTour_title());
+        PlannerDTO planDetailDTO = planService.SelectPlan( userInfo , planDTO.getTour_title());
         String map_key = apikeys.map_apikey();
         mav.addObject("map_key" , map_key);
         //json 데이터로 넘겨주기 위해 사용하는 objectMapper
@@ -129,8 +140,23 @@ public class PlannerController {
         return mav;
     }
 
+    @PostMapping("ModifyPlanData")
+    public ResponseEntity<String> modifyPlanData(@RequestBody PlannerDTO planDto , HttpSession session){
+        System.out.println("[PlannerController] modifyPlanData");
+
+        String loginUser = (String)session.getAttribute("user_id");
+        Boolean CreateResult = planService.planModify(planDto , loginUser);
+
+        System.out.println(CreateResult ? "성공" : "실패");
+
+        if(CreateResult){
+            return ResponseEntity.ok("success");
+        }
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("failure");
+    }
+
     @GetMapping("PlannerIndex")
-    public ModelAndView PlannerIndex(){
+    public ModelAndView plannerIndex(){
         System.out.println("[PlannerController] PlannerIndex");
         mav = new ModelAndView("Planner/PlannerIndex");
         return mav;

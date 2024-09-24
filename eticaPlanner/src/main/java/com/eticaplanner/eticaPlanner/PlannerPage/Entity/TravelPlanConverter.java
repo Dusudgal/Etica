@@ -21,7 +21,7 @@ public class TravelPlanConverter {
 
     public static TravelTitlePlanDTO travelTitlePlanEntityToDTO(TravelTitlePlanEntity Entity) {
         TravelTitlePlanDTO dto = new TravelTitlePlanDTO();
-        dto.setPlanNO(Entity.getPlanNo());
+        dto.setPlanNo(Entity.getPlanNo());
         dto.setTour_title(Entity.getPlanTitle());
         dto.setStartDate(String.valueOf(Entity.getTravelStartDay()));
         dto.setEndDate(String.valueOf(Entity.getTravelEndDay()));
@@ -51,11 +51,26 @@ public class TravelPlanConverter {
 
         List<TravelDetailDTO> dtoList = entitys.stream().map(entity -> {
             TravelDetailDTO dto = new TravelDetailDTO();
+            dto.setPlanNo(entity.getPlanNo());
             dto.setTitle(entity.getTouristAttractionName());
             dto.setAddr(entity.getTouristAttractionAddress());
             dto.setDate(entity.getPlanDurationDays());
             dto.setImgSrc(entity.getTouristAttractionPhotoAddress());
             dto.setInputValue(entity.getTouristAttractionText());
+            return dto;
+        }).collect(Collectors.toList());
+
+        return dtoList;
+    }
+
+    public static List<TravelTitlePlanDTO> travelTitlePlansEntityToDTO(List<TravelTitlePlanEntity> entitys) {
+        List<TravelTitlePlanDTO> dtoList = entitys.stream().map((entity) ->{
+        TravelTitlePlanDTO dto = new TravelTitlePlanDTO();
+            dto.setPlanNo(entity.getPlanNo());
+            dto.setTour_title(entity.getPlanTitle());
+            dto.setStartDate(String.valueOf(entity.getTravelEndDay()));
+            dto.setEndDate(String.valueOf(entity.getTravelEndDay()));
+        // 기본값은 `false`로 설정되므로 별도로 설정할 필요 없음
             return dto;
         }).collect(Collectors.toList());
 
