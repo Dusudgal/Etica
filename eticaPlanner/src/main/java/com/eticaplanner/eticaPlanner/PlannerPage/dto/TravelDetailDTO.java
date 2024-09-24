@@ -6,6 +6,8 @@ import lombok.Setter;
 @Getter
 @Setter
 public class TravelDetailDTO {
+    // 플랜 넘버
+    private int PlanNo;
     // 일수
     private int date;
     // 이미지 주소

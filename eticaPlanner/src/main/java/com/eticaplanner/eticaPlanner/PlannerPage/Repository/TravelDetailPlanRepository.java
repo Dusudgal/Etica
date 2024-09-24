@@ -9,4 +9,6 @@ import java.util.List;
 @Repository
 public interface TravelDetailPlanRepository extends JpaRepository<TravelDetailPlanEntity, Integer> {
     List<TravelDetailPlanEntity> findByPlanNoAndUserId(Integer planNo , String userId);
+
+    void deleteByPlanNoAndUserId(Integer planNo , String userId);
 }
