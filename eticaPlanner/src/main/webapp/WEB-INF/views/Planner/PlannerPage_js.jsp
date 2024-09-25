@@ -178,8 +178,7 @@
                         // 성공 시 페이지 리디렉션
                         window.location.href = '/Planner/PlannerSaveSuccess';
                     }else {
-                        // 실패 시 페이지 리디렉션
-                        alert("서버에 저장이 실패하셨습니다.");
+                        alert("서버에 저장이 실패하셨습니다. ");
                     }
                 } else {
                 // 서버 오류 시 페이지 리디렉션
