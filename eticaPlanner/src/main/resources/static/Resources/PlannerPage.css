@@ -9,7 +9,6 @@
 
 /* 각 줄 스타일 */
 .row {
-    flex: 1; /* 기본적으로 각 줄이 동일한 비율로 공간을 차지하도록 설정 */
     display: flex;
     flex-direction: column; /* 세로 방향으로 나열 */
     align-items: center;
@@ -21,12 +20,14 @@
 
 /* 지도 화면 크기 조정 */
 .large {
-    flex: 3;
+    flex: 3.5;
+    display: flex;
 }
 
 /* 각 줄에 다른 배경색 추가 (선택 사항) */
 .row:nth-child(1) {
     background-color: #f8d7da;
+    display: flex;
     flex: 0.5;
 }
 .row:nth-child(2) {
@@ -39,15 +40,12 @@
 }
 
 .row:nth-child(4) {
+    flex: 1;
     background-color: #d1ecf1;
     display: flex;
     overflow: hidden;
     flex-direction: column;
     justify-content: flex-start; /* 상단 정렬 */
-}
-
-.large {
-    background-color: #cce5ff;
 }
 
 /* 검색창과 버튼을 포함한 컨테이너 스타일 */
@@ -66,7 +64,7 @@
     width: 99%;
     overflow-y: auto; /* 수직 스크롤 활성화 */
     list-style-type: disc;
-    padding-left: 20px;
+    padding-left: 2px;
     margin: 0;
     background-color: #f9f9f9;
 }
@@ -125,11 +123,14 @@ input.img-button {
     width: 99%;
     overflow-y: auto; /* 수직 스크롤 활성화 */
     list-style-type: disc; /* 기본 리스트 스타일 유지 */
-    padding-left: 20px; /* 기본 리스트 패딩 */
+    padding-left: 2px; /* 기본 리스트 패딩 */
     margin: 0;
     background-color: #f9f9f9; /* 배경색 */
 }
-
+img{
+    width: 80px;
+    higth: 100px;
+}
 
 /* 리스트 항목 스타일 */
 .touristSpotMemo li {
@@ -157,4 +158,8 @@ input.img-button {
 .touristSpotMemo li p {
     font-size: 0.8rem; /* 본문 텍스트 글자 크기 설정 */
     margin: 0; /* 본문과 주변 요소 간의 간격 제거 */
+}
+
+body{
+    margin : 0px;
 }

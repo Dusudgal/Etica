@@ -33,7 +33,7 @@ public class MyPageController {
             return "redirect:/user/sign-in-view";
         }
 
-        UserEntity memberResult = myPageService.    memberRight(userId);
+        UserEntity memberResult = myPageService.memberRight(userId);
 
         model.addAttribute("userInfo", memberResult);
 
