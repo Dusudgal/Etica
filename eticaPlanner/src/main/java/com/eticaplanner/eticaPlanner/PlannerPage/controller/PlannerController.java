@@ -87,7 +87,7 @@ public class PlannerController {
         Map response = Map.of();
 
         String Tour_key = apikeys.tour_apikey();
-        int PageNumber = 1;
+        int PageNumber = 2;
         int numOfRows = 30;
         String keyword = encodingdata.get("keyword");
 
