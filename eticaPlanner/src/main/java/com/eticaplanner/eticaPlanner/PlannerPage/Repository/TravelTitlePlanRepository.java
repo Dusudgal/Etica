@@ -1,10 +1,14 @@
 package com.eticaplanner.eticaPlanner.PlannerPage.Repository;
 
-import com.eticaplanner.eticaPlanner.PlannerPage.Entity.TravelTitlePlan;
+import com.eticaplanner.eticaPlanner.PlannerPage.Entity.TravelTitlePlanEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-@Repository
-public interface TravelTitlePlanRepository extends JpaRepository<TravelTitlePlan, Integer> {
+import java.util.List;
 
+@Repository
+public interface TravelTitlePlanRepository extends JpaRepository<TravelTitlePlanEntity, Integer> {
+    TravelTitlePlanEntity findByUserIdAndPlanTitle(String userId, String planTitle);
+
+    List<TravelTitlePlanEntity> findByUserId(String userId);
 }

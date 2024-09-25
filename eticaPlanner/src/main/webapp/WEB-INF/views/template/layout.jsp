@@ -17,13 +17,9 @@
 </head>
 <body>
 <div id="wrap">
-    <header>
-        <jsp:include page="../include/header.jsp" />
-    </header>
+    <jsp:include page="../include/header.jsp" />
     <section class="contents my-5">
         <jsp:include page="../${viewName}.jsp" />
-    <%-- model에 담을시 addAttribute 첫번째 매개변수에 viewName을 담아주시면 됩니다.--%>
-
     </section>
     <footer>
         <jsp:include page="../include/footer.jsp" />

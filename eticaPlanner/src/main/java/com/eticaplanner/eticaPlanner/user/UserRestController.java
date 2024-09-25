@@ -1,6 +1,7 @@
 package com.eticaplanner.eticaPlanner.user;
 
 import com.eticaplanner.eticaPlanner.SessionDto;
+import com.eticaplanner.eticaPlanner.common.EncryptUtils;
 import com.eticaplanner.eticaPlanner.emailVerification.service.EmailVerificationService;
 import com.eticaplanner.eticaPlanner.kakao.service.KakaoUserService;
 import com.eticaplanner.eticaPlanner.user.dto.UserDto;
@@ -156,6 +157,11 @@ public class UserRestController {
             // 세션에 저장
             HttpSession session = request.getSession();
             session.setAttribute("sessionInfo", userSession);
+
+//            SessionDto userSession = new SessionDto();
+//            userSession.setUser_name(user.getUserId());
+//            userSession.setUser_nickname(user.getUserName());
+//            session.setAttribute("userInfo" , userSession );
 
             result.put("code", 200);
             result.put("result", "성공");

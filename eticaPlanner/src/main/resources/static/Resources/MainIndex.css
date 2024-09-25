@@ -1,14 +1,3 @@
-body {
-    font-family: Arial, sans-serif;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    margin: 0;
-    background-color: #f0f0f0;
-}
-
 .content {
     text-align: center; /* 중앙 정렬 */
     margin-bottom: 20px; /* 버튼과의 간격 조절 */
@@ -18,11 +7,6 @@ body {
     display: flex;
     align-items: center; /* 이미지와 텍스트 수직 정렬 */
     justify-content: center; /* 중앙 정렬 */
-}
-
-.image-text-container img {
-    max-width: 400px; /* 이미지 크기 조절 */
-    margin-right: 100px; /* 이미지와 텍스트 간격 조절 */
 }
 
 .image-text-container p {
@@ -48,4 +32,8 @@ body {
     border: none;
     border-radius: 5px;
     cursor: pointer;
+}
+
+html body{
+    margin: 0px 150px 0px 150px;
 }

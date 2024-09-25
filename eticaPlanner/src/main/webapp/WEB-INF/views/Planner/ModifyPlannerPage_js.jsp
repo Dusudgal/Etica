@@ -4,7 +4,7 @@
 <script type="text/javascript" src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=${map_key}"></script>
 
 <script type="text/javascript">
-    document.querySelector('.touristSpotClick').addEventListener('click' , findtouristSpot);
+    document.querySelector('.touristSpotClick').addEventListener('click' , but);
     // 검색하는 관광지 Ul 태그
     const touristUl = document.querySelector('.touristSpotListUl');
     // 메모하기 위한 관광지 Ul 태그
@@ -17,8 +17,9 @@
     let days = "";
     let tourList = "";
 
+
         // 관광지 검색 api 사용
-        async function findtouristSpot(){
+        async function but(){
             const searchString = document.querySelector('.touristSpotSearch');
             const codeString = searchString.value;
             const encodedString = encodeURIComponent(codeString);
@@ -144,6 +145,7 @@
             }
         }
         const tourTitleData = {
+            planNo : document.getElementById('planNo').value ,
             tour_title : tour_title.value ,
             startDate : startDateInput.value,
             endDate : endDateInput.value
@@ -152,15 +154,15 @@
             tourTitleData : tourTitleData,
             tourMemoData : tourMemodata
         }
-        SavePlanData(data);
+        ModifyPlanData(data);
     }
-    async function SavePlanData(data){
+    async function ModifyPlanData(data){
         if(tour_title.value === ""){
             return alert("제목을 입력해주세요");
         }
         if(data.tourMemoData.length > 0 && data.tourTitleData){
             try{
-                const response = await fetch('/Planner/PlannerSaveData' , {
+                const response = await fetch('/Planner/ModifyPlanData' , {
                     method : 'POST',
                     headers : { 'content-Type' : 'application/json' },
                     body : JSON.stringify(data)
@@ -169,16 +171,13 @@
                 if (response.ok) {
                     const result = await response.text();
                     if (result === "login_fail") {
-                        if(confirm("현재 로그인되어있지 않습니다. ") == ture){
-                            window.location.href = '/user/sign-in-view';
-                        }else{
-                            return false;
-                        }
+                        window.location.href = '/user/sign-in-view';
                     } else if(result === "success") {
                         // 성공 시 페이지 리디렉션
                         window.location.href = '/Planner/PlannerSaveSuccess';
                     }else {
-                        alert("서버에 저장이 실패하셨습니다. ");
+                        // 실패 시 페이지 리디렉션
+                        alert("서버에 저장이 실패하셨습니다.");
                     }
                 } else {
                 // 서버 오류 시 페이지 리디렉션
@@ -195,100 +194,125 @@
     // 여행 일자를 클릭시에 버튼을 생성해서 일자별로 볼수있게 만들어주는 함수
     document.addEventListener("DOMContentLoaded", function() {
         const durationSpan = document.getElementById('duration');
-        const dayButtonsContainer = document.getElementById('dayButtons');
-        const tourMemoContainer = document.querySelector('.row:nth-child(2)');
+            const dayButtonsContainer = document.getElementById('dayButtons');
+            const tourMemoContainer = document.querySelector('.row:nth-child(2)');
 
-        function updateDuration() {
-            const startDateValue = startDateInput.value;
-            const endDateValue = endDateInput.value;
+            function updateDuration() {
+                const startDateValue = startDateInput.value;
+                const endDateValue = endDateInput.value;
 
-            if(startDateValue && endDateValue) {
-                const startDate = new Date(startDateValue);
-                const endDate = new Date(endDateValue);
+                if (startDateValue && endDateValue) {
+                    const startDate = new Date(startDateValue);
+                    const endDate = new Date(endDateValue);
+                    const timeDifference = endDate - startDate;
+                    const dayDifference = Math.ceil(timeDifference / (1000 * 60 * 60 * 24)) + 1;
 
-                // 하루를 포함한 여행 기간 계산
-                const timeDifference = endDate - startDate;
-                const dayDifference = Math.ceil(timeDifference / (1000 * 60 * 60 * 24)) + 1;
+                    if (durationSpan) durationSpan.textContent = dayDifference;
 
-                if (durationSpan) durationSpan.textContent = dayDifference;
-
-                if (dayButtonsContainer) updateDayButtons(dayDifference);
-                if (tourMemoContainer) updateTourMemoList(dayDifference);
-                // 기본적으로 첫째 날을 보여줍니다.
-                if (dayDifference > 0) {
-                    showDayList(1); // 첫째 날 표시
-                }
-            } else {
-                if (durationSpan) durationSpan.textContent = '0';
-                if (dayButtonsContainer) clearDayButtons();
-                if (tourMemoContainer) clearTourMemoLists();
-            }
-        }
-
-        function updateDayButtons(days) {
-            if (dayButtonsContainer) {
-                dayButtonsContainer.innerHTML = ''; // 기존 버튼 제거
-
-                for (let i = 1; i <= days; i++) {
-                    const button = document.createElement('button');
-                    button.textContent = `\${i}일차`;
-                    button.addEventListener('click', () => showDayList(i));
-                    dayButtonsContainer.appendChild(button);
-                }
-            }
-        }
-
-        function updateTourMemoList(days) {
-            if (tourMemoContainer) {
-                tourMemoContainer.innerHTML = ''; // 기존 ul 태그 제거
-
-                for (let i = 1; i <= days; i++) {
-                    const newUl = document.createElement('ul');
-                    newUl.classList.add('touristSpotMemo');
-                    newUl.setAttribute('data-date', i); // 각 ul에 날짜 설정
-                    newUl.style.display = 'none'; // 초기에는 숨김
-                    tourMemoContainer.appendChild(newUl);
-                }
-            }
-        }
-
-        function clearDayButtons() {
-            if (dayButtonsContainer) {
-                dayButtonsContainer.innerHTML = '';
-            }
-        }
-
-        function clearTourMemoLists() {
-            if (tourMemoContainer) {
-                tourMemoContainer.innerHTML = '';
-            }
-        }
-
-        function showDayList(day) {
-            const allLists = document.querySelectorAll('.row:nth-child(2) .touristSpotMemo');
-            allLists.forEach(ul => {
-                if (parseInt(ul.getAttribute('data-date')) === day) {
-                    ul.style.display = 'block'; // 해당 날짜의 ul 태그 보이기
-                    tourList = ul;
+                    if (dayButtonsContainer) updateDayButtons(dayDifference);
+                    if (tourMemoContainer) updateTourMemoList(dayDifference);
+                    if (dayDifference > 0) {
+                        showDayList(1); // 첫째 날 표시
+                    }
                 } else {
-                    ul.style.display = 'none'; // 다른 날짜의 ul 태그 숨기기
+                    if (durationSpan) durationSpan.textContent = '0';
+                    clearDayButtons();
+                    clearTourMemoLists();
                 }
-            });
-        }
+            }
 
-        startDateInput.addEventListener('change', updateDuration);
-        endDateInput.addEventListener('change', updateDuration);
+            function updateDayButtons(days) {
+                if (dayButtonsContainer) {
+                    dayButtonsContainer.innerHTML = ''; // 기존 버튼 제거
 
-        const touristSpotClick = document.querySelector('.touristSpotClick');
-        if (touristSpotClick) {
-            touristSpotClick.addEventListener('click', findtouristSpot);
-        }
+                    for (let i = 1; i <= days; i++) {
+                        const button = document.createElement('button');
+                        button.textContent = `\${i}일차`;
+                        button.addEventListener('click', () => showDayList(i));
+                        dayButtonsContainer.appendChild(button);
+                    }
+                }
+            }
 
-        const saveDataButton = document.querySelector('.saveData');
-        if (saveDataButton) {
-            saveDataButton.addEventListener('click', SaveData);
-        }
-        });
+            function updateTourMemoList(days) {
+                if (tourMemoContainer) {
+                    tourMemoContainer.innerHTML = ''; // 기존 ul 태그 제거
+
+                    for (let i = 1; i <= days; i++) {
+                        const newUl = document.createElement('ul');
+                        newUl.classList.add('touristSpotMemo');
+                        newUl.setAttribute('data-date', i); // 각 ul에 날짜 설정
+                        newUl.style.display = 'none'; // 초기에는 숨김
+
+                        // 해당 날짜의 메모 데이터를 가져옴
+                        if(planmemo){
+
+                        const dayData = planmemo.filter(item => item.date === i);
+                        dayData.forEach(data => {
+                            const li = document.createElement('li');
+                            createtag(li, data.title, data.imgSrc, data.addr); // createtag 함수 사용
+                            const input = document.createElement('input');
+                            input.type = 'text';
+                            input.value = data.inputValue; // inputValue 설정
+                            li.appendChild(input);
+
+                            const deleteBtn = document.createElement('input');
+                            deleteBtn.type = "button";
+                            deleteBtn.value = "삭제";
+                            deleteBtn.addEventListener('click', deleteTourMemo);
+                            li.appendChild(deleteBtn);
+
+                            newUl.appendChild(li); // li를 newUl에 추가
+                        });
+                        }
+
+                        tourMemoContainer.appendChild(newUl);
+                    }
+                }
+            }
+
+            function clearDayButtons() {
+                if (dayButtonsContainer) {
+                    dayButtonsContainer.innerHTML = '';
+                }
+            }
+
+            function clearTourMemoLists() {
+                if (tourMemoContainer) {
+                    tourMemoContainer.innerHTML = '';
+                }
+            }
+
+            function showDayList(day) {
+                const allLists = document.querySelectorAll('.row:nth-child(2) .touristSpotMemo');
+                allLists.forEach(ul => {
+                    if (parseInt(ul.getAttribute('data-date')) === day) {
+                        ul.style.display = 'block'; // 해당 날짜의 ul 태그 보이기
+                        tourList = ul;
+                    } else {
+                        ul.style.display = 'none'; // 다른 날짜의 ul 태그 숨기기
+                    }
+                });
+            }
+
+            startDateInput.addEventListener('change', updateDuration);
+            endDateInput.addEventListener('change', updateDuration);
+
+            let planData = JSON.parse('${planData}');
+            let planmemo = planData.tourMemoData;
+            const planTitle = planData.tourTitleData;
+            init(planTitle);
+
+            function init(planTitle) {
+                tour_title.value = planTitle.tour_title;
+                startDateInput.value = planTitle.startDate;
+                endDateInput.value = planTitle.endDate;
+                document.getElementById('planNo').value = planTitle.planNo;
+                console.log(planmemo);
+                updateDuration();
+                planmemo = null;
+            }
+    });
 
         // 카카오 map을 띄우는 곳
         var mapcontainer = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스

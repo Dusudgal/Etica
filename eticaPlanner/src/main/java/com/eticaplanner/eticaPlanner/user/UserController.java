@@ -20,7 +20,6 @@ import org.springframework.beans.factory.annotation.Value;
 @Controller
 @RequestMapping("/user")
 public class UserController {
-
     @Value("${kakao.api.key}")
     private String kakaoApiKey;
 
