@@ -23,6 +23,7 @@
         <%-- 비로그인 시 --%>
             <c:if test="${empty user_id}">
                 <a href="/user/sign-in-view" class="ml-3">로그인</a>
+
             </c:if>
     </div>
 </header>
