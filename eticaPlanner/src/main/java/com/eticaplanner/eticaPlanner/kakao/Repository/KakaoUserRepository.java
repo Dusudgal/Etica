@@ -1,6 +1,6 @@
-package com.eticaplanner.eticaPlanner.kakao.Repository;
+package com.eticaplanner.eticaPlanner.kakao.repository;
 
-import com.eticaplanner.eticaPlanner.kakao.Entity.KakaoUserEntity;
+import com.eticaplanner.eticaPlanner.kakao.entity.KakaoUserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
