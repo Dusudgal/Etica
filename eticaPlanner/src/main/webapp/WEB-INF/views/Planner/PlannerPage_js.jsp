@@ -181,8 +181,7 @@
                         alert("서버에 저장이 실패하셨습니다. ");
                     }
                 } else {
-                // 서버 오류 시 페이지 리디렉션
-                    window.location.href = '/Planner/PlannerSavefail';
+                    alert("서버에 저장이 실패하셨습니다. ");
                 }
             }catch(error){
                 console.error('요청실패' , error);
@@ -196,7 +195,7 @@
     document.addEventListener("DOMContentLoaded", function() {
         const durationSpan = document.getElementById('duration');
         const dayButtonsContainer = document.getElementById('dayButtons');
-        const tourMemoContainer = document.querySelector('.row:nth-child(2)');
+        const tourMemoContainer = document.querySelector('.row:nth-child(2) > .tourMemo');
 
         function updateDuration() {
             const startDateValue = startDateInput.value;
