@@ -1,4 +1,4 @@
-package com.eticaplanner.eticaPlanner.kakao.dto;
+package com.eticaplanner.eticaPlanner.kakao.Dto;
 
 import lombok.*;
 

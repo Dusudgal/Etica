@@ -3,6 +3,7 @@ package com.eticaplanner.eticaPlanner.PlannerPage.controller;
 import com.eticaplanner.eticaPlanner.PlannerPage.dto.PlannerDTO;
 import com.eticaplanner.eticaPlanner.PlannerPage.dto.TravelTitlePlanDTO;
 import com.eticaplanner.eticaPlanner.PlannerPage.service.PlannerService;
+import com.eticaplanner.eticaPlanner.SessionDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,15 +61,22 @@ public class PlannerController {
     public ResponseEntity<String> plannerSaveData(@RequestBody PlannerDTO planDto , HttpSession session){
         System.out.println("[PlannerController] PlannerSaveData");
         PlannerOk = new HashMap<>();
+        Boolean CreateResult = null;
 
-        String loginUser = (String)session.getAttribute("user_id");
+        SessionDto userSession = (SessionDto)session.getAttribute("sessionInfo");
 
-        if(loginUser == null || loginUser.isEmpty()){
+        if( userSession == null){
             return ResponseEntity.ok("login_fail");
         }
+        
+        if(userSession.getUser_id() != null){
+            CreateResult = planService.planCreate(planDto , userSession.getUser_id());
+        }
 
-        Boolean CreateResult = planService.planCreate(planDto , loginUser);
-
+        if(userSession.getKakao_id() != null){
+            CreateResult = planService.planCreate(planDto , userSession.getKakao_id());
+        }
+        
         System.out.println(CreateResult ? "성공" : "실패");
 
         if(CreateResult){
@@ -106,8 +114,8 @@ public class PlannerController {
     @GetMapping("SelectPlanTitle")
     public ResponseEntity<List<TravelTitlePlanDTO>> SelectPlanTitle(HttpSession session){
         System.out.println("[PlannerController] SelectPlanTitle");
-        String sessionId = (String) session.getAttribute("user_id");
-        List<TravelTitlePlanDTO> plandto = planService.SelectPlanTitle(sessionId);
+        SessionDto userSession = (SessionDto)session.getAttribute("sessionInfo");
+        List<TravelTitlePlanDTO> plandto = planService.SelectPlanTitle(userSession.getKakao_id() != null ? userSession.getKakao_id() : userSession.getUser_id() );
 
         if (plandto != null && !plandto.isEmpty()) {
             return ResponseEntity.ok(plandto);
@@ -116,15 +124,24 @@ public class PlannerController {
     }
 
     @PostMapping("ModifyPlan")
-    public ModelAndView modifyPlanner(HttpSession userSession , @ModelAttribute TravelTitlePlanDTO planDTO){
+    public ModelAndView modifyPlanner(HttpSession session , @ModelAttribute TravelTitlePlanDTO planDTO){
         System.out.println("[PlannerController] ModifyPlanner");
-        mav = new ModelAndView("Planner/ModifyPlannerPage");
-        //SessionDto userInfo = (SessionDto)uerSession.getAttribute("userInfo");
-        String userInfo = (String) userSession.getAttribute("user_id");
 
-        //PlannerDTO planDetailDTO = planService.SelectPlan(userInfo.getUser_id() , userInfo.getUser_name());
-        System.out.println(planDTO.getTour_title());
-        PlannerDTO planDetailDTO = planService.SelectPlan( userInfo , planDTO.getTour_title());
+        mav = new ModelAndView("Planner/ModifyPlannerPage");
+
+        PlannerDTO planDetailDTO = null;
+
+        SessionDto userSession = (SessionDto)session.getAttribute("sessionInfo");
+
+        if(userSession.getUser_id() != null){
+            planDetailDTO = planService.SelectPlan( userSession.getUser_id()  , planDTO.getTour_title());
+        }
+
+        if(userSession.getKakao_id() != null){
+            planDetailDTO = planService.SelectPlan( userSession.getKakao_id()  , planDTO.getTour_title());
+        }
+
+
         String map_key = apikeys.map_apikey();
         mav.addObject("map_key" , map_key);
         //json 데이터로 넘겨주기 위해 사용하는 objectMapper
@@ -143,9 +160,18 @@ public class PlannerController {
     @PostMapping("ModifyPlanData")
     public ResponseEntity<String> modifyPlanData(@RequestBody PlannerDTO planDto , HttpSession session){
         System.out.println("[PlannerController] modifyPlanData");
+        Boolean CreateResult = null;
 
-        String loginUser = (String)session.getAttribute("user_id");
-        Boolean CreateResult = planService.planModify(planDto , loginUser);
+        SessionDto userSession = (SessionDto)session.getAttribute("sessionInfo");
+
+
+        if(userSession.getUser_id() != null){
+            CreateResult = planService.planModify(planDto , userSession.getUser_id());
+        }
+
+        if(userSession.getKakao_id() != null){
+            CreateResult = planService.planModify(planDto , userSession.getKakao_id());
+        }
 
         System.out.println(CreateResult ? "성공" : "실패");
 
@@ -159,6 +185,39 @@ public class PlannerController {
     public ModelAndView plannerIndex(){
         System.out.println("[PlannerController] PlannerIndex");
         mav = new ModelAndView("Planner/PlannerIndex");
+        return mav;
+    }
+
+    @PostMapping("ViewPlan")
+    public ModelAndView plannerView(@ModelAttribute TravelTitlePlanDTO planDTO , HttpSession session){
+        System.out.println("[plannerController] PlannerView");
+
+        mav = new ModelAndView("Planner/SelectPlannerPage");
+        PlannerDTO planDetailDTO = null;
+
+        SessionDto userSession = (SessionDto)session.getAttribute("sessionInfo");
+
+        if(userSession.getUser_id() != null){
+            planDetailDTO = planService.SelectPlan( userSession.getUser_id()  , planDTO.getTour_title());
+        }
+
+        if(userSession.getKakao_id() != null){
+            planDetailDTO = planService.SelectPlan( userSession.getKakao_id()  , planDTO.getTour_title());
+        }
+
+
+        String map_key = apikeys.map_apikey();
+        mav.addObject("map_key" , map_key);
+        //json 데이터로 넘겨주기 위해 사용하는 objectMapper
+        ObjectMapper objectMapper = new ObjectMapper();
+        String planData = "";
+        try {
+            planData = objectMapper.writeValueAsString(planDetailDTO);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        mav.addObject("planData", planData);
+
         return mav;
     }
 }
