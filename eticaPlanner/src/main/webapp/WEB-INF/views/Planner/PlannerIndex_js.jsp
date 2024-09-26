@@ -22,6 +22,10 @@
                     <input type="hidden" name="tour_title" value=\${data.tour_title}>
             	</label>
                     <button type="submit">Planner 수정</button>
+            </form>
+            <form action="/Planner/ViewPlan" method="POST">
+                    <input type="hidden" name="tour_title" value=\${data.tour_title}>
+                    <button type="submit">Planner 조회</button>
             </form>` ).join('');
 
             document.querySelector('.PlanSelect').innerHTML = value;

@@ -22,21 +22,10 @@
         </div>
         <div class="row">
             <div>일정 일수: <span id="duration">0</span>일</div>
-            <div class="tourMemo"> </div>
         </div>
         <div class="row large" id="map" >지도</div>
-        <div class="row">
-            <div class="listSearch">
-                <div>
-                    <input class="touristSpotSearch" type="search" />
-                    <button class="touristSpotClick"> click </button>
-                </div>
-            </div>
-            <ul class="touristSpotListUl"> 
-                <!-- 관광지 정보가 스크롤 적용되는 ul 태그 -->
-            </ul>
         </div>
     </div>
-    <jsp:include page="PlannerPage_js.jsp"/>
+    <jsp:include page="SelectPlannerPage_js.jsp"/>
 </body>
 </html>
