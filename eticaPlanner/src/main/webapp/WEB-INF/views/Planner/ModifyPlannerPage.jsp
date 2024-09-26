@@ -10,18 +10,18 @@
     <link rel="stylesheet" type="text/css" href="<c:url value='/Resources/PlannerPage.css' />">
 </head>
 <body>
-    <input type="hidden" id="planNo" >
-    <label>제목 : <input type="text" id="TourTitle" value="${planTitleData.tour_title}"> </label>
-    <label>여행 첫째 날짜: <input type="date" id="startDate" > </label>
-    <label>여행 마지막 날짜: <input type="date" id="endDate" > </label>
-    <button class="saveData">저장</button>
+    <div id="title">
+        <label>제목 : <input type="text" id="TourTitle"> </label>
+        <label>여행 첫째 날짜: <input type="date" id="startDate"> </label>
+        <label>여행 마지막 날짜: <input type="date" id="endDate"> </label>
+        <button class="saveData">저장</button>
+    </div>
     <div class="container">
-        <div class="row">일정 일수: <span id="duration">0</span>일
+        <div class="row">
             <div id="dayButtons"></div>
         </div>
-        <div class="row">일정 메모
-            <ul class="touristSpotMemo">
-            </ul>
+        <div class="row">
+            <div>일정 일수: <span id="duration">0</span>일</div>
         </div>
         <div class="row large" id="map" >지도</div>
         <div class="row">

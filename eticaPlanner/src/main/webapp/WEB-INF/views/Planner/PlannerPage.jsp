@@ -10,24 +10,25 @@
     <link rel="stylesheet" type="text/css" href="<c:url value='/Resources/PlannerPage.css' />">
 </head>
 <body>
-    <label>제목 : <input type="text" id="TourTitle"> </label>
-    <label>여행 첫째 날짜: <input type="date" id="startDate"> </label>
-    <label>여행 마지막 날짜: <input type="date" id="endDate"> </label>
-    <button class="saveData">저장</button>
+    <div id="title">
+        <label>제목 : <input type="text" id="TourTitle"> </label>
+        <label>여행 첫째 날짜: <input type="date" id="startDate"> </label>
+        <label>여행 마지막 날짜: <input type="date" id="endDate"> </label>
+        <button class="saveData">저장</button>
+    </div>
     <div class="container">
-        <div class="row">일정 일수: <span id="duration">0</span>일
+        <div class="row">
             <div id="dayButtons"></div>
         </div>
-        <div class="row">일정 메모
-            <ul class="touristSpotMemo">
-            </ul>
+        <div class="row">
+            <div>일정 일수: <span id="duration">0</span>일</div>
+            <div class="tourMemo"> </div>
         </div>
         <div class="row large" id="map" >지도</div>
         <div class="row">
-            <h3>관광지 리스트 검색</h3>
             <div class="listSearch">
                 <div>
-                    <input class="touristSpotSearch" type="text" />
+                    <input class="touristSpotSearch" type="search" />
                     <button class="touristSpotClick"> click </button>
                 </div>
             </div>
