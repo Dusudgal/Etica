@@ -30,7 +30,7 @@
     document.addEventListener("DOMContentLoaded", function() {
             const durationSpan = document.getElementById('duration');
             const dayButtonsContainer = document.getElementById('dayButtons');
-            const tourMemoContainer = document.querySelector('.row:nth-child(2)');
+            const tourMemoContainer = document.querySelector('.row:nth-child(2) > .tourMemo');
 
             function updateDuration() {
                 const startDateValue = startDateInput.value;

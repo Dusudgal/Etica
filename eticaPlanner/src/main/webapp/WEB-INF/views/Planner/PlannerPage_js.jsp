@@ -16,6 +16,8 @@
     const tour_title = document.getElementById('TourTitle');
     let days = "";
     let tourList = "";
+    let tourMapList = {};
+    let memoMapList = {};
 
         // 관광지 검색 api 사용
         async function findtouristSpot(){
@@ -36,21 +38,24 @@
                 }
                 const jsonResponse = await response.json();
                 const jsondata = jsonResponse.response?.body?.items?.item || [];
-                console.log(jsonResponse.response.body.items);
-                console.log(jsondata);
 
                 // 데이터를 검색했는데 데이터가 있는 경우
                 if (Array.isArray(jsondata) && jsondata.length > 0) {
                     touristUl.innerHTML = ''; // 기존 목록을 비우기
 
+                    moveMap(jsondata[0].mapy , jsondata[0].mapx);
+
                     for (let touristSpot of jsondata) {
+                        tourMapList[touristSpot.title] = {
+                            mapx: touristSpot.mapx,
+                            mapy: touristSpot.mapy
+                        };
                         const newli = document.createElement('li');
                         createtag(newli , touristSpot.title , touristSpot.firstimage2 , `\${touristSpot.addr1} \${touristSpot.addr2}` );
                         //버튼 생성
                         const newBtn = document.createElement('input');
                         newBtn.type = "button";
-                        newBtn.class = "img-button";
-                        newBtn.value = "추가";
+                        newBtn.className = "img-button";
                         newli.appendChild(newBtn);
                         newBtn.addEventListener('click', tourBtnClick);
                         touristUl.appendChild(newli);
@@ -67,6 +72,10 @@
                 searchString.value = ""; // 검색창 초기화
             }catch (error) {console.error('Error fetching data:', error);
         }
+    }
+    function moveMap( mapx , mapy ){
+         var moveLatLon = new kakao.maps.LatLng(mapx, mapy);
+         map.setCenter(moveLatLon);
     }
 
     function tourBtnClick(e){
@@ -90,14 +99,19 @@
         });
         const li = document.createElement('li');
         createtag(li , tourData.titleText , tourData.imgSrc , tourData.address );
+        const tourMaptitle = tourMapList[tourData.titleText];
 
+        memoMapList[tourData.titleText] = {
+            mapx: tourMaptitle.mapx ,
+            mapy: tourMaptitle.mapy
+        };
         const input = document.createElement('input');
         input.type = 'text';
+        input.placeholder = "메모장 입니다."
         li.appendChild(input);
 
         const button = document.createElement('input');
         button.type = "button";
-        button.class = "img-button";
         button.value = "삭제";
         button.addEventListener('click', deleteTourMemo);
         li.appendChild(button);
@@ -117,7 +131,7 @@
         newP.textContent = pText;
         title.textContent = h4Text;
         img.src = imgsrc;
-        img.onerror = () => newimg.style.display='none';
+        img.onerror = () => {img.style.display = 'none';};
         li.appendChild(img);
         li.appendChild(title);
         li.appendChild(newP);
@@ -139,7 +153,7 @@
                     imgSrc : li.getElementsByTagName('img')[0].src || null,
                     addr : li.getElementsByTagName('p')[0].textContent || null,
                     title : li.getElementsByTagName('h4')[0].textContent || null,
-                    inputValue : li.getElementsByTagName('input')[0].value || null,
+                    inputValue : li.getElementsByTagName('input')[0].value || null
                 });
             }
         }
@@ -169,7 +183,7 @@
                 if (response.ok) {
                     const result = await response.text();
                     if (result === "login_fail") {
-                        if(confirm("현재 로그인되어있지 않습니다. ") == ture){
+                        if(confirm("현재 로그인되어있지 않습니다. ") == true){
                             window.location.href = '/user/sign-in-view';
                         }else{
                             return false;

@@ -46,7 +46,8 @@ public class PlannerController {
     @GetMapping("PlannerSaveSuccess")
     public ModelAndView PlannerSaveSuccess(){
         System.out.println("[PlannerController] PlannerSaveSuccess");
-        mav = new ModelAndView("Planner/PlanSaveSuccessPage");
+        mav = new ModelAndView("template/layout");
+        mav.addObject("viewName" , "Planner/PlanSaveSuccessPage");
         return mav;
     }
 

@@ -98,7 +98,6 @@
 
         const button = document.createElement('input');
         button.type = "button";
-        button.class = "img-button";
         button.value = "삭제";
         button.addEventListener('click', deleteTourMemo);
         li.appendChild(button);
@@ -195,7 +194,7 @@
     document.addEventListener("DOMContentLoaded", function() {
         const durationSpan = document.getElementById('duration');
             const dayButtonsContainer = document.getElementById('dayButtons');
-            const tourMemoContainer = document.querySelector('.row:nth-child(2)');
+            const tourMemoContainer = document.querySelector('.row:nth-child(2) > .tourMemo');
 
             function updateDuration() {
                 const startDateValue = startDateInput.value;
@@ -304,6 +303,7 @@
             init(planTitle);
 
             function init(planTitle) {
+                console.log("d");
                 tour_title.value = planTitle.tour_title;
                 startDateInput.value = planTitle.startDate;
                 endDateInput.value = planTitle.endDate;

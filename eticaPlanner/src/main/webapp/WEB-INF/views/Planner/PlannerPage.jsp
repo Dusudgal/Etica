@@ -8,6 +8,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Etica Travel Planner</title>
     <link rel="stylesheet" type="text/css" href="<c:url value='/Resources/PlannerPage.css' />">
+    <style>
+        .img-button {
+           width: 30px;
+           height: 30px;
+           background: url('<c:url value="/Resources/Img/plus.png" />') no-repeat center center;
+           background-size: cover;
+           background-color : #fff;
+           border : none;
+        }
+    </style>
 </head>
 <body>
     <div id="title">

@@ -22,11 +22,6 @@
     <section class="contents my-5">
         <div class="container">
             <h1> hello main index </h1>
-            <div class="image-text-container">
-                <p>Etica Planner를 찾아주셔서 감사합니다.</p>
-            </div>
-        </div>
-        <div class="button-container">
             <div class="button-container">
                 <a href="/Review/ReviewIndex" class="button">Review 버튼</a>
                 <a href="/Planner/PlannerIndex" class="button">Planner 버튼</a>

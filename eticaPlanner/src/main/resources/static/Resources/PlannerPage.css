@@ -51,7 +51,7 @@ body{
     overflow: hidden;
     flex-direction: column;
     justify-content: flex-start; /* 상단 정렬 */
-    background-color: #ddd;
+    background-color: #fff;
 }
 
 .row:nth-child(4) {
@@ -72,6 +72,7 @@ body{
     background : #fff;
     margin-bottom : 1px;
 }
+
 
 #title {
     display: flex;
@@ -141,9 +142,8 @@ body{
     border: 1px solid #fff;
 }
 
-input.img-button {
-  width: 18px;
-  height: 18px;
+.tourMemo{
+    overflow-y: auto;
 }
 
 .touristSpotMemo {
@@ -187,4 +187,9 @@ img{
 .touristSpotMemo li p {
     font-size: 0.8rem; /* 본문 텍스트 글자 크기 설정 */
     margin: 0; /* 본문과 주변 요소 간의 간격 제거 */
+}
+
+button{
+    background : #fff;
+    border : none;
 }
