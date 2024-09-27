@@ -3,6 +3,8 @@ package com.eticaplanner.eticaPlanner.Admin.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDateTime;
+
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
@@ -35,5 +37,14 @@ public class AdminEntity {
 
     @Column(name="admin_email", nullable = false)
     private String adminEmail;
+
+    @Column(name="admin_loginattempts")
+    private int adminLoginattempts;
+
+    @Column(name="admin_accountlocked")
+    private boolean adminAccountlocked;
+
+    @Column(name="admin_locktime")
+    private LocalDateTime adminLocktime;
 
 }

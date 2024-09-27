@@ -11,8 +11,14 @@
     <%-- 로그인 정보 --%>
     <div>
         <%-- 로그인 시 --%>
-            <span class="name-message">[관리자] ${sessionScope.loginedAdminVo.adminName} 님 안녕하세요</span>
+        <c:choose>
+                <c:when test="${not empty sessionScope.loginedAdminVo}">
+                    <span class="name-message">[관리자] ${sessionScope.loginedAdminVo.adminName} 님 안녕하세요</span>
+                </c:when>
         <%-- 비로그인 시 --%>
-        <%-- 구현예정--%>
+            <c:otherwise>
+                <span class="name=message">로그인이 필요합니다</span>
+            </c:otherwise>
+        </c:choose>
     </div>
 </div>

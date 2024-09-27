@@ -13,7 +13,7 @@
     <div class=head>
     <div class=container>
         <h2>내 정보 수정</h2>
-        <form method="post" action="*" id="modifyform">
+        <form method="post" action="<c:url value='/Admin/modifyprofile'/>" id="modifyform">
             <div>
                 <label for="admin_id">아이디</label>
                 <input type="text" id="admin_id" name="admin_id" value="${admin.adminId}" readonly />

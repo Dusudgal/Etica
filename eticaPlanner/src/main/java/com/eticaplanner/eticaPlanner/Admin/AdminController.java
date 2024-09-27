@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.security.auth.login.AccountException;
 import java.text.AttributedString;
 
 
@@ -47,6 +48,10 @@ public class AdminController {
         } catch (IllegalArgumentException e) {
             System.out.println("[AdminController] login Fail!");
             return "Admin/login_ng";
+        } catch (AccountLockedException e) {
+            System.out.println("[AdminController] account locked!");
+            model.addAttribute("lockTime",adminService.getRemainingLockTime(admin_id));
+            return "Admin/lockPage";
         }
     }
 
@@ -61,6 +66,39 @@ public class AdminController {
         model.addAttribute("viewName","Admin/modifyprofile");
         this.nextPage = "template/Adminlayout";
         return this.nextPage;
+    }
+
+    //관리자 정보 수정 폼 제출 처리를 위한 메서드
+    @PostMapping("/modifyprofile")
+    public String handleAdminModifyProfile(
+            @RequestParam("admin_id") String adminId,
+            @RequestParam("admin_password") String adminPassword,
+            @RequestParam("admin_password_again") String adminPasswordAgain,
+            Model model, HttpSession session) {
+
+        try {
+            AdminDTo admin = (AdminDTo) session.getAttribute("loginedAdminVo");
+            admin.setAdminId(adminId);
+
+            // 새 비밀번호와 새 비밀번호 확인이 서로 일치하는치 확인
+            if (!adminPassword.equals(adminPasswordAgain)) {
+                throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
+            }
+            // 새 비밀번호가 있는 경우에만 업데이트
+            if (adminPassword != null && !adminPassword.isEmpty()) {
+                admin.setAdminPw(adminPassword);
+            }
+            // 서비스 호출하여 관리자 정보 업데이트
+            adminService.updateAdminInfo(admin);
+            session.invalidate();
+
+            model.addAttribute("viewName","Admin/modify_ok");
+            return "template/Adminlayout";
+        } catch (Exception e){
+            model.addAttribute("errorMsg",e.getMessage());
+            model.addAttribute("viewName","Admin/modify_ng");
+            return "template/Adminlayout";
+        }
     }
 
     //여행지 추가
