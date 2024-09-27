@@ -10,6 +10,7 @@ import java.time.ZonedDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
+@Setter
 @Builder
 @Table(name="user")
 @Entity
@@ -25,8 +26,11 @@ public class UserEntity {
     @Column(name = "user_password")
     private String userPassword;
 
-    @Column(name = "user_name", nullable = false)
+    @Column(name = "user_name" )
     private String userName;
+
+    @Column(name = "user_nickname")
+    private String userNickname;
 
     @Column(name = "user_phone")
     private String userPhone;
@@ -37,8 +41,8 @@ public class UserEntity {
     @Column(name = "user_gender")
     private String userGender;
 
-    @Column(name = "user_image_path")
-    private String userImagePath;
+    @Column(name = "user_email")
+    private String userEmail;
 
     @UpdateTimestamp
     @Column(name = "user_created_at", updatable = false)

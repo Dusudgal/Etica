@@ -1,4 +1,51 @@
 @charset "UTF-8";
-header {height:100px; background: #F7B5CA}
+/* Header */
+
+header {
+    height: 250px;
+    background: #ffffff;
+    align-items: flex-start;
+}
+
+.logo {
+    color: inherit; /* 부모 색상 사용 */
+}
+
+.logo:visited {
+    color: inherit;
+}
+
+.logo:hover,
+a:hover,
+a:active {
+    color: inherit; /* 호버 시 색상 유지 */
+    text-decoration: none; /* 밑줄 제거 */
+}
+
+header > img {
+    width: 340px;
+    height: 170px;
+}
+
+html body {
+    margin: 0px 150px 0px 150px;
+}
+
+a {
+    color: black; /* 앵커 태그 기본 색상 설정 */
+    text-decoration: none; /* 밑줄 제거 */
+}
+
+/* Section */
+.contents {
+    min-height: 300px;
+}
+
+footer {
+    height: 100px;
+}
+/*
+ Footer
+header {height:100px; background: #F7B5CA; color:black;}
 .contents {min-height:300px;}
-footer {height:100px;}
+*/

@@ -1,4 +1,7 @@
 /* 전체 화면을 채우는 컨테이너 */
+body{
+    background : #ddd;
+}
 .container {
     display: flex;
     flex-direction: row; /* 가로 방향으로 나열 */
@@ -9,52 +12,179 @@
 
 /* 각 줄 스타일 */
 .row {
-    flex: 1; /* 기본적으로 각 줄이 동일한 비율로 공간을 차지하도록 설정 */
     display: flex;
+    flex-direction: column; /* 세로 방향으로 나열 */
     align-items: center;
     justify-content: center;
-    border: 1px solid #ccc; /* 줄 사이에 경계선 추가 */
+    border: 1px solid #fff; /* 줄 사이에 경계선 추가 */
     font-size: 1.5rem;
-    color: #333;
+    color: #000;
+    margin : 1px;
 }
 
 /* 지도 화면 크기 조정 */
 .large {
-    flex: 3;
+    flex: 3.5;
+    display: flex;
 }
 
 /* 각 줄에 다른 배경색 추가 (선택 사항) */
 .row:nth-child(1) {
-    background-color: #f8d7da;
+    background-color: #ffffff;
+    display: flex;
+    flex: 0.5;
+    align-items: stretch;
+}
+
+#dayButtons{
+    display: flex; /* 버튼을 가로로 나열 */
+    flex-direction: column;
+    background-color:transparent;
+    color: pink;
+    width: 100%;
+    flex: 1;
 }
 
 .row:nth-child(2) {
-    background-color: #d4edda;
+    flex: 1;
+    display: flex;
+    overflow: hidden;
+    flex-direction: column;
+    justify-content: flex-start; /* 상단 정렬 */
+    background-color: #ddd;
 }
 
 .row:nth-child(4) {
-    background-color: #d1ecf1;
+    flex: 1;
+    background-color: #ffffff;
+    display: flex;
+    overflow: hidden;
+    flex-direction: column;
+    justify-content: flex-start; /* 상단 정렬 */
 }
 
-.large {
-    background-color: #cce5ff;
+/* 검색창과 버튼을 포함한 컨테이너 스타일 */
+.row > div {
+    display: flex;
+    flex-direction: row; /* 수평 방향으로 나열 */
+    width: 100%; /* 전체 너비 사용 */
+    gap: 10px; /* 검색창과 버튼 간의 간격 설정 */
+    background : #fff;
+    margin-bottom : 1px;
 }
 
-/* 기존 스타일에 추가 */
+#title {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    background : #fff;
+    justify-content: center;
+    align-items: center;
+}
+#title > label{
+    margin-right : 5px;
+}
+
+/* 2번째 메모 할수 있는 일정 정보란 설정 */
 .touristSpotListUl {
-    height: 300px; /* 원하는 높이 설정 */
+    flex: 1;
+    max-height: 99%; /* 부모 div의 크기에 맞게 최대 높이 설정 */
+    max-width: 99%;
+    width: 99%;
     overflow-y: auto; /* 수직 스크롤 활성화 */
-    list-style: none;
-    padding: 0;
+    list-style-type: disc;
+    padding-left: 2px;
     margin: 0;
-    border: 1px solid #ccc; /* 테두리 추가 (선택사항) */
-    background-color: #f9f9f9; /* 배경색 (선택사항) */
+    background-color: #f9f9f9;
 }
 
+/* 리스트 항목 스타일 (선택 사항) */
+.touristSpotListUl li {
+    display: flex;
+    flex-direction: column; /* 세로 방향으로 나열 */
+    align-items: flex-start; /* 왼쪽 정렬 */
+    margin-bottom: 10px; /* 항목 간의 간격 설정 */
+    padding: 10px; /* 항목 내 여백 설정 */
+    box-sizing: border-box; /* 패딩과 테두리를 요소의 전체 너비/높이에 포함 */
+    border: 2px solid #ddd; /* 항목 테두리 추가 (선택사항) */
+    background-color: #fff; /* 항목 배경색 (선택사항) */
+}
+
+/* 리스트 항목 이미지 스타일 */
+.touristSpotListUl li img {
+    max-width: 100%; /* 이미지가 리스트 항목 너비를 넘지 않도록 설정 */
+    height: auto; /* 이미지 비율 유지 */
+}
+
+.touristSpotListUl li h5 {
+    font-size: 1rem; /* 제목 글자 크기 설정 */
+    margin: 0 0 5px 0; /* 제목과 텍스트 사이의 간격 설정 */
+}
+
+.touristSpotListUl li p {
+    font-size: 0.8rem; /* 본문 텍스트 글자 크기 설정 */
+    margin: 0; /* 본문과 주변 요소 간의 간격 제거 */
+}
+
+/* 검색창 및 버튼 스타일 */
 .touristSpotSearch {
-    margin-right: 10px;
+    padding: 8px; /* 입력 필드 패딩 설정 */
+    flex: 1; /* 검색창이 가능한 넓이 차지 */
 }
 
 .touristSpotClick {
     padding: 5px 10px;
+}
+
+.listSearch {
+    border: 1px solid #fff;
+}
+
+input.img-button {
+  width: 18px;
+  height: 18px;
+}
+
+.touristSpotMemo {
+    flex: 1; /* ul이 부모 div의 전체 공간을 차지하도록 설정 */
+    max-width: 99%;
+    width: 99%;
+    overflow-y: auto; /* 수직 스크롤 활성화 */
+    list-style-type: disc; /* 기본 리스트 스타일 유지 */
+    padding-left: 2px; /* 기본 리스트 패딩 */
+    margin: 0;
+    background-color: #f9f9f9; /* 배경색 */
+}
+img{
+    width: 80px;
+    higth: 100px;
+}
+
+/* 리스트 항목 스타일 */
+.touristSpotMemo li {
+    display: flex;
+    flex-direction: column; /* 세로 방향으로 나열 */
+    align-items: flex-start; /* 왼쪽 정렬 */
+    margin-bottom: 10px; /* 항목 간의 간격 설정 */
+    padding: 10px; /* 항목 내 여백 설정 */
+    box-sizing: border-box; /* 패딩과 테두리를 요소의 전체 너비/높이에 포함 */
+    border: 2px solid #fff; /* 항목 테두리 추가 */
+    background-color: #fff; /* 항목 배경색 */
+}
+
+/* 리스트 항목 이미지 스타일 */
+.touristSpotMemo li img {
+    max-width: 100%; /* 이미지가 리스트 항목 너비를 넘지 않도록 설정 */
+    height: auto; /* 이미지 비율 유지 */
+}
+
+.touristSpotMemo li h4 {
+    font-size: 1rem; /* 제목 글자 크기 설정 */
+    margin: 0 0 5px 0; /* 제목과 텍스트 사이의 간격 설정 */
+}
+
+.touristSpotMemo li p {
+    font-size: 0.8rem; /* 본문 텍스트 글자 크기 설정 */
+    margin: 0; /* 본문과 주변 요소 간의 간격 제거 */
 }
