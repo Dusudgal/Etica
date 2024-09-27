@@ -1,0 +1,67 @@
+.layout-wrapper {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    margin-left: 160px;
+    margin-top: 70px;
+}
+
+.map-placeholder {
+    width: 800px;
+    height: 600px;
+    border: 1px solid black;
+    background-color: yellow;
+    text-align: center;
+    font-size: 18px;
+    margin-right: 20px;
+}
+
+.form-container {
+    display: flex;
+    flex-direction: column;
+    width: 200px;
+}
+
+form input {
+    border: none;
+    border-bottom: 1px solid #F7B5CA;
+    -webkit-appearance: none;
+    box-shadow: none;
+    border-radius: 0;
+}
+
+form textarea {
+    border: 1px solid #F7B5CA;
+    vertical-align: top;
+    margin-bottom: 20px;
+}
+
+#travel_name {
+    margin-bottom: 20px;
+}
+
+#travel_context {
+    width: 400px;
+    height: 200px;
+    vertical-align: top;
+    margin-bottom: 20px;
+}
+
+#travel_X-marker, #travel_Y-marker {
+    margin-bottom: 20px;
+}
+
+.button-container {
+    display: flex;
+    flex-direction: flex-start;
+    gap: 10px;
+    margin-top: 50px;
+}
+
+button {
+    color: #fff;
+    height: 30px;
+    width: 50px;
+    background-color: #F7B5CA;
+    border: none;
+}
