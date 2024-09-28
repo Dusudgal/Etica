@@ -12,16 +12,16 @@
 <body>
 <div class="d-flex justify-content-center">
     <div class="login-wrapper">
-        <h2>로그인</h2>
         <form id="loginForm" method="post" action="/user/sign-in">
+            <div class="d-flex justify-content-end mb-3">
+                <a href="/user/sign-up-view" class="goToJoin">회원가입 하러가기</a>
+            </div>
             <input type="text" name="user_id" placeholder="아이디를 입력해주세요.">
             <input type="password" name="user_password" placeholder="비밀번호를 입력해주세요.">
-            <label for="remember-check">
-                <input type="checkbox" id="remember-check">아이디 저장하기
-                <a href="/user/sign-up-view" class="goToJoin ml-5">회원가입 하러가기</a>
-
-
-            </label>
+            <div class="links">
+                <a href="/user/find-id-view">아이디 찾기</a>
+                <a href="/User/find-password" class="ml-2">비밀번호 찾기</a>
+            </div>
             <input type="submit" value="로그인">
             <button type="button" id="kakaoLoginButton">
                 <img src="<c:url value='/Resources/kakao_login_medium_wide.png' />" alt="카카오 로그인" width="320px">

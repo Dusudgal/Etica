@@ -13,7 +13,7 @@
     </div>
 
     <%-- 로그인 정보 --%>
-    <div class="align-items-center d-flex">
+    <div class="login-info align-items-center d-flex">
         <c:set var="sessionInfo" value="${sessionScope.sessionInfo}" />
         <%-- 로그인 시 --%>
             <c:if test="${not empty sessionInfo.user_id}">

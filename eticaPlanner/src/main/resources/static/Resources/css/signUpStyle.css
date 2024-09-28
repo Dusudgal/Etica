@@ -69,7 +69,7 @@ body {
 }
 
 .user-info input:focus {
-    border-bottom: 1px solid #F7B5CA;
+    border-bottom: 1px solid #87cefa;
 }
 
 /* 아이디 입력란의 높이 조정 */
@@ -79,9 +79,9 @@ body {
 
 /* 중복확인 버튼 스타일 */
 #login_id_check_btn {
-    background-color: #F7B5CA;
+    background-color: #87cefa;
     color: #ffffff; /* 텍스트 색상 */
-    border: 1px solid #F7B5CA;
+    border: 1px solid #87cefa;
     width: 25%;
     margin-left: 30px;
     cursor: pointer;
@@ -169,7 +169,7 @@ button {
     line-height: 27px;
     text-align: center;
     color: #ffffff;
-    background: #F7B5CA;
+    background: #87cefa;
     border: none;
     border-radius: 10px;
     cursor: pointer;

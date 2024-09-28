@@ -1,14 +1,13 @@
 package com.eticaplanner.eticaPlanner.user;
 
 import com.eticaplanner.eticaPlanner.SessionDto;
-import com.eticaplanner.eticaPlanner.common.EncryptUtils;
-import com.eticaplanner.eticaPlanner.emailVerification.service.EmailVerificationService;
 import com.eticaplanner.eticaPlanner.kakao.service.KakaoUserService;
 import com.eticaplanner.eticaPlanner.user.dto.UserDto;
 import com.eticaplanner.eticaPlanner.user.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -24,10 +23,12 @@ public class UserRestController {
     @Autowired
     private KakaoUserService kakaoUserService;
 
-    @Autowired
-    private EmailVerificationService emailVerificationSerive;
 
-    // 아이디 중복확인 API
+    /**
+     * 아이디 중복확인 API
+     * @param user_id
+     * @return
+     */
     @RequestMapping("/is-duplicated-id")
     public Map<String, Object> isDuplicatedId(
             @RequestParam("user_id") String user_id) {
@@ -45,7 +46,11 @@ public class UserRestController {
         return result;
     }
 
-    // 닉네임 중복확인 API
+    /**
+     * 닉네임 중복확인 API
+     * @param user_nickname
+     * @return
+     */
     @RequestMapping("is-duplicated-nickname")
     public Map<String, Object> isDuplicatedNickName(
             @RequestParam("user_nickname") String user_nickname){
@@ -65,7 +70,11 @@ public class UserRestController {
     }
 
 
-    // 핸드폰 번호 중복확인 API
+    /**
+     * 핸드폰 번호 중복확인 API
+     * @param user_phone
+     * @return
+     */
     @RequestMapping("is-duplicated-phone")
     public Map<String, Object> isDuplicatedPhone(
             @RequestParam("user_phone") String user_phone){
@@ -84,7 +93,11 @@ public class UserRestController {
         return result;
     }
 
-    // 이메일 중복확인
+    /**
+     * 이메일 중복확인
+     * @param user_email
+     * @return
+     */
     @RequestMapping("is-duplicated-email")
     public Map<String, Object> isDuplicatedEmail(
             @RequestParam("user_email") String user_email){
@@ -103,19 +116,15 @@ public class UserRestController {
         return result;
     }
 
-    // 회원가입 API
+    /**
+     * 회원가입 API
+     * @param userDto
+     * @return
+     */
     @PostMapping("/sign-up")
     public Map<String, Object> signUp(@RequestBody UserDto userDto){
 
         Map<String, Object> result = new HashMap<>();
-        /*
-        // 이메일 인증 확인                                                          //여기서 정수로 변환하면 회원가입때 에러남
-        boolean is_email_verified = emailVerificationSerive.isEmailVerified(Integer.parseInt(userDto.getUser_email()));
-        if(!is_email_verified){ // 인증이 안됐다면
-            result.put("code", 400);
-            result.put("error_message", "이메일 인증이 필요합니다. 이메일을 확인하세요");
-            return result;
-        }*/
 
         // password hashing
         // UserService에서 처리
@@ -135,7 +144,12 @@ public class UserRestController {
         return result;
     }
 
-    // 로그인 API
+    /**
+     * 로그인 API
+     * @param userDto
+     * @param request
+     * @return
+     */
     @PostMapping("/sign-in")
     public Map<String, Object> signIn(@RequestBody UserDto userDto, HttpServletRequest request){
 
@@ -158,11 +172,6 @@ public class UserRestController {
             HttpSession session = request.getSession();
             session.setAttribute("sessionInfo", userSession);
 
-//            SessionDto userSession = new SessionDto();
-//            userSession.setUser_name(user.getUserId());
-//            userSession.setUser_nickname(user.getUserName());
-//            session.setAttribute("userInfo" , userSession );
-
             result.put("code", 200);
             result.put("result", "성공");
         } else { // 로그인 불가
@@ -183,47 +192,22 @@ public class UserRestController {
         response.put("kakaoLoginUrl", kakaoLoginUrl);
         return response;
     }
-    
-    /*
-    // 아직 안함
-    @GetMapping("/verify-email")
-    public ResponseEntity<Void> verifyEmail(@RequestParam("userId") int userId, @RequestParam("token") String token) {
-        boolean isVerified = userBO.verifyEmail(userId, token);
-        if (isVerified) {
-            return ResponseEntity.status(HttpStatus.FOUND)
-                    .header("Location", LOGIN_URL)
-                    .build();
-        } else {
-            return ResponseEntity.status(HttpStatus.FOUND)
-                    .header("Location", ERROR_URL)
-                    .build();
-        }
-    }
 
-    @PostMapping("/resend-verification-email")
-    public Map<String, Object> resendVerificationEmail(@RequestBody Map<String, Object> request) {
-        Integer userId = (Integer) request.get("userId");
-        String purpose = (String) request.get("purpose");
-
-        User user = userBO.getUserByUserId(userId);
-
+    // 아이디 찾기 API
+    @GetMapping("/find-id")
+    public Map<String, Object> findId(@RequestParam String email) {
+        UserDto userDto = userService.findUserIdByEmail(email);
         Map<String, Object> result = new HashMap<>();
-        if (user != null) {
-            String token = emailVerificationBO.addToken(userId, purpose);
 
-            String subject = "인증 메일입니다.";
-            String text = "http://localhost/user/verify-email?userId=" + userId + "&token=" + token;
-            emailVerificationBO.sendEmail(user.getEmail(), subject, text);
-
+        if (userDto != null) {
             result.put("code", 200);
-            result.put("result", "성공");
+            result.put("user_id", userDto.getUser_id());
         } else {
-            result.put("code", 500);
-            result.put("error_message", "이메일 인증에 실패하였습니다. 다시 시도해주세요.");
+            result.put("code", 400);
+            result.put("error_message", "해당 이메일로 등록된 아이디가 없습니다.");
         }
 
-        return result;
+        return result; // Map을 반환
     }
-    */
 
 }

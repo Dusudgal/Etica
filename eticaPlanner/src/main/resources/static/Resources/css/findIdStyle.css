@@ -1,0 +1,78 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 650px;
+    height: auto;
+    padding: 30px;
+    margin-top: 60px;
+    margin-bottom: 60px;
+    background: #f2f2f2;
+    border: 3px solid #f2f2f2;
+    border-radius: 20px;
+}
+
+.logo h2 {
+    font-size: 36px; /* 로고 크기 */
+    color: #007bff; /* 로고 색상 */
+}
+
+.form-wrapper h2 {
+    margin: 20px 0; /* 제목 마진 */
+    font-size: 24px; /* 제목 크기 */
+}
+
+input[type="text"] {
+    width: 100%; /* 입력 필드 너비 */
+    padding: 10px; /* 입력 필드 안쪽 여백 */
+    margin-bottom: 20px; /* 입력 필드와 버튼 사이의 여백 */
+    border: 1px solid #ccc; /* 입력 필드 테두리 */
+    border-radius: 4px; /* 입력 필드 둥근 모서리 */
+    box-sizing: border-box; /* 패딩 포함 너비 계산 */
+}
+
+button {
+    width: 100%; /* 버튼 너비 */
+    padding: 10px; /* 버튼 안쪽 여백 */
+    background-color: #007bff; /* 버튼 배경색 */
+    color: #ffffff; /* 버튼 글자색 */
+    border: none; /* 버튼 테두리 없음 */
+    border-radius: 4px; /* 버튼 둥근 모서리 */
+    cursor: pointer; /* 마우스 커서 변경 */
+}
+
+button:hover {
+    background-color: #0056b3; /* 버튼 호버 색상 */
+}
+
+/* 모달 내용 스타일 */
+.modal-body {
+    font-size: 16px; /* 글자 크기 */
+    text-align: center; /* 중앙 정렬 */
+}
+
+/* 모달 닫기 버튼 스타일 */
+.modal-footer .btn {
+    color: white; /* 닫기 버튼 텍스트 색상 */
+}
+
+.modal-footer .btn:hover {
+    background-color: #5a6268; /* 호버 시 닫기 버튼 배경색 변경 */
+}
+
+/* 모달 헤더 스타일 */
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+}
+
+/* 모달 본문 스타일 */
+.modal-body {
+    text-align: center; /* 중앙 정렬 */
+}
+
+/* 버튼 스타일 */
+.modal-footer .btn {
+    padding: 8px 12px; /* 패딩 줄이기 */
+    margin: 5px; /* 버튼 사이 여백 */
+}
