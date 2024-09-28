@@ -7,6 +7,11 @@ header {
     align-items: flex-start;
 }
 
+header .login-info {
+  font-size: 14px !important;
+  padding: 15px 20px;
+}
+
 .logo {
     color: inherit; /* 부모 색상 사용 */
 }
@@ -18,7 +23,7 @@ header {
 .logo:hover,
 a:hover,
 a:active {
-    color: inherit; /* 호버 시 색상 유지 */
+    color: #87cefa;
     text-decoration: none; /* 밑줄 제거 */
 }
 

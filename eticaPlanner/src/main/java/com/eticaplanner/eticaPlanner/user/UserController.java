@@ -1,8 +1,9 @@
 package com.eticaplanner.eticaPlanner.user;
 
 import com.eticaplanner.eticaPlanner.SessionDto;
-import com.eticaplanner.eticaPlanner.kakao.Dto.KakaoUserDto;
+import com.eticaplanner.eticaPlanner.kakao.dto.KakaoUserDto;
 import com.eticaplanner.eticaPlanner.kakao.service.KakaoUserService;
+import com.eticaplanner.eticaPlanner.user.service.UserService;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -39,6 +40,9 @@ public class UserController {
         this.kakaoUserService = kakaoUserService;
     }
 
+    @Autowired
+    public UserService userService;
+
     /**
      * 일반 회원가입 화면
      * @param model
@@ -51,7 +55,31 @@ public class UserController {
         return "template/layout";
     }
 
-    //일반 로그인, 카카오 로그인 화면
+    /**
+     * 아이디 찾기 화면
+     * @param model
+     * @return
+     */
+    @GetMapping("/find-id-view")
+    public String findIdView(Model model){
+        System.out.println("[UserController] FindIdView");
+        model.addAttribute("viewName", "User/findId");
+        return "template/layout";
+    }
+
+    // 비밀번호 찾기 화면
+    @GetMapping("/find-password-view")
+    public String findPasswordView(Model model){
+        System.out.println("[UserController] FindPasswordView");
+        model.addAttribute("viewName", "User/findPassword");
+        return "template/layout";
+    }
+
+    /**
+     * 일반 로그인, 카카오 로그인 화면
+     * @param model
+     * @return
+     */
     @GetMapping("/sign-in-view")
     public String signInView(Model model){
         System.out.println("[UserController] SignInView");
@@ -176,7 +204,7 @@ public class UserController {
             System.out.println("현재 쿠키가 없습니다.");
         }
 
-        // redirect 로그인 화면으로 이동 // 일단 회원가입으로 임시이동 => 다시 로그인으로 변경
+        // redirect 로그인 화면으로 이동
         return "redirect:/user/sign-in-view";
     }
 
@@ -185,4 +213,5 @@ public class UserController {
         kakaoUserService.kakaoLogout(accessToken);
         return "redirect:" + kakaoUserService.getLogoutRedirectUri();
     }
+
 }
