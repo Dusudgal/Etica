@@ -144,39 +144,33 @@ public class UserRestController {
         return result;
     }
 
-    /**
-     * 로그인 API
-     * @param userDto
-     * @param request
-     * @return
-     */
+    // 로그인 API
     @PostMapping("/sign-in")
     public Map<String, Object> signIn(@RequestBody UserDto userDto, HttpServletRequest request){
-
+        System.out.println("[UserRestController] signIn 로그인을 하는 화면");
+        System.out.println("userDto.getUser_id() + userDto.getUser_password() = " + userDto.getUser_id() + userDto.getUser_password());
         // 비밀번호 hashing은 마찬가지로 service에서 처리
 
         // db조회(user_id, 해싱된 비밀번호)
-        UserDto user = userService.getUserDtoByUserIdPassword(userDto);
+        SessionDto userSession = userService.getUserDtoByUserIdPassword(userDto);
 
         // 응답값
         Map<String, Object> result = new HashMap<>();
-        if(user != null){ // 성공
-            // 로그인 처리
-            SessionDto userSession = SessionDto.builder()
-                    .user_id(user.getUser_id())
-                    .user_name(user.getUser_name())
-                    .user_nickname(user.getUser_nickname())
-                    .build();
+        if(userSession != null) {
+            if (userSession.getUser_id() != null && userSession.getUser_nickname() != null) { // 성공
 
-            // 세션에 저장
-            HttpSession session = request.getSession();
-            session.setAttribute("sessionInfo", userSession);
-
-            result.put("code", 200);
-            result.put("result", "성공");
-        } else { // 로그인 불가
-            result.put("code", 300);
-            result.put("error_message", "존재하지않는 사용자입니다.");
+                // 세션에 저장
+                HttpSession session = request.getSession();
+                session.setAttribute("sessionInfo", userSession);
+                result.put("code", 200);
+                result.put("result", "성공"); // 아이디, 비밀번호 모두 맞음
+            } else {
+                result.put("code", 401);
+                result.put("result", "비밀번호가 틀렸습니다"); // 아이디만 맞고 비밀번호가 틀림
+            }
+        } else {
+            result.put("code", 404);
+            result.put("result", "아이디가 존재하지 않습니다."); // 다 틀림
         }
         return result;
     }
@@ -193,7 +187,11 @@ public class UserRestController {
         return response;
     }
 
-    // 아이디 찾기 API
+    /**
+     * 아이디 찾기 API
+     * @param email
+     * @return
+     */
     @GetMapping("/find-id")
     public Map<String, Object> findId(@RequestParam String email) {
         UserDto userDto = userService.findUserIdByEmail(email);
