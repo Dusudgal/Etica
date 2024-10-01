@@ -21,11 +21,11 @@
     <jsp:include page="./include/header.jsp" />
     <section class="contents my-5">
         <div class="container">
-            <h1> hello main index </h1>
             <div class="button-container">
                 <a href="/Review/ReviewIndex" class="button">Review 버튼</a>
                 <a href="/Planner/PlannerIndex" class="button">Planner 버튼</a>
             </div>
+            <div> 플래너 사진  </div>
         </div>
     </section>
     <footer>

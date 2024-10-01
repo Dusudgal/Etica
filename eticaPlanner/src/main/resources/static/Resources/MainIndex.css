@@ -37,3 +37,9 @@
 html body{
     margin: 0px 150px 0px 150px;
 }
+
+.container {
+    display: flex;
+    justify-content: space-between; /* 양쪽으로 공간 분배 */
+    align-items: center; /* 세로 가운데 정렬 */
+}

@@ -42,7 +42,6 @@ public class PlannerController {
         mav.addObject("map_key" , map_key);
         return mav;
     }
-
     @GetMapping("PlannerSaveSuccess")
     public ModelAndView PlannerSaveSuccess(){
         System.out.println("[PlannerController] PlannerSaveSuccess");
@@ -96,7 +95,7 @@ public class PlannerController {
         Map response = Map.of();
 
         String Tour_key = apikeys.tour_apikey();
-        int PageNumber = 2;
+        int PageNumber = 1;
         int numOfRows = 30;
         String keyword = encodingdata.get("keyword");
 
@@ -164,14 +163,10 @@ public class PlannerController {
         Boolean CreateResult = null;
 
         SessionDto userSession = (SessionDto)session.getAttribute("sessionInfo");
+        String userId = userSession.getKakao_id() != null ? userSession.getKakao_id() : userSession.getUser_id();
 
-
-        if(userSession.getUser_id() != null){
-            CreateResult = planService.planModify(planDto , userSession.getUser_id());
-        }
-
-        if(userSession.getKakao_id() != null){
-            CreateResult = planService.planModify(planDto , userSession.getKakao_id());
+        if(userId != null){
+            CreateResult = planService.planModify(planDto , userId);
         }
 
         System.out.println(CreateResult ? "성공" : "실패");

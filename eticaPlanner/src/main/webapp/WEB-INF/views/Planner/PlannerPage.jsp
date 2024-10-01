@@ -17,6 +17,10 @@
            background-color : #fff;
            border : none;
         }
+        .img-button:focus {
+             border: none;
+             outline: none;
+        }
     </style>
 </head>
 <body>
@@ -38,8 +42,7 @@
         <div class="row">
             <div class="listSearch">
                 <div>
-                    <input class="touristSpotSearch" type="search" />
-                    <button class="touristSpotClick"> click </button>
+                    <input class="touristSpotSearch" type="search"  placeholder="찾으시려는 관광지 키워드를 입력해주세요." />
                 </div>
             </div>
             <ul class="touristSpotListUl"> 

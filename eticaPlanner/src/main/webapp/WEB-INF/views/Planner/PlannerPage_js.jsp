@@ -4,7 +4,11 @@
 <script type="text/javascript" src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=${map_key}"></script>
 
 <script type="text/javascript">
-    document.querySelector('.touristSpotClick').addEventListener('click' , findtouristSpot);
+    document.querySelector('.touristSpotSearch').addEventListener('keyup' , (event) => {
+        if(event.keyCode === 13){
+            findtouristSpot(event)
+        }
+    });
     // 검색하는 관광지 Ul 태그
     const touristUl = document.querySelector('.touristSpotListUl');
     // 메모하기 위한 관광지 Ul 태그
@@ -15,15 +19,23 @@
     const endDateInput = document.getElementById('endDate');
     const tour_title = document.getElementById('TourTitle');
     let days = "";
-    let tourList = "";
+    let tourList = null;
     let tourMapList = {};
     let memoMapList = {};
+    let positions = [];
+    let markers = [];
+    // 카카오 map을 띄우는 곳
+    let mapcontainer = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
+    let options = { //지도를 생성할 때 필요한 기본 옵션
+	    center: new kakao.maps.LatLng(33.450701, 126.570667), //지도의 중심좌표.
+	    level: 3 //지도의 레벨(확대, 축소 정도)
+    };
+
+    let map = new kakao.maps.Map(mapcontainer, options); //지도 생성 및 객체 리턴
 
         // 관광지 검색 api 사용
-        async function findtouristSpot(){
-            const searchString = document.querySelector('.touristSpotSearch');
-            const codeString = searchString.value;
-            const encodedString = encodeURIComponent(codeString);
+        async function findtouristSpot(event){
+            const encodedString = encodeURIComponent(event.target.value);
             const data = { 'keyword' : encodedString };
             try {
                 const response = await fetch( '/Planner/TourApiSearch' ,
@@ -69,14 +81,11 @@
                     newli.appendChild(errmessage);
                 }
 
-                searchString.value = ""; // 검색창 초기화
+                event.target.value = ""; // 검색창 초기화
             }catch (error) {console.error('Error fetching data:', error);
         }
     }
-    function moveMap( mapx , mapy ){
-         var moveLatLon = new kakao.maps.LatLng(mapx, mapy);
-         map.setCenter(moveLatLon);
-    }
+
 
     function tourBtnClick(e){
         //버튼 위에 부모인 li태그에서 자식의 정보를 불러오기 위한 tourli
@@ -99,11 +108,18 @@
         });
         const li = document.createElement('li');
         createtag(li , tourData.titleText , tourData.imgSrc , tourData.address );
+
         const tourMaptitle = tourMapList[tourData.titleText];
 
-        memoMapList[tourData.titleText] = {
-            mapx: tourMaptitle.mapx ,
-            mapy: tourMaptitle.mapy
+        moveMap(tourMaptitle.mapy , tourMaptitle.mapx);
+
+        if (!memoMapList[tourList.getAttribute('data-date')]) {
+            memoMapList[tourList.getAttribute('data-date')] = {}; // 빈 객체로 초기화
+        }
+
+        memoMapList[tourList.getAttribute('data-date')][tourData.titleText] = {
+                mapx: tourMaptitle.mapx ,
+                mapy: tourMaptitle.mapy
         };
         const input = document.createElement('input');
         input.type = 'text';
@@ -117,6 +133,9 @@
         li.appendChild(button);
 
         tourList.appendChild(li);
+
+        setMarker(tourMaptitle , tourData);
+
     }
 
     function deleteTourMemo(e){
@@ -146,14 +165,19 @@
 
             // ul 태그 안에 있는 li 요소
             const tourli = ul.getElementsByTagName('li');
+            const date = ul.getAttribute('data-date');
 
             for( const li of tourli ){
+                const title = li.getElementsByTagName('h4')[0]?.textContent;
+                const memoData = memoMapList[date] ? memoMapList[date][title] : null;
                 tourMemodata.push({
-                    date : ul.getAttribute('data-date') || null,
+                    date : date || null,
                     imgSrc : li.getElementsByTagName('img')[0].src || null,
                     addr : li.getElementsByTagName('p')[0].textContent || null,
-                    title : li.getElementsByTagName('h4')[0].textContent || null,
-                    inputValue : li.getElementsByTagName('input')[0].value || null
+                    title : title || null ,
+                    inputValue : li.getElementsByTagName('input')[0].value || null ,
+                    mapx : memoData ? memoData.mapx : null ,
+                    mapy : memoData ? memoData.mapy : null
                 });
             }
         }
@@ -203,6 +227,28 @@
         }else{
             return console.log("저장할 데이터가 없습니다.");
         }
+    }
+    function moveMap( mapx , mapy ){
+         let moveLatLon = new kakao.maps.LatLng(mapx, mapy);
+         map.setCenter(moveLatLon);
+    }
+    function setMarker(tourMaptitle , tourData){
+        let markerPosition  = new kakao.maps.LatLng( tourMaptitle.mapy , tourMaptitle.mapx);  // 마커가 표시될 위치
+        let marker = new kakao.maps.Marker({  // 마커를 생성한다
+            position: markerPosition ,
+            ul : tourList.getAttribute('data-date')
+        });
+
+        marker.setMap(map);
+        markers.push({ marker : marker , title : tourData.titleText , ul : tourList.getAttribute('data-date') });
+    }
+
+    function setMarkersView(date , map){
+        markers.forEach(markerdata => {
+            if(markerdata.ul === date){
+                markerdata.marker.setMap(map);
+            }
+        });
     }
 
     // 여행 일자를 클릭시에 버튼을 생성해서 일자별로 볼수있게 만들어주는 함수
@@ -278,6 +324,9 @@
         }
 
         function showDayList(day) {
+            if(tourList){
+                setMarkersView(tourList.getAttribute('data-date') , null);
+            }
             const allLists = document.querySelectorAll('.row:nth-child(2) .touristSpotMemo');
             allLists.forEach(ul => {
                 if (parseInt(ul.getAttribute('data-date')) === day) {
@@ -287,6 +336,9 @@
                     ul.style.display = 'none'; // 다른 날짜의 ul 태그 숨기기
                 }
             });
+            if(tourList){
+                setMarkersView(tourList.getAttribute('data-date') , map);
+            }
         }
 
         startDateInput.addEventListener('change', updateDuration);
@@ -303,12 +355,4 @@
         }
         });
 
-        // 카카오 map을 띄우는 곳
-        var mapcontainer = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
-        var options = { //지도를 생성할 때 필요한 기본 옵션
-	        center: new kakao.maps.LatLng(33.450701, 126.570667), //지도의 중심좌표.
-	        level: 3 //지도의 레벨(확대, 축소 정도)
-        };
-
-        var map = new kakao.maps.Map(mapcontainer, options); //지도 생성 및 객체 리턴
 </script>

@@ -11,7 +11,6 @@
 </head>
 <body>
     <div id="title">
-        <input type="text" id="planNo" disabled>
         <label>제목 : <input type="text" id="TourTitle"> </label>
         <label>여행 첫째 날짜: <input type="date" id="startDate"> </label>
         <label>여행 마지막 날짜: <input type="date" id="endDate"> </label>
@@ -31,7 +30,6 @@
             <div class="listSearch">
                 <div>
                     <input class="touristSpotSearch" type="text" />
-                    <button class="touristSpotClick"> click </button>
                 </div>
             </div>
             <ul class="touristSpotListUl"> 
