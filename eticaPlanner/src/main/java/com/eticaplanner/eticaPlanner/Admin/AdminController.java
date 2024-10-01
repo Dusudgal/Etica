@@ -1,15 +1,17 @@
 package com.eticaplanner.eticaPlanner.Admin;
 
 import com.eticaplanner.eticaPlanner.Admin.entity.AdminDTo;
-import io.micrometer.common.util.internal.logging.InternalLogLevel;
+import com.eticaplanner.eticaPlanner.Admin.entity.TravelDTO;
+import com.eticaplanner.eticaPlanner.Admin.entity.TravelEntity;
+import com.eticaplanner.eticaPlanner.PlannerPage.controller.ApiComponent;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
-import javax.security.auth.login.AccountException;
-import java.text.AttributedString;
+import java.util.List;
 
 
 @Controller
@@ -18,6 +20,9 @@ public class AdminController {
 
     AdminDTo admin;
     private String nextPage;
+
+    @Autowired
+    private ApiComponent apiKeys;
 
     @Autowired
     public AdminService adminService;
@@ -34,15 +39,15 @@ public class AdminController {
     public String adminloginform(@RequestParam String admin_id,
                                  @RequestParam String admin_pw,
                                  HttpSession session,
-                                 Model model){
+                                 Model model) {
         System.out.println("[AdminController] loginConfirm()");
 
         try {
-            AdminDTo admin = adminService.loginConfirm(admin_id,admin_pw);
-            session.setAttribute("loginedAdminVo",admin);
-            session.setMaxInactiveInterval(60*30);
-            model.addAttribute("viewName","Admin/login_ok");
-            this.nextPage ="template/Adminlayout";
+            AdminDTo admin = adminService.loginConfirm(admin_id, admin_pw);
+            session.setAttribute("loginedAdminVo", admin);
+            session.setMaxInactiveInterval(60 * 30);
+            model.addAttribute("viewName", "Admin/login_ok");
+            this.nextPage = "template/Adminlayout";
             System.out.println("[AdminController] login success!");
             return this.nextPage;
         } catch (IllegalArgumentException e) {
@@ -50,7 +55,7 @@ public class AdminController {
             return "Admin/login_ng";
         } catch (AccountLockedException e) {
             System.out.println("[AdminController] account locked!");
-            model.addAttribute("lockTime",adminService.getRemainingLockTime(admin_id));
+            model.addAttribute("lockTime", adminService.getRemainingLockTime(admin_id));
             return "Admin/lockPage";
         }
     }
@@ -58,12 +63,12 @@ public class AdminController {
 
     //관리자 정보 수정
     @GetMapping("/modifyprofile")
-    public String adminmodifyprofile(Model model,HttpSession session){
+    public String adminmodifyprofile(Model model, HttpSession session) {
         System.out.println("[AdminController] AdminmodifyProfile()");
 
         AdminDTo admin = (AdminDTo) session.getAttribute("loginedAdminVo");
         model.addAttribute("admin", admin);
-        model.addAttribute("viewName","Admin/modifyprofile");
+        model.addAttribute("viewName", "Admin/modifyprofile");
         this.nextPage = "template/Adminlayout";
         return this.nextPage;
     }
@@ -92,32 +97,51 @@ public class AdminController {
             adminService.updateAdminInfo(admin);
             session.invalidate();
 
-            model.addAttribute("viewName","Admin/modify_ok");
+            model.addAttribute("viewName", "Admin/modify_ok");
             return "template/Adminlayout";
-        } catch (Exception e){
-            model.addAttribute("errorMsg",e.getMessage());
-            model.addAttribute("viewName","Admin/modify_ng");
+        } catch (Exception e) {
+            model.addAttribute("errorMsg", e.getMessage());
+            model.addAttribute("viewName", "Admin/modify_ng");
             return "template/Adminlayout";
         }
     }
 
     //여행지 추가
     @GetMapping("/add_travel")
-    public String adminaddtravel(Model model){
+    public ModelAndView adminaddtravel() {
         System.out.println("[AdminController] Adminadd_travel()");
-        model.addAttribute("viewName","Admin/add_travel");
-        this.nextPage = "template/Adminlayout";
-        return this.nextPage;
+        ModelAndView mav = new ModelAndView("template/Adminlayout");
+        String map_key = apiKeys.map_apikey(); // API키를 가져옴
+        mav.addObject("map_key", map_key); // API 키를 뷰에 전달
+        mav.addObject("viewName", "Admin/add_travel");
+        return mav;
+    }
+    @PostMapping("/add_travel")
+    public ModelAndView addTravel(@ModelAttribute TravelDTO travelDTO) {
+        System.out.println("[AdminController] addTravel()");
+
+        Boolean result = adminService.addTravel(travelDTO);
+        if(result){
+            ModelAndView mav = new ModelAndView("redirect:/Admin/add_travel");
+            return mav;
+        }
+        ModelAndView mav = new ModelAndView("redirect:/Admin/fail");
+        return mav;
     }
 
-    //여행지 정보 수정
-    @GetMapping("/modify_travel")
-    public String adminmodifytravel(Model model){
-        System.out.println("[AdminController] Adminmodify_travel()");
-        model.addAttribute("viewName","Admin/modify_travel");
-        this.nextPage = "template/Adminlayout";
-        return this.nextPage;
+    // 여행지 리스트 정렬
+    @GetMapping("/list_travel")
+    public ModelAndView getTravelList(Model model){
+        System.out.println("[AdminController] getTravelList()");
+        ModelAndView mav = new ModelAndView("template/Adminlayout");
+        List<TravelEntity> travels = adminService.getAllTravels();
+        model.addAttribute("travels", travels);
+        mav.addObject("travels",travels);
+        mav.addObject("viewName","Admin/list_travel");
+
+        return mav;
     }
+
 
     //로그아웃
     @GetMapping("/logout")

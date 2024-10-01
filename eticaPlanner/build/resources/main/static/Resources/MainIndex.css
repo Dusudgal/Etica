@@ -1,0 +1,39 @@
+.content {
+    text-align: center; /* 중앙 정렬 */
+    margin-bottom: 20px; /* 버튼과의 간격 조절 */
+}
+
+.image-text-container {
+    display: flex;
+    align-items: center; /* 이미지와 텍스트 수직 정렬 */
+    justify-content: center; /* 중앙 정렬 */
+}
+
+.image-text-container p {
+    font-size: 18px;
+    color: #333;
+}
+
+.button-container {
+    display: flex;
+    flex-direction: column; /* 버튼을 수직으로 배치 */
+    align-items: center;
+    gap: 10px; /* 버튼 간 간격 */
+}
+
+.button {
+    display: inline-block;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+    color: white;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+html body{
+    margin: 0px 150px 0px 150px;
+}

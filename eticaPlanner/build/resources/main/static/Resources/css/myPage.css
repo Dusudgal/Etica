@@ -1,0 +1,277 @@
+body {
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+/* 메뉴 컨테이너 설정 */
+.menu-container {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    z-index: 1000;
+}
+
+/* 햄버거 메뉴 스타일 */
+.hamburger-menu {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 30px;
+    height: 25px;
+    cursor: pointer;
+    margin-bottom: 220px; /* 햄버거 메뉴와 로그인 버튼 사이의 간격 */
+}
+
+.hamburger-menu span {
+    display: block;
+    width: 100%;
+    height: 4px;
+    background-color: #333;
+    border-radius: 2px;
+    transition: all 0.3s ease;
+}
+
+
+/* 드롭다운 메뉴 숨기기 */
+#dropdown-menu {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 1s ease-out;
+    position: absolute;
+    top: 60px;
+    left: 20px;
+    width: 200px;
+    background-color: #fff;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* 메뉴 활성화 스타일 */
+.menu-open #dropdown-menu {
+    max-height: 500px;
+}
+
+#dropdown-menu ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+#dropdown-menu ul li {
+    border-bottom: 1px solid #ddd;
+}
+
+#dropdown-menu ul li a {
+    display: block;
+    padding: 15px;
+    text-decoration: none;
+    color: #333;
+}
+
+#dropdown-menu ul li a:hover {
+    background-color: #f0f0f0;
+}
+
+
+.benner {
+    width: 100%;
+    height: 60px;
+    text-align: center;
+    line-height: 100px;
+    font-size: 70px;
+    color: #F7B5CA;
+    
+}
+
+.firstul {
+    position: absolute;
+    border: 1px #F7B5CA solid;
+    border-left: none;
+    border-top-right-radius: 12px;
+    border-bottom-right-radius: 12px;
+    top: 35%;
+    
+}
+.mypagecontents {
+    list-style-type: none;
+    margin: auto;
+    padding: 15px;
+    
+}
+.mypagecontentsli {
+    padding: 10px 60px 10px 5px;
+    margin-top: 5px;
+    color: #ff73a0;
+    cursor: pointer;
+} 
+
+.information-section {
+    display: none;
+}
+
+
+/* 임시 */
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 650px;
+    height: auto;
+    padding: 30px;
+    margin-top: 60px;
+    margin-bottom: 60px;
+    background: #f2f2f2;
+    border: 3px solid #f2f2f2;
+    border-radius: 20px;
+}
+
+.member-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.header {
+    width: 100%;
+    font-weight: 700;
+    font-size: 32px;
+    line-height: 47px;
+    color: #666;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.user-info {
+    width: 100%;
+}
+
+.user-info-item {
+    margin-bottom: 20px;
+}
+
+.user-info-item div {
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 24px;
+    color: #666;
+}
+
+.user-info input {
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    color: #666;
+    border: none;
+    border-bottom: 1px solid #cfcfcf;
+    width: calc(100% - 120px);
+    padding: 8px;
+    box-sizing: border-box;
+}
+
+.user-info input:focus {
+    border-bottom: 1px solid #F7B5CA;
+}
+
+/* 아이디 입력란의 높이 조정 */
+.user-info-item input#loginId {
+    height: 40px; /* 비밀번호 입력란과 같은 높이 */
+}
+
+/* 중복확인 버튼 스타일 */
+#loginIdCheckBtn {
+    background-color: #F7B5CA;
+    color: #ffffff; /* 텍스트 색상 */
+    border: 1px solid #F7B5CA;
+    width: 25%;
+    margin-left: 30px;
+    cursor: pointer;
+}
+
+.label {
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 24px;
+    color: #666666; /* 회색으로 변경 */
+}
+
+.input-wrapper {
+    margin-top: 5px;
+}
+
+.user-info input {
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    color: #666666; /* 회색으로 변경 */
+    border: none;
+    border-bottom: 1px solid #cfcfcf;
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+}
+
+.feedback {
+    font-size: 14px;
+    line-height: 21px;
+    margin-top: 5px;
+}
+
+.feedback.text-danger {
+    color: #ff0000;
+}
+
+.feedback.text-success {
+    color: #00ff00;
+}
+
+.gender {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 20px 0;
+}
+
+.gender input {
+    margin-right: 5px;
+}
+
+.gender label {
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    margin-right: 20px;
+}
+
+.agree-check {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 21px;
+    margin-top: 20px;
+}
+
+.agree-check input {
+    margin-right: 5px;
+}
+
+#signUpForm > input::placeholder{
+    color: #D2D2D2;
+}
+
+button:not(.phonenumber-confirm) {
+    width: 100%;
+    height: 50px;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 27px;
+    text-align: center;
+    color: #ffffff;
+    background: #F7B5CA;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+}

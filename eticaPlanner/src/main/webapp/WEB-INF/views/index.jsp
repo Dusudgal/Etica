@@ -30,6 +30,7 @@
             <div class="button-container">
                 <a href="/Review/ReviewIndex" class="button">Review 버튼</a>
                 <a href="/Planner/PlannerIndex" class="button">Planner 버튼</a>
+                <a href="Admin/signin" class="button">관리자 버튼</a>
             </div>
         </div>
     </section>
