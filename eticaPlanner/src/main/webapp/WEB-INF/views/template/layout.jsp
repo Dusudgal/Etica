@@ -18,7 +18,7 @@
 <body>
 <div id="wrap">
     <jsp:include page="../include/header.jsp" />
-    <section class="contents my-5">
+    <section class="contents">
         <jsp:include page="../${viewName}.jsp" />
     </section>
     <footer>
