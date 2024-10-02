@@ -25,5 +25,6 @@
         <jsp:include page="../include/footer.jsp" />
     </footer>
 </div>
+<jsp:include page="../include/sidebar.jsp" />
 </body>
 </html>

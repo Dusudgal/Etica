@@ -22,6 +22,7 @@
         </div>
         <div class="row">
             <div>일정 일수: <span id="duration">0</span>일</div>
+            <div class="tourMemo"> </div>
         </div>
         <div class="row large" id="map" >지도</div>
         <div class="row">
@@ -29,7 +30,6 @@
             <div class="listSearch">
                 <div>
                     <input class="touristSpotSearch" type="text" />
-                    <button class="touristSpotClick"> click </button>
                 </div>
             </div>
             <ul class="touristSpotListUl"> 
