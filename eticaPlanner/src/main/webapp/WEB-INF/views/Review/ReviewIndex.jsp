@@ -1,25 +1,35 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page language="java" contentType="text/html; charset=utf-8"
-    pageEncoding="utf-8"%>
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="<c:url value='/Resources/MainIndex.css' />">
-    <title>Etica Planner</title>
+    <link rel="stylesheet" type="text/css" href="<c:url value='/Resources/ReviewIndex.css'/>">
+    <link rel="stylesheet" href="<c:url value='/Resources/css/signInStyle.css' />" type="text/css">
+    <title>Review Main</title>
 </head>
 <body>
-    <div class="container">
-        <h1> hello main index </h1>
-        <div class="image-text-container">
-            <img src="<c:url value='/Resources/Main_ban.jpg' />" alt="Etica Planner Logo">
-            <p>제 리뷰를 봐주셔서 감사합니다.</p>
+    <div class="bodies">
+        <h1>Review</h1>
+        <div class="button-container">
+            <a href="/Review/ReviewMy" class="button">My Review</a> <!-- 나의 리뷰 -->
+            <a href="/" class="button">Home</a> <!-- 홈으로 돌아가기 -->
         </div>
     </div>
-     <div class="button-container">
-         <button action="/Account/AccountIndex" type="submit">Account 버튼</button>
-         <button action="/Account/ReviewIndex" type="submit">Account 버튼</button>
-     </div>
+    <div class="search-box">
+        <form action="/Review/Search" method="get"> <!-- 검색 요청을 처리할 URL 설정 -->
+            <input type="text" class="touristSpotSearch" name="query" placeholder="관광지 검색" required /> <!-- 검색 입력 필드 -->
+            <button type="button" class="touristSpotClick">검색</button> <!-- 검색 버튼 -->
+            <a href="/Review/ReviewGeneration" class="more-button">Generation</a> <!-- 클릭 시 바로 생성 페이지로 이동 -->
+        </form>
+    </div>
+
+    <div class="search-results">
+        <ul class="touristSpotListUl"></ul> <!-- 검색 결과를 표시할 리스트 -->
+    </div>
+
+    <!-- JavaScript 파일 포함 -->
+    <script type="text/javascript" src="<c:url value='/Planner/PlannerPage_js.jsp'/>"></script>
 </body>
 </html>
