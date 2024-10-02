@@ -1,5 +1,6 @@
 package com.eticaplanner.eticaPlanner.mypage;
 
+
 import com.eticaplanner.eticaPlanner.PlannerPage.dto.TravelTitlePlanDTO;
 import com.eticaplanner.eticaPlanner.PlannerPage.service.PlannerService;
 import com.eticaplanner.eticaPlanner.SessionDto;
@@ -15,9 +16,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-
 import java.security.Principal;
 import java.util.List;
+
 
 @Controller
 @RequestMapping("/MyPage")
