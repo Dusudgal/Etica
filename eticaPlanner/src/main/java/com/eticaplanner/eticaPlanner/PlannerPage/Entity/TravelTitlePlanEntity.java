@@ -45,5 +45,4 @@ public class TravelTitlePlanEntity {
     @UpdateTimestamp
     @Column(name = "plan_modify_day")
     private LocalDate planModifyDay;
-
 }
