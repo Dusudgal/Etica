@@ -5,6 +5,7 @@ header {
     height: 250px;
     background: #ffffff;
     align-items: flex-start;
+    font-size: 14px;
 }
 
 .logo {
@@ -106,8 +107,7 @@ footer {
     text-align: center; /* 푸터 내용을 가운데 정렬 */
     padding: 20px; /* 푸터 패딩 */
 }
-
-button {
+#toggleSidebar{
     cursor: pointer; /* 버튼 커서 스타일 */
 }
 /*
