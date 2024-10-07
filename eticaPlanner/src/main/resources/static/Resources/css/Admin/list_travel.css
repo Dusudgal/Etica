@@ -1,0 +1,66 @@
+body {
+    font-family: Arial, sans-serif;
+}
+
+.travel-list {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+h2 {
+    margin: 0;
+}
+
+.add-button {
+    background-color: #F7B5CA;
+    color: white;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+.travel-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.travel-box {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    background-color: #white;
+    border: 1px solid #F7B5CA;
+    border-radius: 5px;
+}
+
+.travel-content h3 {
+    margin: 0 0 10px 0;
+}
+
+.button-container {
+    display: flex;
+    gap: 10px;
+}
+
+button {
+    background-color: #F7B5CA;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
