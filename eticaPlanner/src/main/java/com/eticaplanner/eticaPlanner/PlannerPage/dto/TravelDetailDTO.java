@@ -18,4 +18,8 @@ public class TravelDetailDTO {
     private String addr;
     // 관광지 주소
     private String inputValue;
+
+    private String mapx;
+
+    private String mapy;
 }
