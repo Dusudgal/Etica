@@ -4,7 +4,7 @@
 
 
 <div class="sidebar" id="sidebar">
-    <button id="closeSidebar">닫기</button>
+    <button id="closeSidebar"></button>
     <a href="/Review/ReviewIndex">Review 버튼</a>
     <a href="/Planner/PlannerIndex">Planner 버튼</a>
     <a href="Admin/signin">관리자 버튼</a>

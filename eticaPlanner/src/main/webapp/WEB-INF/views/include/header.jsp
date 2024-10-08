@@ -33,4 +33,8 @@
             </c:if>
     </div>
 </header>
-<button id="toggleSidebar" class="overlay-button">사이드바 열기</button>
+<div id="toggleSidebar" class="overlay-button">
+    <span></span>
+    <span></span>
+    <span></span>
+</div>
