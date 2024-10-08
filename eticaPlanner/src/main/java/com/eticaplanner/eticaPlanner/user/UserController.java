@@ -1,9 +1,9 @@
 package com.eticaplanner.eticaPlanner.user;
 
 import com.eticaplanner.eticaPlanner.SessionDto;
-import com.eticaplanner.eticaPlanner.kakao.Dto.KakaoUserDto;
+import com.eticaplanner.eticaPlanner.kakao.dto.KakaoUserDto;
 import com.eticaplanner.eticaPlanner.kakao.service.KakaoUserService;
-import com.eticaplanner.eticaPlanner.passwordReset.service.PasswordResetService;
+import com.eticaplanner.eticaPlanner.user.service.PasswordResetService;
 import com.eticaplanner.eticaPlanner.user.service.UserService;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
