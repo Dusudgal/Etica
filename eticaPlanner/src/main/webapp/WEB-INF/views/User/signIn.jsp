@@ -17,8 +17,8 @@
             <input type="password" name="user_password" placeholder="비밀번호를 입력해주세요.">
             <div class="links d-flex justify-content-center">
                 <a href="/user/sign-up-view">회원가입</a>
-                <a href="/user/find-password-view" class="ml-3">비밀번호 찾기</a>
-                <a href="/user/find-id-view" class="ml-3">아이디 찾기</a>
+                <a href="/user/find-password-view" class="ml-5">비밀번호 찾기</a>
+                <a href="/user/find-id-view" class="ml-5">아이디 찾기</a>
             </div>
             <input type="submit" value="로그인">
             <button type="button" id="kakaoLoginButton">

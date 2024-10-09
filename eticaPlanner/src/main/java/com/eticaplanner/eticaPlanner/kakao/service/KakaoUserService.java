@@ -1,5 +1,6 @@
 package com.eticaplanner.eticaPlanner.kakao.service;
-import com.eticaplanner.eticaPlanner.kakao.Dto.KakaoUserDto;
+import com.eticaplanner.eticaPlanner.kakao.dto.KakaoUserDto;
+
 import com.eticaplanner.eticaPlanner.kakao.entity.KakaoUserEntity;
 import com.eticaplanner.eticaPlanner.kakao.repository.KakaoUserRepository;
 import lombok.Getter;
