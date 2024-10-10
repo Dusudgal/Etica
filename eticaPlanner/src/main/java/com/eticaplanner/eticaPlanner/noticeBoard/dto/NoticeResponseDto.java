@@ -25,7 +25,7 @@ public class NoticeResponseDto {
     // Memo 엔티티를 기반으로 DTO 생성
     public NoticeResponseDto(Notice memo) {
         this.id = memo.getId();               // ID 초기화
-        this.username = "admin";               // 사용자 이름을 "admin"으로 고정
+        this.username = memo.getUsername();               // 사용자 이름을 "admin"으로 고정
         this.title = memo.getTitle();         // 제목 초기화
         this.contents = memo.getContents();   // 내용 초기화
         this.createdAt = convertToString(memo.getCreatedAt()); // LocalDateTime을 String으로 변환

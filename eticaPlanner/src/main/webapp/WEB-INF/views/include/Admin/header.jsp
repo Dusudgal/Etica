@@ -17,6 +17,7 @@
         <c:choose>
                 <c:when test="${not empty sessionScope.loginedAdminVo}">
                     <span class="name-message">[관리자] ${sessionScope.loginedAdminVo.adminName} 님 안녕하세요</span>
+                    <a href="<c:url value='/Admin/logout'/>" class="logout-button">로그아웃</a>
                 </c:when>
         <%-- 비로그인 시 --%>
             <c:otherwise>
@@ -25,3 +26,21 @@
         </c:choose>
     </div>
 </div>
+
+<style>
+    .logout-button {
+        display: inline-block;
+        margin-left: 10px;
+        margin-right: 50px;
+        padding: 5px 10px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        text-decoration: none;
+        text-align: center;
+    }
+    .logout-button:hover {
+        background-color: #0056b3;
+    }
+</style>

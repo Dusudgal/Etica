@@ -4,6 +4,9 @@ import com.eticaplanner.eticaPlanner.Admin.entity.AdminDTo;
 import com.eticaplanner.eticaPlanner.Admin.entity.TravelDTO;
 import com.eticaplanner.eticaPlanner.Admin.entity.TravelEntity;
 import com.eticaplanner.eticaPlanner.PlannerPage.controller.ApiComponent;
+import com.eticaplanner.eticaPlanner.noticeBoard.dto.NoticeListResponseDto;
+import com.eticaplanner.eticaPlanner.noticeBoard.service.BoardService;
+import com.eticaplanner.eticaPlanner.noticeBoard.service.NoticeService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -27,6 +30,9 @@ public class AdminController {
 
     @Autowired
     public AdminService adminService;
+
+    @Autowired
+    public NoticeService noticeService;
 
     //로그인
     @GetMapping("/signin")
@@ -187,6 +193,18 @@ public class AdminController {
         }
         // 변경 후 목록 페이지로 리디렉션
         return "redirect:/Admin/list_travel";
+    }
+
+    // 관리자 공지사항 목록 이동
+    @GetMapping("/admin_board")
+    public ModelAndView adminboard(Model model){
+        System.out.println("[AdminController] adminboard()");
+        ModelAndView mav = new ModelAndView("template/Adminlayout");
+        List<NoticeListResponseDto> notices = noticeService.getAllMemos();
+        model.addAttribute("notices", notices);
+        mav.addObject("viewName","Admin/admin_board");
+
+        return mav;
     }
 
     //로그아웃
