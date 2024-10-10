@@ -11,18 +11,15 @@
 </head>
 <body>
     <div class="bodies">
-        <h1>Review</h1>
         <div class="button-container">
             <a href="/Review/ReviewMy" class="button">My Review</a> <!-- 나의 리뷰 -->
             <a href="/" class="button">Home</a> <!-- 홈으로 돌아가기 -->
         </div>
     </div>
     <div class="search-box">
-        <form action="/Review/Search" method="get"> <!-- 검색 요청을 처리할 URL 설정 -->
-            <input type="text" class="touristSpotSearch" name="query" placeholder="관광지 검색" required /> <!-- 검색 입력 필드 -->
-            <button type="button" class="touristSpotClick">검색</button> <!-- 검색 버튼 -->
-            <a href="/Review/ReviewGeneration" class="more-button">Generation</a> <!-- 클릭 시 바로 생성 페이지로 이동 -->
-        </form>
+        <input type="text" class="touristSpotSearch" name="query" placeholder="관광지 검색" required /> <!-- 검색 입력 필드 -->
+        <button type="button" class="touristSpotClick">검색</button> <!-- 검색 버튼 -->
+        <a href="/Review/ReviewGeneration" class="more-button">Generation</a> <!-- 클릭 시 바로 생성 페이지로 이동 -->
     </div>
 
     <div class="search-results">

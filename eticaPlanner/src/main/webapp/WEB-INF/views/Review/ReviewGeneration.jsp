@@ -11,13 +11,12 @@
     <title>Review Main</title>
 </head>
 <body>
-    <div class="bodies">
-        <h1>Review</h1>
-        <div class="button-container">
+    <div>
+        <div class="bodies">
             <a href="/Review/ReviewMy" class="button">My Review</a> <!-- 나의 리뷰 -->
             <a href="/" class="button">Home</a> <!-- 홈으로 돌아가기 -->
         </div>
-    <form action="/Review/create"  method="post" enctype="multipart/form-data">
+    <form action="/Review/create"  method="post" enctype="multipart/form-data" class="review_Generation">
             <div class="review_box">
                 <h2>관광지 이름</h2>
                 <div class="form-group">

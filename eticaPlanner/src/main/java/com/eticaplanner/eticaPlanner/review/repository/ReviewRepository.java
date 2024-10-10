@@ -1,6 +1,5 @@
 package com.eticaplanner.eticaPlanner.review.repository;
 
-import com.eticaplanner.eticaPlanner.review.dto.ReviewDto;
 import com.eticaplanner.eticaPlanner.review.entity.ReviewEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

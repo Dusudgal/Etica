@@ -1,29 +1,20 @@
 h1 {
     margin-left: 20px;
-    color: pink;
+    color: #87cefa;
 }
-body {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh; /* 화면 전체 높이 사용 */
-            margin: 0; /* 기본 마진 제거 */
-            font-family: Arial, sans-serif; /* 기본 폰트 설정 */
-            position: relative; /* 상대 위치 지정 */
-        }
 
 .bodies {
             position: absolute; /* 절대 위치 지정 */
-            top: 20px; /* 상단 여백 */
-            right: 20px; /* 우측 여백 */
+            top: 150px; /* 상단 여백 */
+            right: 200px; /* 우측 여백 */
             text-align: center; /* 제목 중앙 정렬 */
         }
 
-.button-container{
-    display: flex;
-    justify-content: flex-end;
-    margin-right: 10px
+.revieweditmy_bodies{
+    position: absolute; /* 절대 위치 지정 */
+                top: 92px; /* 상단 여백 */
+                right: 200px; /* 우측 여백 */
+                text-align: center; /* 제목 중앙 정렬 */
 }
 
 .button {
@@ -33,28 +24,81 @@ body {
     text-decoration: none;
     font-size: 12px;
     color: white;
-    background-color: pink;
+    background-color: #87cefa;
     border: none;
     border-radius: 5px;
     cursor: pointer;
 }
+
+.editbutton{
+    display: inline-block;
+    padding: 8px;
+    text-align: center;
+    font-size: 12px;
+    background-color: #87cefa;
+    border-radius: 5px;
+    cursor: pointer;
+    color: white;
+}
+
+.reviews {
+    display: flex;
+    flex-direction: column; /* 세로 방향으로 정렬 */
+    align-items: center; /* 자식 요소를 중앙 정렬 */
+    justify-content: center; /* 수직 중앙 정렬 */
+}
 .review_box {
     height: auto;
-    width: auto; /* 원하는 너비 */
-    border: 1px solid pink; /* 네모 테두리 */
-    padding: 5px; /* 안쪽 여백 */
+    width: 600px; /* 원하는 너비 */
+    border: 1px solid #87cefa; /* 네모 테두리 */
+    padding: 10px; /* 안쪽 여백 */
     position: relative; /* 자식 요소 배치 위해 */
     margin: 10px 0;
     background-color: white;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
+
+.review_box2 {
+    height: 132px;
+    width: 600px; /* 원하는 너비 */
+    border: 1px solid #87cefa; /* 네모 테두리 */
+    padding: 15px;; /* 안쪽 여백 */
+    position: relative; /* 자식 요소 배치 위해 */
+    margin: 10px 0;
+    background-color: white;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.review_box3 {
+    height: auto;
+    width: 600px; /* 원하는 너비 */
+    border: 1px solid #87cefa; /* 네모 테두리 */
+    padding: 15px; /* 안쪽 여백 */
+    background-color: white;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    margin: 10px auto; /* 위 아래 여백을 주고 수평 중앙 정렬 */
+    text-align: center; /* 내용 중앙 정렬 */
+    display: flex; /* Flexbox 추가 */
+    flex-direction: column; /* 세로 방향으로 정렬 */
+    align-items: center; /* 가로 방향 중앙 정렬 */
+    border-radius: 5px;
+}
+
+.review_box3 input[type="text"],
+.review_box3 textarea {
+    width: 550px; /* 너비 설정 */
+    padding: 8px;
+    border: 1px solid #87cefa; /* 테두리 색상 추가 */
+    border-radius: 4px;
+}
+
 .review-title {
     font-size: 15px; /* 제목 크기 */
     white-space: nowrap; /* 한 줄로 표시 */
     overflow: hidden; /* 넘치는 부분 숨김 */
     text-overflow: ellipsis; /* 넘치는 부분은 "..."으로 표시 */
     width: 200px; /* 제목의 최대 너비 설정 */
-    color: rgb(236, 149, 163);
+    color: #87cefa;
     margin: 0px;
 }
 .review-contents {
@@ -63,7 +107,7 @@ body {
             -webkit-line-clamp: 1; /* 최대 한 줄로 제한 */
     overflow: hidden; /* 넘치는 부분 숨김 */
     text-overflow: ellipsis; /* 넘치는 부분은 "..."으로 표시 */
-    color: rgb(238, 219, 222);
+    color: black;
     margin: 0px;
 }
 .image {
@@ -71,39 +115,9 @@ body {
     margin-right: 4px; /* 이미지 오른쪽 여백 */
     width: 100px; /*이미지 너비 */
     height: 100px; /* 이미지 높이 */
-    background-color: pink; /* 이미지 대체 색 */
-}
-.more-button {
-    font-size: 10px;
-
-    bottom: 5px; /* 아래 여백 */
-    right: 5px; /* 오른쪽 여백 */
-    padding: 2px; /* 버튼 안쪽 여백 */
-    background-color: pink; /*버튼 배경색 */
-    color: #fff; /*버튼 텍스트 색*/
-    border: none; /* 테두리 없음 */
-    border-radius: 15px; /*둥근 모서리*/
-    cursor: pointer; /* 마우스 커서 핸들 */
+    background-color: #87cefa; /* 이미지 대체 색 */
 }
 
-
-.button-container2 {
-    position: absolute; /* 버튼 컨테이너를 절대 위치로 설정 */
-    bottom: 5px; /* 아래 여백 */
-    right: 5px; /* 오른쪽 여백 */
-    display: flex; /* Flexbox로 버튼을 가로로 배치 */
-    gap: 10px; /* 버튼 간의 간격 */
-}
-
-.more-button {
-    font-size: 10px; /* 버튼 글자 크기 */
-    padding: 2px; /* 버튼 안쪽 여백 */
-    background-color: pink; /* 버튼 배경색 */
-    color: #fff; /* 버튼 텍스트 색 */
-    border: none; /* 테두리 없음 */
-    border-radius: 15px; /* 둥근 모서리 */
-    cursor: pointer; /* 마우스 커서 핸들 */
-}
 .form-group {
     margin-bottom: 15px;
 }
@@ -111,24 +125,26 @@ body {
     display: block;
     margin-bottom: 5px;
 }
-.form-group input, .form-group textarea {
-    width: 95%;
+.form-group input, .form-group text {
+    width: 550px;
     padding: 8px;
-    border: 1px solid #ccc;
+    border: 1px solid #87cefa;;
     border-radius: 4px;
 }
 .form-group button {
     width: 100%;
     padding: 10px;
-    background-color: pink;
+    background-color: #87cefa;
     color: white;
     border: none;
     border-radius: 4px;
     cursor: pointer;
 }
 .form-group button:hover {
-    background-color: palevioletred;
+    background-color: #87cefa;
 }
+
+
 
 .search-box {
             display: flex;
@@ -147,14 +163,15 @@ body {
         .search-box button {
             padding: 10px 15px;
             font-size: 16px;
-            border: none; /* 테두리 제거 */
+            border: solid; /* 테두리 제거 */
             border-radius: 4px; /* 모서리 둥글게 */
-            background-color: #007bff; /* 버튼 배경 색상 */
+            background-color: #87cefa; /* 버튼 배경 색상 */
             color: white; /* 글자 색상 */
             cursor: pointer; /* 마우스 포인터 변경 */
             margin-left: 5px; /* 버튼과 입력 필드 간격 */
         }
 
         .search-box button:hover {
-            background-color: #0056b3; /* 버튼 호버 색상 */
+            background-color: #87cefa; /* 버튼 호버 색상 */
         }
+
