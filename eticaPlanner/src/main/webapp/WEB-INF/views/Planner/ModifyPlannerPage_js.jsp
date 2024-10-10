@@ -143,6 +143,7 @@
     function deleteTourMemo(e){
         const tourli = e.target.closest('li');
         tourli.parentElement.removeChild(tourli);
+        removeMarker(tourli.querySelector('h4').textContent);
 
     }
     function createtag( li , h4Text , imgsrc , pText ){
@@ -250,7 +251,18 @@
             }
         });
     }
+    function removeMarker(Text) {
+        // markers 배열에서 h4Text와 일치하는 마커 찾기
+        const index = markers.findIndex(markerObj => markerObj.title === Text);
 
+        if (index !== -1) {
+            // 마커 삭제
+            markers[index].marker.setMap(null); // 맵에서 마커 제거
+
+            // 배열에서 해당 마커 객체 제거
+            markers.splice(index, 1);
+        }
+    }
     // 여행 일자를 클릭시에 버튼을 생성해서 일자별로 볼수있게 만들어주는 함수
     document.addEventListener("DOMContentLoaded", function() {
         const durationSpan = document.getElementById('duration');

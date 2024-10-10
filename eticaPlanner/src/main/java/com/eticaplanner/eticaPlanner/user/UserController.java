@@ -46,8 +46,6 @@ public class UserController {
     @Autowired
     public UserService userService;
 
-    @Autowired
-    public PasswordResetService passwordResetService;
 
     /**
      * 일반 회원가입 화면
@@ -85,7 +83,6 @@ public class UserController {
     @PostMapping("/send-email")
     public String sendPasswordResetEmail(@RequestParam("email") String email, Model model) {
         try {
-            passwordResetService.createPasswordResetToken(email);
             model.addAttribute("message", "비밀번호 재설정 링크가 이메일로 전송되었습니다.");
         } catch (UsernameNotFoundException e) {
             model.addAttribute("error", "해당 이메일을 사용하는 사용자가 없습니다.");

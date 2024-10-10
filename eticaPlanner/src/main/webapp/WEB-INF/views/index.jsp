@@ -21,11 +21,16 @@
     <jsp:include page="./include/header.jsp" />
     <section class="contents my-5">
         <div class="container">
-            <h3> Etica에 오신것을 환영합니다. </h3>
-            여행 플랜을 만드시려면 >> <a href="/Planner/PlannerPage">Planner 버튼</a>
-        </div>
-        <div id="imageContainer">
-            <img id="slideshowImage" src="" alt="Slideshow Image">
+            <div class="planner-container">
+                <h2>즐겁게 여행을 떠나봅시다.</h2>
+                <div class="planner-div">
+                    <p> Etica를 통해 여행 계획을 스케줄링 해보세요. </p>
+                    <a href="/Planner/PlannerPage" class="button"> Etica </a>
+                </div>
+            </div>
+            <div id="imageContainer">
+                <img id="slideshowImage" src="" alt="Slideshow Image">
+            </div>
         </div>
     </section>
     <jsp:include page="./include/sidebar.jsp" />
@@ -57,6 +62,7 @@
         imageContainer.src = images[currentIndex];
         currentIndex = (currentIndex + 1) % images.length;
     }
+    imageContainer.src = images[4];
 
     setInterval(showNextImage, 3000); // 3초마다 이미지 변경
 </script>

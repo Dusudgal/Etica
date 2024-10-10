@@ -50,7 +50,7 @@
                 }
                 const jsonResponse = await response.json();
                 const jsondata = jsonResponse.response?.body?.items?.item || [];
-
+                console.log(jsonResponse);
                 // 데이터를 검색했는데 데이터가 있는 경우
                 if (Array.isArray(jsondata) && jsondata.length > 0) {
                     touristUl.innerHTML = ''; // 기존 목록을 비우기
@@ -77,7 +77,7 @@
                     const newli = document.createElement('li');
                     touristUl.appendChild(newli);
                     const errmessage = document.createElement('H4');
-                    errmessage.appendChild(document.createTextNode(`검색하신 '\${codeString}'에 대한 정보가 없습니다.`));
+                    errmessage.appendChild(document.createTextNode(`검색하신 \${event.target.value} 에 대한 정보가 없습니다.`));
                     newli.appendChild(errmessage);
                 }
 
@@ -141,6 +141,7 @@
     function deleteTourMemo(e){
         const tourli = e.target.closest('li');
         tourli.parentElement.removeChild(tourli);
+        removeMarker(tourli.querySelector('h4').textContent);
 
     }
     function createtag( li , h4Text , imgsrc , pText ){
@@ -249,6 +250,19 @@
                 markerdata.marker.setMap(map);
             }
         });
+    }
+
+    function removeMarker(Text) {
+        // markers 배열에서 h4Text와 일치하는 마커 찾기
+        const index = markers.findIndex(markerObj => markerObj.title === Text);
+
+        if (index !== -1) {
+            // 마커 삭제
+            markers[index].marker.setMap(null); // 맵에서 마커 제거
+
+            // 배열에서 해당 마커 객체 제거
+            markers.splice(index, 1);
+        }
     }
 
     // 여행 일자를 클릭시에 버튼을 생성해서 일자별로 볼수있게 만들어주는 함수
