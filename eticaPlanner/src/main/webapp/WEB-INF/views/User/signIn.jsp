@@ -12,16 +12,14 @@
 <body>
 <div class="d-flex justify-content-center">
     <div class="login-wrapper">
-        <h2>로그인</h2>
         <form id="loginForm" method="post" action="/user/sign-in">
             <input type="text" name="user_id" placeholder="아이디를 입력해주세요.">
             <input type="password" name="user_password" placeholder="비밀번호를 입력해주세요.">
-            <label for="remember-check">
-                <input type="checkbox" id="remember-check">아이디 저장하기
-                <a href="/user/sign-up-view" class="goToJoin ml-5">회원가입 하러가기</a>
-
-
-            </label>
+            <div class="links d-flex justify-content-center">
+                <a href="/user/sign-up-view">회원가입</a>
+                <a href="/user/find-password-view" class="ml-5">비밀번호 찾기</a>
+                <a href="/user/find-id-view" class="ml-5">아이디 찾기</a>
+            </div>
             <input type="submit" value="로그인">
             <button type="button" id="kakaoLoginButton">
                 <img src="<c:url value='/Resources/kakao_login_medium_wide.png' />" alt="카카오 로그인" width="320px">
@@ -66,13 +64,18 @@
                     if (data.code === 200) {
                         alert("로그인 성공! 환영합니다.");
                         location.href = "/"; // 메인페이지로 이동
-                    } else {
-                        alert(data.error_message);
+                    } else if(data.code === 401){
+                        alert("비밀번호를 다시 확인해주세요.");
+                        location.reload();
+                    } else if(data.code === 404){
+                        alert("아이디를 다시 확인해주세요.")
+                        location.reload();
                     }
                 },
                 error: function(jqXHR, textStatus, errorThrown) {
                     console.error("Request failed:", textStatus, errorThrown);
                     alert("서버 요청에 실패했습니다.");
+                    location.reload();
                 }
             });
         });
