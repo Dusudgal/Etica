@@ -27,18 +27,19 @@ public class AdminService {
     private AdminDTo ADTO;
 
     private final int MAX_ATTEMPTS=5;
-    private final long LOCK_TIME_DURATION = 30*1000; //30초 단위:밀리초
+    private final long LOCK_TIME_DURATION = 30; //30초 단위:밀리초
 
     public AdminDTo loginConfirm(String admin_id, String admin_pw) {
         System.out.println("[AdminService] loginConfirm()");
-        AdminEntity admin = adminRepository.findByAdminIdAndAdminPw(admin_id, admin_pw);
+        AdminEntity admin = adminRepository.findByAdminId(admin_id);
 
         if(admin == null){
-            throw new IllegalArgumentException("Invalid admin ID or password");
+            throw new IllegalArgumentException("Invalid admin ID");
         }
 
         if(admin.isAdminAccountlocked()){
-            if (Duration.between(admin.getAdminLocktime(),LocalDateTime.now()).getSeconds() < LOCK_TIME_DURATION){
+            long lockTimeElapsed = Duration.between(admin.getAdminLocktime(), LocalDateTime.now()).toSeconds();
+            if (lockTimeElapsed < LOCK_TIME_DURATION) {
                 throw new AccountLockedException("Account is locked.");
             } else {
                 unlockAccount(admin);
@@ -59,11 +60,14 @@ public class AdminService {
         ADTO.setAdminName(admin.getAdminName());
         ADTO.setAdminPhone(admin.getAdminPhone());
         ADTO.setAdminEmail(admin.getAdminEmail());
+        ADTO.setAdminLoginattempts(admin.getAdminLoginattempts());
+
         System.out.println(ADTO.getAdminId());
         return ADTO;
     }
 
     private void incrementFailedAttempts(AdminEntity admin){
+        System.out.println("[AdminService] incrementFailedAttempts()");
         int newFailAttempts = admin.getAdminLoginattempts() + 1;
         admin.setAdminLoginattempts(newFailAttempts);
 
@@ -96,10 +100,15 @@ public class AdminService {
     public long getRemainingLockTime(String admin_id){
         AdminEntity admin = adminRepository.findByAdminId(admin_id);
         if(admin != null && admin.isAdminAccountlocked()){
-            long lockTimeElapsed = Duration.between(admin.getAdminLocktime(),LocalDateTime.now()).getSeconds();
+            long lockTimeElapsed = Duration.between(admin.getAdminLocktime(), LocalDateTime.now()).toSeconds();
             return LOCK_TIME_DURATION - lockTimeElapsed;
         }
         return 0;
+    }
+
+    public int getFailedAttempts(String adminId){
+        AdminEntity admin = adminRepository.findByAdminId(adminId);
+        return admin != null ? admin.getAdminLoginattempts() : 0;
     }
 
     // 관리자 정보 수정 메서드 (아이디와 비밀번호만 수정 가능)
@@ -123,7 +132,7 @@ public class AdminService {
 
     // 여행지 데이터베이스에 추가
     public Boolean addTravel(TravelDTO travelDTO) {
-        System.out.println("[service] addTravel");
+        System.out.println("[AdminService] addTravel");
         TravelEntity result = travelRepository.save(new TravelEntity(travelDTO));
 
         return result != null;
