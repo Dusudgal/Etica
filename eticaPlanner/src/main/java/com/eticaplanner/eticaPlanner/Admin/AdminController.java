@@ -47,12 +47,14 @@ public class AdminController {
             AdminDTo admin = adminService.loginConfirm(admin_id, admin_pw);
             session.setAttribute("loginedAdminVo", admin);
             session.setMaxInactiveInterval(60 * 30);
-            model.addAttribute("viewName", "Admin/login_ok");
+            model.addAttribute("viewName","Admin/login_ok");
             this.nextPage = "template/Adminlayout";
             System.out.println("[AdminController] login success!");
             return this.nextPage;
         } catch (IllegalArgumentException e) {
             System.out.println("[AdminController] login Fail!");
+            int failedAttempts = adminService.getFailedAttempts(admin_id);
+            model.addAttribute("failedAttempts",failedAttempts);
             return "Admin/login_ng";
         } catch (AccountLockedException e) {
             System.out.println("[AdminController] account locked!");
