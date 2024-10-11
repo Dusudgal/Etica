@@ -17,14 +17,15 @@
     </div>
     <div class="review_box3">
         <c:if test="${not empty review}">
-            <form action="/Review/update" method="post"> <!-- 실제 업데이트를 수행할 액션 -->
-                <input type="hidden" name="reviewId" value="${review.reviewId}"/> <!-- 리뷰 ID를 숨은 필드로 추가 -->
+            <form action="/Review/update" method="post">
+                <input type="hidden" name="reviewId" value="${review.reviewId}"/>
+                <h2>${review.tourTitle}</h2>
                 <label for="reviewTitle">제목</label>
                 <input type="text" name="reviewTitle" value="${review.reviewTitle}" required/><br/>
                 <label for="reviewContent">내용</label>
-                <textarea name="reviewContent" required>${review.reviewContent}</textarea><br/>
+                <textarea name="reviewContent" rows="4" required>${review.reviewContent}</textarea><br/> <!-- textarea로 변경 -->
                 <button type="submit" class="editbutton">수정 완료</button>
-                <a href="/Review/ReviewMy" class="editbutton" >취소</a>
+                <a href="/Review/ReviewMy" class="editbutton">취소</a>
             </form>
         </c:if>
         <c:if test="${empty review}">

@@ -23,7 +23,9 @@
             <c:forEach var="review" items="${userReviews}">
                 <div class="review_box2">
                         <form action="/Review/ReviewEdit" method="post" style="display:inline;">
+
                             <input type="hidden" value="${review.reviewId}" name="reviewId"/>
+                            <h2 >${review.tourTitle}</h2>
                             <h3 class="review-title">${review.reviewTitle}</h3>
                             <p class="review-contents">${review.reviewContent}</p>
                             <c:if test="${not empty sessionInfo.user_id }"> <!-- 로그인한 경우만 표시 -->

@@ -1,7 +1,9 @@
 h1 {
-    margin-left: 20px;
+    text-align: center;
+     margin: 20px 0;
     color: #87cefa;
 }
+
 
 .bodies {
             position: absolute; /* 절대 위치 지정 */
@@ -51,7 +53,7 @@ h1 {
     height: auto;
     width: 600px; /* 원하는 너비 */
     border: 1px solid #87cefa; /* 네모 테두리 */
-    padding: 10px; /* 안쪽 여백 */
+    padding: 15px;; /* 안쪽 여백 */
     position: relative; /* 자식 요소 배치 위해 */
     margin: 10px 0;
     background-color: white;
@@ -83,14 +85,40 @@ h1 {
     align-items: center; /* 가로 방향 중앙 정렬 */
     border-radius: 5px;
 }
+.review {
+    word-wrap: break-word; /* 긴 단어를 줄 바꿈 */
+    overflow-wrap: break-word; /* 긴 단어를 줄 바꿈 (모던 브라우저 지원) */
+}
 
-.review_box3 input[type="text"],
+
+.review_box textarea {
+    width: 100%; /* 부모 요소의 너비에 맞게 조정 */
+    padding: 8px; /* 패딩 추가 */
+    border: 1px solid #87cefa; /* 테두리 색상 */
+    border-radius: 4px; /* 모서리 둥글게 */
+}
 .review_box3 textarea {
+    width: 100%; /* 부모 요소의 너비에 맞게 조정 */
+    padding: 8px; /* 패딩 추가 */
+    border: 1px solid #87cefa; /* 테두리 색상 */
+    border-radius: 4px; /* 모서리 둥글게 */
+}
+
+.review_box3 input[type="text"]
+{
     width: 550px; /* 너비 설정 */
     padding: 8px;
     border: 1px solid #87cefa; /* 테두리 색상 추가 */
     border-radius: 4px;
+    margin: 10px 0; /* 여백 설정 */
 }
+
+.review_box3 h2 {
+    margin: 10px 0; /* 여백 설정 */
+    color: #87cefa; /* 제목 색상 */
+    text-align: center; /* 제목 중앙 정렬 */
+}
+
 
 .review-title {
     font-size: 15px; /* 제목 크기 */
@@ -174,4 +202,69 @@ h1 {
         .search-box button:hover {
             background-color: #87cefa; /* 버튼 호버 색상 */
         }
+
+
+.touristSpotListUl li {
+    list-style-type: none; /* 리스트 스타일 제거 */
+    border: 2px solid #87cefa; /* 테두리 색상 지정 */
+    margin: 10px 0; /* 리스트 항목 간격 */
+    padding: 10px; /* 내부 패딩 */
+    position: relative; /* 절대 위치 요소를 위한 기준 설정 */
+    border-radius: 4px;
+    width: 600px; /* 원하는 너비 설정 */
+    background-color: white; /* 배경색 */
+    text-align: center; /* 내용 중앙 정렬 */
+}
+
+.touristSpotListUl li img {
+    width: 100%; /* 이미지가 li 너비에 맞게 조정 */
+    height: auto; /* 비율에 맞게 높이 조정 */
+    border-radius: 4px; /* 이미지 모서리 둥글게 */
+}
+
+.touristSpotListUl li h2 {
+    margin: 10px 0; /* 여백 설정 */
+    color: #87cefa; /* 관광지 이름 색상 */
+}
+
+/* 버튼 스타일 */
+.touristSpotListUl li form,
+.touristSpotListUl li a {
+    display: inline-block; /* 인라인 블록으로 변경하여 나란히 배치 */
+    margin: 10px; /* 버튼 간격 조절 */
+    text-align: center; /* 버튼 텍스트 중앙 정렬 */
+}
+
+.touristSpotListUl li form button,
+.touristSpotListUl li a {
+    padding: 10px 15px; /* 버튼 패딩 */
+    font-size: 12px; /* 버튼 글자 크기 */
+    background-color: #87cefa; /* 버튼 배경 색상 */
+    color: white; /* 글자 색상 */
+    border: none; /* 테두리 제거 */
+    border-radius: 4px; /* 모서리 둥글게 */
+    cursor: pointer; /* 마우스 포인터 변경 */
+    transition: background-color 0.3s; /* 부드러운 색 변화를 위해 추가 */
+}
+
+.touristSpotListUl li form button:hover,
+.touristSpotListUl li a:hover {
+    background-color: #007bb5; /* 호버 시 배경색 변경 */
+    color: white; /* 글자색 변경 */
+}
+
+.search-results {
+    display: flex; /* Flexbox 사용 */
+    justify-content: center; /* 가로 방향 중앙 정렬 */
+    align-items: center; /* 세로 방향 중앙 정렬 */
+    flex-direction: column; /* 세로 방향으로 정렬 */
+    margin-top: 20px; /* 상단 여백 추가 (필요에 따라 조정) */
+}
+
+.touristSpotListUl {
+    padding: 0; /* 기본 패딩 제거 */
+    margin: 0; /* 기본 여백 제거 */
+    list-style-type: none; /* 리스트 스타일 제거 */
+}
+
 
