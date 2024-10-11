@@ -11,10 +11,9 @@
 </head>
 <body>
     <div id="title">
-        <label>제목 : <input type="text" id="TourTitle"> </label>
-        <label>여행 첫째 날짜: <input type="date" id="startDate"> </label>
-        <label>여행 마지막 날짜: <input type="date" id="endDate"> </label>
-        <button class="saveData">저장</button>
+        <label>제목 : <input type="text" id="TourTitle" readonly> </label>
+        <label>여행 첫째 날짜: <input type="date" id="startDate" readonly> </label>
+        <label>여행 마지막 날짜: <input type="date" id="endDate" readonly> </label>
     </div>
     <div class="container">
         <div class="row">

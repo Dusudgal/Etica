@@ -143,6 +143,7 @@ input:focus {
 
 /* 검색창 및 버튼 스타일 */
 .touristSpotSearch {
+    width : 240px;
     padding: 8px; /* 입력 필드 패딩 설정 */
     flex: 1; /* 검색창이 가능한 넓이 차지 */
     box-sizing: border-box;w

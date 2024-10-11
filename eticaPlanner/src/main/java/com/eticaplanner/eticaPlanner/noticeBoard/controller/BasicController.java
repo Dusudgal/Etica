@@ -23,7 +23,8 @@ public class BasicController {
     public String board(Model model) {
         List<NoticeListResponseDto> notices = noticeService.getAllMemos(); // 메모 목록 가져오기
         model.addAttribute("notices", notices); // 뷰로 메모 전달
-        return "Board/board"; // Board/board.jsp로 이동
+        model.addAttribute("viewName", "Board/board");
+        return "template/layout";
     }
 
     // 메모 목록 페이지 (페이지네이션 제외)
@@ -39,8 +40,9 @@ public class BasicController {
     public String memoDetail(@PathVariable Long id, Model model, RedirectAttributes redirectAttributes) {
         try {
             NoticeResponseDto memo = noticeService.getMemoById(id); // 메모 상세 조회 (메서드 이름 수정)
-            model.addAttribute("memo", memo); // 뷰로 메모 전달
-            return "Board/noticeDetail"; // Board/noticeDetail.jsp로 이동
+            model.addAttribute("memo", memo);// 뷰로 메모 전달
+            model.addAttribute("viewName", "Board/noticeDetail");
+            return "template/layout";
         } catch (IllegalArgumentException e) {
             redirectAttributes.addFlashAttribute("errorMessage", e.getMessage());
             return "redirect:/board/notice"; // 게시글 목록 페이지로 리다이렉트

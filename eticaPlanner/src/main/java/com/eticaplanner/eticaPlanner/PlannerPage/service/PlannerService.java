@@ -1,5 +1,8 @@
 package com.eticaplanner.eticaPlanner.PlannerPage.service;
 
+import com.eticaplanner.eticaPlanner.Admin.entity.TravelDTO;
+import com.eticaplanner.eticaPlanner.Admin.entity.TravelEntity;
+import com.eticaplanner.eticaPlanner.Admin.repository.TravelRepository;
 import com.eticaplanner.eticaPlanner.PlannerPage.Entity.TravelDetailPlanEntity;
 import com.eticaplanner.eticaPlanner.PlannerPage.Entity.TravelTitlePlanEntity;
 import com.eticaplanner.eticaPlanner.PlannerPage.Entity.TravelPlanConverter;
@@ -7,6 +10,7 @@ import com.eticaplanner.eticaPlanner.PlannerPage.Repository.TravelDetailPlanRepo
 import com.eticaplanner.eticaPlanner.PlannerPage.Repository.TravelTitlePlanRepository;
 import com.eticaplanner.eticaPlanner.PlannerPage.dto.PlannerDTO;
 import com.eticaplanner.eticaPlanner.PlannerPage.dto.TravelDetailDTO;
+import com.eticaplanner.eticaPlanner.PlannerPage.dto.TravelResponseDTO;
 import com.eticaplanner.eticaPlanner.PlannerPage.dto.TravelTitlePlanDTO;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
@@ -16,6 +20,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @Service
@@ -26,11 +31,13 @@ public class PlannerService {
 
     private final TravelTitlePlanRepository travelTitlePlanRepository;
     private final TravelDetailPlanRepository travelDetailPlanRepository;
+    private final TravelRepository travelRepository;
 
     @Autowired
-    public PlannerService(TravelTitlePlanRepository travelTitlePlanRepository , TravelDetailPlanRepository travelDetailPlanRepository) {
+    public PlannerService(TravelTitlePlanRepository travelTitlePlanRepository , TravelDetailPlanRepository travelDetailPlanRepository , TravelRepository travelRepository) {
         this.travelTitlePlanRepository = travelTitlePlanRepository;
         this.travelDetailPlanRepository = travelDetailPlanRepository;
+        this.travelRepository = travelRepository;
     }
 
     public Boolean planCreate(PlannerDTO data, String userid){
@@ -108,9 +115,10 @@ public class PlannerService {
                 !tourTitleData.getTour_title().isEmpty()){
 
             TravelTitlePlanEntity existingTitlePlan = travelTitlePlanRepository.findById(tourTitleData.getPlanNo()).orElse(null);
-
+            System.out.println("1");
             if (existingTitlePlan != null) {
                 // 제목, 시작일, 종료일 업데이트
+                System.out.println("2");
                 existingTitlePlan.setPlanTitle(tourTitleData.getTour_title());
                 existingTitlePlan.setTravelStartDay(LocalDate.parse(tourTitleData.getStartDate()));
                 existingTitlePlan.setTravelEndDay(LocalDate.parse(tourTitleData.getEndDate()));
@@ -118,7 +126,7 @@ public class PlannerService {
 
                 if (savedata.getPlanNo() != null) {
                     List<TravelDetailPlanEntity> travelDetailPlans = TravelPlanConverter.travelDetailDTOToEntity(tourMemoData, savedata.getPlanNo(), loginUser);
-
+                    System.out.println("3");
                     // TravelDetailPlanEntity 저장
                     travelDetailPlanRepository.deleteByPlanNoAndUserId(savedata.getPlanNo(), loginUser);
                     List<TravelDetailPlanEntity> detailSaveData = travelDetailPlanRepository.saveAll(travelDetailPlans);
@@ -147,5 +155,21 @@ public class PlannerService {
         List<TravelTitlePlanDTO> userTitlePlanInfo = TravelPlanConverter.travelTitlePlansEntityToDTO(travelTitlePlanRepository.findByUserId(sessionId));
 
         return userTitlePlanInfo;
+    }
+
+    @Transactional
+    public void deletePlan(TravelTitlePlanDTO planDTO, String userID) {
+        System.out.println("[PlannerService] DeletePlan");
+        travelTitlePlanRepository.deleteById(planDTO.getPlanNo());
+        travelDetailPlanRepository.deleteByPlanNoAndUserId(planDTO.getPlanNo(), userID);
+    }
+
+//    public void getTravelData(String keyword) {
+        public List<TravelResponseDTO> getTravelData(String keyword) {
+        System.out.println("[PlannerService] getTravelData");
+        List<TravelEntity> result = this.travelRepository.findByTravelNameLike("%"+keyword+"%");
+        List<TravelResponseDTO> Dto = result.stream().map(TravelResponseDTO::new).collect(Collectors.toList());
+        System.out.println(Dto);
+        return Dto;
     }
 }

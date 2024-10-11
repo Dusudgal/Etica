@@ -35,14 +35,13 @@
 
         // 관광지 검색 api 사용
         async function findtouristSpot(event){
-            const encodedString = encodeURIComponent(event.target.value);
-            const data = { 'keyword' : encodedString };
+            const data = event.target.value;
             try {
                 const response = await fetch( '/Planner/TourApiSearch' ,
                     {  method: 'POST' ,
                     headers : { 'Content-Type' : 'application/json' } ,
                     body: JSON.stringify({
-                        keyword : encodedString
+                        keyword : data
                     })
                 });
                 if (!response.ok) {
@@ -148,9 +147,9 @@
         const title = document.createElement('H4');
         const img = document.createElement('img');
         const newP = document.createElement('p');
-        newP.textContent = pText;
+        newP.textContent = pText || "";
         title.textContent = h4Text;
-        img.src = imgsrc;
+        img.src = imgsrc || "";
         img.onerror = () => {img.style.display = 'none';};
         li.appendChild(img);
         li.appendChild(title);

@@ -18,4 +18,7 @@ public interface TravelRepository extends JpaRepository<TravelEntity, Long> {
     @Transactional
     @Query("DELETE FROM TravelEntity t WHERE t.travelName = :travelName")
     void deleteByTravelName(@Param("travelName") String travelName);
+
+
+    List<TravelEntity> findByTravelNameLike(String keyword);
 }

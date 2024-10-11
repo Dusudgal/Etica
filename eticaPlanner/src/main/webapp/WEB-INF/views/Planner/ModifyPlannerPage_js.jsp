@@ -35,17 +35,14 @@
 
 
         // 관광지 검색 api 사용
-        async function findtouristSpot(){
-            const searchString = document.querySelector('.touristSpotSearch');
-            const codeString = searchString.value;
-            const encodedString = encodeURIComponent(codeString);
-            const data = { 'keyword' : encodedString };
+        async function findtouristSpot(event){
+            const data = event.target.value;
             try {
                 const response = await fetch( '/Planner/TourApiSearch' ,
                     {  method: 'POST' ,
                     headers : { 'Content-Type' : 'application/json' } ,
                     body: JSON.stringify({
-                        keyword : encodedString
+                        keyword : data
                     })
                 });
                 if (!response.ok) {
@@ -70,8 +67,7 @@
                         //버튼 생성
                         const newBtn = document.createElement('input');
                         newBtn.type = "button";
-                        newBtn.class = "img-button";
-                        newBtn.value = "추가";
+                        newBtn.className = "img-button";
                         newli.appendChild(newBtn);
                         newBtn.addEventListener('click', tourBtnClick);
                         touristUl.appendChild(newli);
@@ -81,11 +77,11 @@
                     const newli = document.createElement('li');
                     touristUl.appendChild(newli);
                     const errmessage = document.createElement('H4');
-                    errmessage.appendChild(document.createTextNode(`검색하신 '\${codeString}'에 대한 정보가 없습니다.`));
+                    errmessage.appendChild(document.createTextNode(`검색하신 \${codeString}에 대한 정보가 없습니다.`));
                     newli.appendChild(errmessage);
                 }
 
-                searchString.value = ""; // 검색창 초기화
+                event.target.value = ""; // 검색창 초기화
             }catch (error) {console.error('Error fetching data:', error);
         }
     }
@@ -404,6 +400,7 @@
             init(planTitle);
 
             function init(planTitle) {
+                document.getElementById('planNo').value = planTitle.planNo;
                 tour_title.value = planTitle.tour_title;
                 startDateInput.value = planTitle.startDate;
                 endDateInput.value = planTitle.endDate;
