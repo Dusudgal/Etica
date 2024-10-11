@@ -13,9 +13,9 @@
         <div class="menu">
             <ul>
                 <li><a href="<c:url value='/'/>">홈페이지</a></li>
+                <li><a href="<c:url value='/Admin/admin_board'/>">공지사항</a></li>
                 <li><a href="<c:url value='/Admin/list_travel'/>">여행지 설정</a></li>
                 <li><a href="<c:url value='/Admin/modifyprofile'/>">비밀번호 수정</a></li>
-                <li><a href="<c:url value='/Admin/logout'/>">로그아웃</a></li>
             </ul>
         </div>
     </div>

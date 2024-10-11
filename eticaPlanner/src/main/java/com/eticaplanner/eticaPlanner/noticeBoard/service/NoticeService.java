@@ -39,8 +39,8 @@ public class NoticeService {
     }
 
     // 게시글 생성
-    public NoticeResponseDto createMemo(String title, String contents) {
-        Notice memo = new Notice("admin", contents, title); // "admin"을 username으로 고정
+    public NoticeResponseDto createMemo(String adminId, String title, String contents) {
+        Notice memo = new Notice(adminId, contents, title); // "관리자 테이블에서 admin_id를 받아야함"
         Notice savedMemo = noticeRepository.save(memo);
         return new NoticeResponseDto(savedMemo);
     }
