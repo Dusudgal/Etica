@@ -33,3 +33,8 @@
             </c:if>
     </div>
 </header>
+<div id="toggleSidebar" class="overlay-button">
+    <span></span>
+    <span></span>
+    <span></span>
+</div>

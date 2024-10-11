@@ -21,20 +21,51 @@
     <jsp:include page="./include/header.jsp" />
     <section class="contents my-5">
         <div class="container">
-            <h1> hello main index </h1>
-            <div class="image-text-container">
-                <p>Etica Planner를 찾아주셔서 감사합니다.</p>
+            <div class="planner-container">
+                <h2>즐겁게 여행을 떠나봅시다.</h2>
+                <div class="planner-div">
+                    <p> Etica를 통해 여행 계획을 스케줄링 해보세요. </p>
+                    <a href="/Planner/PlannerPage" class="button"> Etica </a>
+                </div>
             </div>
-        </div>
-        <div class="button-container">
-            <div class="button-container">
-                <a href="/Review/ReviewIndex" class="button">Review 버튼</a>
-                <a href="/Planner/PlannerIndex" class="button">Planner 버튼</a>
+            <div id="imageContainer">
+                <img id="slideshowImage" src="" alt="Slideshow Image">
             </div>
         </div>
     </section>
+    <jsp:include page="./include/sidebar.jsp" />
     <footer>
         <jsp:include page="./include/footer.jsp" />
     </footer>
 </body>
+
+<%String[] images = {
+        request.getContextPath() + "/Img/Eti_sli0.jpg",
+        request.getContextPath() + "/Img/Eti_sli1.jpg",
+        request.getContextPath() + "/Img/Eti_sli2.jpg",
+        request.getContextPath() + "/Img/Eti_sli3.jpg",
+        request.getContextPath() + "/Img/Eti_sli4.jpg"};%>
+<script>
+    const images = [
+        '<%= images[0] %>',
+        '<%= images[1] %>',
+        '<%= images[2] %>',
+        '<%= images[3] %>',
+        '<%= images[4] %>'
+    ];
+
+    // 이미지 슬라이드쇼 로직
+    let currentIndex = 0;
+    const imageContainer = document.getElementById('slideshowImage'); // 이미지 표시할 div
+
+    function showNextImage() {
+        imageContainer.src = images[currentIndex];
+        currentIndex = (currentIndex + 1) % images.length;
+    }
+    imageContainer.src = images[4];
+
+    setInterval(showNextImage, 3000); // 3초마다 이미지 변경
+</script>
+
+
 </html>

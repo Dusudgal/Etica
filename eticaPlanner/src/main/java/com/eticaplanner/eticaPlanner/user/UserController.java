@@ -1,8 +1,10 @@
 package com.eticaplanner.eticaPlanner.user;
 
 import com.eticaplanner.eticaPlanner.SessionDto;
-import com.eticaplanner.eticaPlanner.kakao.Dto.KakaoUserDto;
+import com.eticaplanner.eticaPlanner.kakao.dto.KakaoUserDto;
 import com.eticaplanner.eticaPlanner.kakao.service.KakaoUserService;
+import com.eticaplanner.eticaPlanner.user.service.PasswordResetService;
+import com.eticaplanner.eticaPlanner.user.service.UserService;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -12,10 +14,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 @Controller
 @RequestMapping("/user")
@@ -39,6 +43,10 @@ public class UserController {
         this.kakaoUserService = kakaoUserService;
     }
 
+    @Autowired
+    public UserService userService;
+
+
     /**
      * 일반 회원가입 화면
      * @param model
@@ -51,7 +59,43 @@ public class UserController {
         return "template/layout";
     }
 
-    //일반 로그인, 카카오 로그인 화면
+    /**
+     * 아이디 찾기 화면
+     * @param model
+     * @return
+     */
+    @GetMapping("/find-id-view")
+    public String findIdView(Model model){
+        System.out.println("[UserController] FindIdView");
+        model.addAttribute("viewName", "User/findId");
+        return "template/layout";
+    }
+
+    // 비밀번호 찾기 화면
+    @GetMapping("/find-password-view")
+    public String findPasswordView(Model model){
+        System.out.println("[UserController] FindPasswordView");
+        model.addAttribute("viewName", "User/findPassword");
+        return "template/layout";
+    }
+
+    // 비밀번호 재설정 이메일 요청 처리
+    @PostMapping("/send-email")
+    public String sendPasswordResetEmail(@RequestParam("email") String email, Model model) {
+        try {
+            model.addAttribute("message", "비밀번호 재설정 링크가 이메일로 전송되었습니다.");
+        } catch (UsernameNotFoundException e) {
+            model.addAttribute("error", "해당 이메일을 사용하는 사용자가 없습니다.");
+        }
+        model.addAttribute("viewName", "User/findPassword");
+        return "template/layout";
+    }
+
+    /**
+     * 일반 로그인, 카카오 로그인 화면
+     * @param model
+     * @return
+     */
     @GetMapping("/sign-in-view")
     public String signInView(Model model){
         System.out.println("[UserController] SignInView");
@@ -176,7 +220,7 @@ public class UserController {
             System.out.println("현재 쿠키가 없습니다.");
         }
 
-        // redirect 로그인 화면으로 이동 // 일단 회원가입으로 임시이동 => 다시 로그인으로 변경
+        // redirect 로그인 화면으로 이동
         return "redirect:/user/sign-in-view";
     }
 
@@ -185,4 +229,5 @@ public class UserController {
         kakaoUserService.kakaoLogout(accessToken);
         return "redirect:" + kakaoUserService.getLogoutRedirectUri();
     }
+
 }

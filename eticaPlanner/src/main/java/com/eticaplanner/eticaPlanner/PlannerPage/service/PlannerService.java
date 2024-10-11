@@ -106,7 +106,9 @@ public class PlannerService {
 
         if(tourTitleData != null &&
                 !tourTitleData.getTour_title().isEmpty()){
+
             TravelTitlePlanEntity existingTitlePlan = travelTitlePlanRepository.findById(tourTitleData.getPlanNo()).orElse(null);
+
             if (existingTitlePlan != null) {
                 // 제목, 시작일, 종료일 업데이트
                 existingTitlePlan.setPlanTitle(tourTitleData.getTour_title());
@@ -128,6 +130,8 @@ public class PlannerService {
                         System.out.println("관광지 주소: " + item.getTouristAttractionAddress());
                         System.out.println("관광지 이름: " + item.getTouristAttractionName());
                         System.out.println("관광 플랜 메모: " + item.getTouristAttractionText());
+                        System.out.println("관광지 x좌표" + item.getPlanTouristMapx());
+                        System.out.println("관광지 y좌표" + item.getPlanTouristMapy());
                     }
                     // 저장이 성공했음을 나타냄
                     result = true;

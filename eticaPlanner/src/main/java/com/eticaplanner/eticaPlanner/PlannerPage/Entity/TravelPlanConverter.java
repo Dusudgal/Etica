@@ -40,7 +40,8 @@ public class TravelPlanConverter {
             entity.setTouristAttractionText(dto.getInputValue());
             entity.setTouristAttractionAddress(dto.getAddr());
             entity.setTouristAttractionPhotoAddress(dto.getImgSrc());
-
+            entity.setPlanTouristMapx(dto.getMapx());
+            entity.setPlanTouristMapy(dto.getMapy());
             return entity;
         }).collect(Collectors.toList());
 
@@ -57,6 +58,8 @@ public class TravelPlanConverter {
             dto.setDate(entity.getPlanDurationDays());
             dto.setImgSrc(entity.getTouristAttractionPhotoAddress());
             dto.setInputValue(entity.getTouristAttractionText());
+            dto.setMapx(entity.getPlanTouristMapx());
+            dto.setMapy(entity.getPlanTouristMapy());
             return dto;
         }).collect(Collectors.toList());
 

@@ -12,7 +12,7 @@
     <jsp:include page="login_ok.jsp"/>
     <div class=head>
     <div class=container>
-        <h2>내 정보 수정</h2>
+        <h2>비밀번호 수정</h2>
         <form method="post" action="<c:url value='/Admin/modifyprofile'/>" id="modifyform">
             <div>
                 <label for="admin_id">아이디</label>

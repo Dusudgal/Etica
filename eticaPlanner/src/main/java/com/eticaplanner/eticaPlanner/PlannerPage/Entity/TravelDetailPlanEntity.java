@@ -42,4 +42,9 @@ public class TravelDetailPlanEntity {
     @Column(name = "tourist_attraction_photo_address", length = 255)
     private String touristAttractionPhotoAddress;
 
+    @Column(name = "tourist_attraction_mapx")
+    private String planTouristMapx;
+
+    @Column(name = "tourist_attraction_mapy")
+    private String planTouristMapy;
 }

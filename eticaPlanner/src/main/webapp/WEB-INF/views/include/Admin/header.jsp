@@ -2,10 +2,13 @@
          pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <div class="h-100 d-flex justify-content-between align-items-center">
+<link rel="stylesheet" href="/Resources/css/signInStyle.css" type="text/css">
 
     <%-- logo --%>
     <div>
-        <h1 class="ml-5" style="padding-left: px; font-weight:bold;"><a href="/" style="color : black">ETICA ADMIN</a></h1>
+        <h1 class="ml-5" style="font-weight:bold;">
+            <a href="/"><img src="<c:url value='/Resources/Img/eti.png'/>" alt="ETICA ADMIN" style="color : black; margin-top: 50px;"/></a>
+        </h1>
     </div>
 
     <%-- 로그인 정보 --%>

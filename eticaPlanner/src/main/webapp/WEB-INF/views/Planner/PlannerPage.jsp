@@ -8,6 +8,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Etica Travel Planner</title>
     <link rel="stylesheet" type="text/css" href="<c:url value='/Resources/PlannerPage.css' />">
+    <style>
+        .img-button {
+           width: 30px;
+           height: 30px;
+           background: url('<c:url value="/Resources/Img/plus.png" />') no-repeat center center;
+           background-size: cover;
+           background-color : #fff;
+           border : none;
+        }
+        .img-button:focus {
+             border: none;
+             outline: none;
+        }
+    </style>
 </head>
 <body>
     <div id="title">
@@ -28,8 +42,7 @@
         <div class="row">
             <div class="listSearch">
                 <div>
-                    <input class="touristSpotSearch" type="search" />
-                    <button class="touristSpotClick"> click </button>
+                    <input class="touristSpotSearch" type="search"  placeholder="찾으시려는 관광지 키워드를 입력해주세요." />
                 </div>
             </div>
             <ul class="touristSpotListUl"> 
