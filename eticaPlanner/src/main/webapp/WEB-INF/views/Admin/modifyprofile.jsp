@@ -18,18 +18,6 @@
                 <label for="admin_id">아이디</label>
                 <input type="text" id="admin_id" name="admin_id" value="${admin.adminId}" readonly />
             </div>
-             <div>
-                <label for="admin_name">이름</label>
-                <input type="text" id="admin_name" name="admin_name" value="${admin.adminName}">
-            </div>
-            <div>
-                 <label for="admin_phone">전화번호</label>
-                 <input type="text" id="admin_phone" name="admin_phone" value="${admin.adminPhone}">
-            </div>
-            <div>
-                <label for="admin_email">이메일</label>
-                <input type="email" id="admin_email" name="admin_email" value="${admin.adminEmail}">
-            </div>
             <div>
                 <label for="password">새 비밀번호</label>
                 <input type="password" id="admin_password" name="admin_password">

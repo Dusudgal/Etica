@@ -25,11 +25,11 @@
                     <div class="button-container">
                         <form action="<c:url value='/Admin/edit_travel'/>" method="get">
                             <input type="hidden" name="id" value="${travel.travelNo}"/>
-                            <button type="submit">수정</button>
+                            <button type="submit" class="edit-button">수정</button>
                         </form>
                         <form action="<c:url value='/Admin/delete_travel'/>" method="post" style="display:inline;">
                             <input type="hidden" name="id" value="${travel.travelName}"/>
-                            <button type="submit" onclick="return confirm('정말 삭제하시겠습니까?')">삭제</button>
+                            <button type="submit" class="delete-button" onclick="return confirm('정말 삭제하시겠습니까?')">삭제</button>
                         </form>
                     </div>
                 </div>

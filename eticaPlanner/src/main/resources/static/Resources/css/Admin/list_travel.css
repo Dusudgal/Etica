@@ -17,10 +17,11 @@ body {
 
 h2 {
     margin: 0;
+    color : #00BFFF;
 }
 
 .add-button {
-    background-color: #F7B5CA;
+    background-color: #00BFFF;
     color: white;
     padding: 10px 20px;
     text-decoration: none;
@@ -39,7 +40,7 @@ h2 {
     align-items: center;
     padding: 10px;
     background-color: #white;
-    border: 1px solid #F7B5CA;
+    border: 1px solid #00BFFF;
     border-radius: 5px;
 }
 
@@ -52,13 +53,22 @@ h2 {
     gap: 10px;
 }
 
-button {
-    background-color: #F7B5CA;
+.edit-button {
+    background-color: #00BFFF;
     color: white;
     border: none;
     padding: 5px 10px;
     border-radius: 3px;
     cursor: pointer;
+}
+
+.delete-button {
+        background-color: #ff4d4f;
+        color: white;
+        border: none;
+        padding: 5px 10px;
+        border-radius: 3px;
+        cursor: pointer;
 }
 
 button:hover {

@@ -35,8 +35,8 @@
                 </div>
             </form>
             <div class="button-container">
-                <button type="submit" form="travelform">수정</button>
-                <button type="submit" onclick="history.back()">취소</button>
+                <button type="submit" form="travelform" class="add-button">수정</button>
+                <button type="submit" onclick="history.back()" class="cancel-button">취소</button>
             </div>
         </div>
     </div>

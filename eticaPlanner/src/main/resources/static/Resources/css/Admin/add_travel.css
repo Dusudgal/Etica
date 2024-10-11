@@ -20,14 +20,14 @@
 
 form input {
     border: none;
-    border-bottom: 1px solid #F7B5CA;
+    border-bottom: 1px solid #00BFFF;
     -webkit-appearance: none;
     box-shadow: none;
     border-radius: 0;
 }
 
 form textarea {
-    border: 1px solid #F7B5CA;
+    border: 1px solid #00BFFF;
     vertical-align: top;
     margin-bottom: 20px;
 }
@@ -53,11 +53,18 @@ form textarea {
     gap: 10px;
     margin-top: 50px;
 }
+.add-button{
+        color: #fff;
+        height: 30px;
+        width: 50px;
+        background-color: #00BFFF;
+        border: none;
+}
 
-button {
+.cancel-button {
     color: #fff;
     height: 30px;
     width: 50px;
-    background-color: #F7B5CA;
+    background-color: #ff4d4f;
     border: none;
 }

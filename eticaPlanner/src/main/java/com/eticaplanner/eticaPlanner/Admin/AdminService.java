@@ -6,6 +6,7 @@ import com.eticaplanner.eticaPlanner.Admin.entity.TravelDTO;
 import com.eticaplanner.eticaPlanner.Admin.entity.TravelEntity;
 import com.eticaplanner.eticaPlanner.Admin.repository.AdminRepository;
 import com.eticaplanner.eticaPlanner.Admin.repository.TravelRepository;
+import com.eticaplanner.eticaPlanner.common.EncryptUtils;
 import jakarta.persistence.PersistenceContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.pulsar.PulsarProperties;
@@ -46,7 +47,8 @@ public class AdminService {
             }
         }
 
-        if(!admin.getAdminPw().equals(admin_pw)){
+        String encryptedPassword = EncryptUtils.sha256(admin_pw);
+        if(!admin.getAdminPw().equals(encryptedPassword)){
             incrementFailedAttempts(admin);
             throw new IllegalArgumentException("Invalid password");
         }
