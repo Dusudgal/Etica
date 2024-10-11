@@ -15,7 +15,7 @@
     <form id="resetPasswordForm">
         <h2>비밀번호 찾기</h2>
         <input type="email" id="reset_email" placeholder="이메일을 입력하세요" required />
-        <button type="submit">이메일 인증</button>
+        <button type="submit" id="email_check">이메일 인증</button>
         <div id="reset_result"></div>
     </form>
 </div>

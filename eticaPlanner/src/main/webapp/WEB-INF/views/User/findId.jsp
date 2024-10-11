@@ -21,7 +21,7 @@
     <form class="form-wrapper">
         <h2 class="mb-3">아이디 찾기</h2>
         <input type="email" name="email" placeholder="이메일을 입력하세요" required>
-        <button>아이디 찾기</button>
+        <button type="button" id="findUserIdButton">아이디 찾기</button>
     </form>
 
 <!-- 모달 구조 -->
