@@ -17,8 +17,8 @@ public class ReviewEntity {
     @Column(name = "review_no")
     private Integer reviewId; // 리뷰 고유 번호
 
-//    @Column(name = "travel_no", nullable = false)
-//    private Integer travelNo; // 관광지 고유 번호
+    @Column(name = "tourTitle")
+    private String tourTitle; // 관광지 고유 번호
 
     @Column(name = "user_id", nullable = false, length = 20) // 길이 맞추기
     private String userId; // 사용자 ID
