@@ -5,6 +5,7 @@ import com.eticaplanner.eticaPlanner.review.dto.ReviewDto;
 import jakarta.servlet.http.HttpSession;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -60,26 +61,32 @@ public class ReviewController {
 
     // 내 리뷰 페이지 이동시 로그인 되어 있는지 확인
     @GetMapping("/ReviewMy")
-    public String ReviewMy(Model model, HttpSession session) {
+    public String ReviewMy(@RequestParam(defaultValue = "1") int currentPage, Model model, HttpSession session) {
         System.out.println("[ReviewController] ReviewMy()");
-        SessionDto userSession = (SessionDto)session.getAttribute("sessionInfo");
+        SessionDto userSession = (SessionDto) session.getAttribute("sessionInfo");
 
-        // userSession이 null인 경우
         if (userSession == null || (userSession.getUser_id() == null && userSession.getKakao_id() == null)) {
             return "redirect:/user/sign-in-view"; // 로그인 페이지로 리다이렉트
         }
 
         String userId = userSession.getKakao_id() != null ? userSession.getKakao_id() : userSession.getUser_id();
-        // 사용자 리뷰 조회
-        List<ReviewDto> userReviews = reviewService.SearchReview(userId);
-        System.out.println("리뷰 개수: " + userReviews.size()); // 리뷰 개수 확인
 
-        // 모델에 리뷰 리스트 추가
-        model.addAttribute("userReviews", userReviews);
+        // 페이지당 리뷰 수
+        int pageSize = 5;
+        // 사용자 리뷰 조회 (페이지네이션 포함)
+        Page<ReviewDto> userReviews = reviewService.searchReview(userId, currentPage, pageSize);
+
+        // 모델에 리뷰 리스트와 페이지 정보 추가
+        model.addAttribute("userReviews", userReviews.getContent());
+        model.addAttribute("currentPage", currentPage);
+        model.addAttribute("totalPages", userReviews.getTotalPages());
 
         model.addAttribute("viewName", "Review/ReviewMy");
         return "template/layout";
     }
+
+
+
 
     // 리뷰 수정 이동
     @PostMapping("/ReviewEdit")

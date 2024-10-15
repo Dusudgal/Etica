@@ -267,4 +267,31 @@ h1 {
     list-style-type: none; /* 리스트 스타일 제거 */
 }
 
+.pagination {
+    display: flex;
+    justify-content: center; /* 가운데 정렬 */
+    align-items: center; /* 수직 중앙 정렬 */
+    margin: 20px 0; /* 위 아래 여백 */
+}
+
+.pagination .button, .pagination .current-page {
+    margin: 0 5px; /* 좌우 간격 5px */
+    padding: 10px 15px; /* 버튼 패딩 */
+    text-decoration: none; /* 링크 밑줄 제거 */
+    color: #007bff; /* 링크 색상 */
+    border: 1px solid #007bff; /* 테두리 */
+    border-radius: 4px; /* 모서리 둥글게 */
+    transition: background-color 0.3s; /* 호버 효과를 위한 트랜지션 */
+}
+
+.pagination .current-page {
+    font-weight: bold; /* 현재 페이지 강조 */
+    color: #fff; /* 현재 페이지 텍스트 색상 */
+    background-color: #007bff; /* 현재 페이지 배경 색상 */
+}
+
+.pagination .button:hover {
+    background-color: #007bff; /* 호버 시 배경 색상 */
+    color: #fff; /* 호버 시 텍스트 색상 */
+}
 

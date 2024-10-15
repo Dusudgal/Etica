@@ -35,4 +35,6 @@ public class ReviewEntity {
     @Column(name = "re_edit_date")
     private LocalDateTime reEditDate; // 수정일
 
+
+
 }

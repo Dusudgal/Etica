@@ -4,6 +4,10 @@ import com.eticaplanner.eticaPlanner.review.dto.ReviewDto;
 import com.eticaplanner.eticaPlanner.review.entity.ReviewEntity;
 import com.eticaplanner.eticaPlanner.review.repository.ReviewRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -161,4 +165,19 @@ public class ReviewService {
         }
         return null;
     }
+
+    // 사용자 리뷰 조회 (페이지네이션 포함)
+    public Page<ReviewDto> searchReview(String userId, int currentPage, int pageSize) {
+        Pageable pageable = PageRequest.of(currentPage - 1, pageSize);
+        Page<ReviewEntity> reviewEntities = reviewRepository.findByUserIdOrderByReDateDesc(userId, pageable); // 수정된 메서드 호출
+
+        // ReviewEntity를 ReviewDto로 변환
+        List<ReviewDto> reviewDtos = reviewEntities.getContent().stream()
+                .map(this::convertToDto)
+                .collect(Collectors.toList());
+
+        return new PageImpl<>(reviewDtos, pageable, reviewEntities.getTotalElements());
+    }
+
+
 }
