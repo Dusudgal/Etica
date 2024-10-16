@@ -3,15 +3,6 @@
 
 <script type="text/javascript">
 // 드롭다운
-document.addEventListener("DOMContentLoaded", () => {
-    const hamburgerMenu = document.getElementById("hamburger-menu");
-    const dropdownMenu = document.querySelector(".main-container");
-    
-    hamburgerMenu.addEventListener("click", () => {
-        // dropdownMenu.classList.toggle("show"); // 올바른 드롭다운 메뉴를 대상으로 하는지 확인
-        dropdownMenu.classList.toggle("menu-open");
-    });
-});
 
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -46,43 +37,18 @@ document.addEventListener("DOMContentLoaded", () => {
     })
         
         informationsection.forEach(list => {
-            if(target.textContent.includes("내 정보 수정")) {
+            if(target.textContent.includes("내 정보")) {
                 lookInformation.style.display = "block";
             } else if (target.textContent.includes("비밀번호 변경")) {
                 changePassword.style.display = "block";
             } else if (target.textContent.includes("여행 플래너 보기")) {
                 travelPlanner.style.display = "block";
-            } else if (target.textContent.includes("임시")){ 
+            } else if (target.textContent.includes("임시")){
                 memberContainer.style.display = "block";
             }
         })
     })
 
 })
-/*document.addEventListener("DOMContentLoaded", () => {
-    const phonenumberConfirm = document.querySelector(".phonenumber-confirm");
-
-    const phonenumberForm = document.getElementById("phonenumber-form")
-*/
-    // passwordConfirm.addEventListener("mousedown", () => {
-    //     passwordform.textContent = "${user.userPassword}";
-    // });
-    // passwordConfirm.addEventListener("mouseup", () => {
-    //     passwordform.textContent = "******";
-    // });
-    // passwordConfirm.addEventListener("mouseleave", () => {
-    //     passwordform.textContent = "******";
-    // });
-/*    if (phonenumberConfirm && phonenumberForm) {  // 요소가 존재하는지 확인
-        phonenumberConfirm.addEventListener("mousedown", () => {
-            phonenumberForm.textContent = "${user.userPhone}" // textContent를 통해 HTML 텍스트를 변경
-        });
-        phonenumberConfirm.addEventListener("mouseup", () => {
-            phonenumberForm.textContent = "010-****-****"; // textContent를 통해 HTML 텍스트를 변경
-        });
-    } else {
-        console.error("Required elements are not found in the DOM.");
-    }
-})*/
 
 </script>

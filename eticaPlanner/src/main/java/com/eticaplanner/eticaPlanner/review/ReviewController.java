@@ -10,7 +10,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/Review")
@@ -23,27 +25,38 @@ public class ReviewController {
     @GetMapping("/ReviewIndex")
     public String ReviewIndex(Model model){
         System.out.println("[ReviewController] ReviewIndex()");
-        return "Review/ReviewIndex";
+        model.addAttribute("viewName", "Review/ReviewIndex");
+        return "template/layout";
     }
 
     // 리뷰 생성 이동
     @GetMapping("/ReviewGeneration")
-    public String ReviewGeneration(Model model, HttpSession session) {
+    public String ReviewGeneration(@RequestParam("title") String tourTitle, Model model, HttpSession session) {
         SessionDto userSession = (SessionDto) session.getAttribute("sessionInfo"); // 수정: sessionInfo로 변경
         if (userSession == null || (userSession.getUser_id() == null && userSession.getKakao_id() == null)) {
             return "redirect:/user/sign-in-view"; // 로그인 페이지로 리다이렉트
         }
         System.out.println("[ReviewController] ReviewGeneration()");
-        return "Review/ReviewGeneration";
+        model.addAttribute("viewName", "Review/ReviewGeneration");
+        model.addAttribute("tourTitle" , tourTitle);
+        return "template/layout";
     }
 
-
-    // 리뷰 더보기 이동
     @GetMapping("/ReviewPlus")
-    public String ReviewPlus(Model model) {
+    public String reviewPlus(@RequestParam("title") String title, Model model) {
         System.out.println("[ReviewController] ReviewPlus()");
-        return "Review/ReviewPlus";
+        System.out.println("받은 관광지 이름: " + title); // 받은 title 출력
+
+        // title을 기반으로 리뷰 목록 조회
+        List<ReviewDto> reviews = reviewService.findReviewsByTourTitle(title); // 리뷰 조회
+        model.addAttribute("reviews", reviews); // 리뷰 목록을 모델에 추가
+        model.addAttribute("tourTitle", title); // 관광지 이름도 추가
+        model.addAttribute("viewName", "Review/ReviewPlus"); // 뷰 이름 추가
+
+        return "template/layout"; // 레이아웃 템플릿 반환
     }
+
+
 
     // 내 리뷰 페이지 이동시 로그인 되어 있는지 확인
     @GetMapping("/ReviewMy")
@@ -64,7 +77,8 @@ public class ReviewController {
         // 모델에 리뷰 리스트 추가
         model.addAttribute("userReviews", userReviews);
 
-        return "Review/ReviewMy"; // 내 리뷰 페이지로 이동
+        model.addAttribute("viewName", "Review/ReviewMy");
+        return "template/layout";
     }
 
     // 리뷰 수정 이동
@@ -88,27 +102,31 @@ public class ReviewController {
             return "redirect:/Review/ReviewMy"; // 내 리뷰 페이지로 리다이렉트
         }
         model.addAttribute("review", reviewDto); // 모델에 리뷰 추가
-        return "Review/ReviewEdit"; // JSP 페이지로 이동
+        model.addAttribute("viewName", "Review/ReviewEdit");
+        return "template/layout";
     }
 
 
     // 생성
     @PostMapping("/create")
-    public String reviewSubmit(ReviewDto reviewDto, HttpSession session){
+    public String reviewSubmit(ReviewDto reviewDto, HttpSession session, Model model){
+
         System.out.println("[ReviewController] ReviewSubmit()");
+        System.out.println(" tourTitle " + reviewDto.getTourTitle());
         System.out.println(" reviewTitle " + reviewDto.getReviewTitle());
         System.out.println(" reviewContent " + reviewDto.getReviewContent());
 
         SessionDto userSession = (SessionDto)session.getAttribute("sessionInfo");
-
-        if (userSession.getUser_id() == null && userSession.getKakao_id() == null) {
-            return "redirect:/user/sign-in-view"; // 로그인 페이지로 리다이렉트
+        System.out.println(reviewDto.getTourTitle());
+        if(userSession == null){
+           return "redirect:/user/sign-in-view";
         }
+
         String userId = userSession.getKakao_id() != null ? userSession.getKakao_id() : userSession.getUser_id();
 
         boolean result = reviewService.saveReview(reviewDto, userId);
         System.out.println( result ? "성공" : "실패");
-
+        model.addAttribute("tourTitle" , reviewDto.getTourTitle());
 
         return "redirect:/Review/ReviewMy";
     }
@@ -132,12 +150,13 @@ public class ReviewController {
         boolean result = reviewService.editReview(reviewDto, userId);
         System.out.println(result ? "수정 성공" : "수정 실패");
 
-        return "redirect:/Review/ReviewMy";
+
+        return "redirect:/Review/ReviewMy"; // 내 리뷰 페이지로 리다이렉트
     }
     
     // 삭제
     @PostMapping("/delete")
-    public String deleteReview(@RequestParam Integer reviewId, HttpSession session) {
+    public String deleteReview(ReviewDto reviewDto, HttpSession session , Model model) {
         System.out.println("[ReviewController] deleteReview()");
 
         SessionDto userSession = (SessionDto)session.getAttribute("sessionInfo");
@@ -148,7 +167,7 @@ public class ReviewController {
         String userId = userSession.getKakao_id() != null ? userSession.getKakao_id() : userSession.getUser_id();
 
 
-        boolean result = reviewService.deleteReview(reviewId);
+        boolean result = reviewService.deleteReview(reviewDto.getReviewId());
         System.out.println(result ? "삭제 성공" : "삭제 실패");
 
         return "redirect:/Review/ReviewMy"; // 내 리뷰 페이지로 리다이렉트

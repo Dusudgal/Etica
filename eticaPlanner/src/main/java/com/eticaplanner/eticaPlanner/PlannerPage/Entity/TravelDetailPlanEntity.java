@@ -36,7 +36,7 @@ public class TravelDetailPlanEntity {
     @Column(name = "tourist_attraction_text", columnDefinition = "TEXT")
     private String touristAttractionText;
 
-    @Column(name = "tourist_attraction_address", nullable = false, length = 255)
+    @Column(name = "tourist_attraction_address", length = 255)
     private String touristAttractionAddress;
 
     @Column(name = "tourist_attraction_photo_address", length = 255)

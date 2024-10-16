@@ -1,7 +1,6 @@
 package com.eticaplanner.eticaPlanner.PlannerPage.controller;
 
-import com.eticaplanner.eticaPlanner.PlannerPage.dto.PlannerDTO;
-import com.eticaplanner.eticaPlanner.PlannerPage.dto.TravelTitlePlanDTO;
+import com.eticaplanner.eticaPlanner.PlannerPage.dto.*;
 import com.eticaplanner.eticaPlanner.PlannerPage.service.PlannerService;
 import com.eticaplanner.eticaPlanner.SessionDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -10,11 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -64,57 +60,41 @@ public class PlannerController {
         Boolean CreateResult = null;
 
         SessionDto userSession = (SessionDto)session.getAttribute("sessionInfo");
-
         if( userSession == null){
             return ResponseEntity.ok("login_fail");
         }
-        
-        if(userSession.getUser_id() != null){
-            CreateResult = planService.planCreate(planDto , userSession.getUser_id());
-        }
 
-        if(userSession.getKakao_id() != null){
-            CreateResult = planService.planCreate(planDto , userSession.getKakao_id());
-        }
-        
-        System.out.println(CreateResult ? "성공" : "실패");
+        String userID = userSession.getUser_id() != null ? userSession.getUser_id() : userSession.getKakao_id();
+
+        CreateResult = planService.planCreate( planDto , userID);
 
         if(CreateResult){
             return ResponseEntity.ok("success");
         }
+
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("failure");
     }
 
-    @PostMapping("TourApiSearch")
-    public ResponseEntity<Map> tourApiSearch(@RequestBody Map<String, String> encodingdata){
+    @GetMapping("/TourApiSearch")
+    public ResponseEntity<TourApiResponse> tourApiSearch(@RequestParam("keyword") String keyword, @RequestParam("page") int page) {
         System.out.println("[PlannerController] tourApiSearch");
 
-        RestTemplate restTemplate = new RestTemplate();
+        TourApiResponse tourApiData = planService.getTourData(keyword , page);
 
-        // api 호출시 받아올때 빈맵일수 있으니 초기화를 Map.of()로 한것
-        Map response = Map.of();
-
-        String Tour_key = apikeys.tour_apikey();
-        int PageNumber = 1;
-        int numOfRows = 30;
-        String keyword = encodingdata.get("keyword");
-
-        String url = String.format("https://apis.data.go.kr/B551011/KorService1/searchKeyword1?numOfRows=%s&pageNo=%s&MobileOS=ETC&MobileApp=etica&_type=json&listYN=Y&arrange=A&keyword=%s&serviceKey=%s",
-                numOfRows, PageNumber , keyword , Tour_key);
-
-        try{
-            URI uri = new URI(url);
-            response = restTemplate.getForObject(uri , Map.class);
-
-        }catch(URISyntaxException uriException){
-            System.out.println(uriException.getMessage());
+        // totalCount가 0이고 items가 null인 경우 두 번째 API 호출
+        if (tourApiData.getResponse().getBody().getTotalCount() == 0) {
+            TourApiResponse tourApiResponse = planService.getTourApiData(apikeys.tour_apikey(), keyword, page);
+            return ResponseEntity.ok(tourApiResponse);
         }
-        return ResponseEntity.ok(response);
+
+        return ResponseEntity.ok(tourApiData); // 전체 응답 반환
     }
+
     @GetMapping("SelectPlanTitle")
     public ResponseEntity<List<TravelTitlePlanDTO>> SelectPlanTitle(HttpSession session){
         System.out.println("[PlannerController] SelectPlanTitle");
         SessionDto userSession = (SessionDto)session.getAttribute("sessionInfo");
+
         List<TravelTitlePlanDTO> plandto = planService.SelectPlanTitle(userSession.getKakao_id() != null ? userSession.getKakao_id() : userSession.getUser_id() );
 
         if (plandto != null && !plandto.isEmpty()) {
@@ -133,14 +113,16 @@ public class PlannerController {
 
         SessionDto userSession = (SessionDto)session.getAttribute("sessionInfo");
 
-        if(userSession.getUser_id() != null){
-            planDetailDTO = planService.SelectPlan( userSession.getUser_id()  , planDTO.getTour_title());
+        if(userSession == null){
+            mav.setViewName("redirect:/user/sign-in-view");
+            return mav;
         }
 
-        if(userSession.getKakao_id() != null){
-            planDetailDTO = planService.SelectPlan( userSession.getKakao_id()  , planDTO.getTour_title());
-        }
+        String userID = userSession.getUser_id() != null ? userSession.getUser_id() : userSession.getKakao_id();
 
+        if(userSession.getUser_id() != null || userSession.getKakao_id() != null){
+            planDetailDTO = planService.SelectPlan( userID , planDTO.getTour_title());
+        }
 
         String map_key = apikeys.map_apikey();
         mav.addObject("map_key" , map_key);
@@ -169,8 +151,6 @@ public class PlannerController {
             CreateResult = planService.planModify(planDto , userId);
         }
 
-        System.out.println(CreateResult ? "성공" : "실패");
-
         if(CreateResult){
             return ResponseEntity.ok("success");
         }
@@ -192,15 +172,15 @@ public class PlannerController {
         PlannerDTO planDetailDTO = null;
 
         SessionDto userSession = (SessionDto)session.getAttribute("sessionInfo");
-
-        if(userSession.getUser_id() != null){
-            planDetailDTO = planService.SelectPlan( userSession.getUser_id()  , planDTO.getTour_title());
+        if(userSession == null){
+            mav.setViewName("redirect:/user/sign-in-view");
+            return mav;
         }
+        String userID = userSession.getUser_id() != null ? userSession.getUser_id() : userSession.getKakao_id();
 
-        if(userSession.getKakao_id() != null){
-            planDetailDTO = planService.SelectPlan( userSession.getKakao_id()  , planDTO.getTour_title());
+        if(userSession.getUser_id() != null || userSession.getKakao_id() != null){
+            planDetailDTO = planService.SelectPlan( userID , planDTO.getTour_title());
         }
-
 
         String map_key = apikeys.map_apikey();
         mav.addObject("map_key" , map_key);
@@ -216,4 +196,16 @@ public class PlannerController {
 
         return mav;
     }
+
+    @PostMapping("DeletePlan")
+    public ModelAndView deletePlan(@ModelAttribute TravelTitlePlanDTO planDTO , HttpSession session){
+        System.out.println("[PlannerController] detelePlan");
+        mav = new ModelAndView();
+        SessionDto userSession = (SessionDto)session.getAttribute("sessionInfo");
+        String userID = userSession.getUser_id() != null ? userSession.getUser_id() : userSession.getKakao_id();
+        planService.deletePlan(planDTO , userID);
+        mav.setViewName("redirect:/MyPage/mypage");
+        return mav;
+    }
+
 }

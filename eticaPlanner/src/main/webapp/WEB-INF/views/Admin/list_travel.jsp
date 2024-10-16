@@ -13,6 +13,7 @@
     <section class="travel-list">
         <div class="header">
             <h2>여행지 목록</h2>
+            <a href="#" class="add-button" onclick="executeTask()">관광지 불러오기</a>
             <a href="<c:url value='/Admin/add_travel'/>" class="add-button">추가</a>
         </div>
         <div class="travel-container">
@@ -36,5 +37,22 @@
             </c:forEach>
         </div>
     </section>
+    <script>
+    async function executeTask() {
+        try {
+            const response = await fetch('<c:url value="/Admin/tour_api"/>', {
+                method: 'POST',
+            });
+
+            if (response.ok) {
+                console.log("Task executed successfully");
+            } else {
+                console.error("Error executing task");
+            }
+        } catch (error) {
+            console.error("Error:", error);
+        }
+    }
+    </script>
 </body>
 </html>

@@ -3,6 +3,7 @@ package com.eticaplanner.eticaPlanner.Admin;
 import com.eticaplanner.eticaPlanner.Admin.entity.AdminDTo;
 import com.eticaplanner.eticaPlanner.Admin.entity.TravelDTO;
 import com.eticaplanner.eticaPlanner.Admin.entity.TravelEntity;
+import com.eticaplanner.eticaPlanner.PlannerPage.TourApiDBService;
 import com.eticaplanner.eticaPlanner.PlannerPage.controller.ApiComponent;
 import com.eticaplanner.eticaPlanner.noticeBoard.dto.NoticeListResponseDto;
 import com.eticaplanner.eticaPlanner.noticeBoard.service.BoardService;
@@ -24,6 +25,9 @@ public class AdminController {
 
     AdminDTo admin;
     private String nextPage;
+
+    @Autowired
+    private TourApiDBService tourApiDBService;
 
     @Autowired
     private ApiComponent apiKeys;
@@ -215,5 +219,10 @@ public class AdminController {
         return "redirect:/Admin/signin"; //로그인 페이지로 리디렉션
     }
 
-
+    //tour api 정보 불러오기
+    @PostMapping("/tour_api")
+    public void  tourApi(){
+        System.out.println("[AdminController] Tour_API()");
+        tourApiDBService.setServerData();
+    }
 }
