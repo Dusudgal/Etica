@@ -4,9 +4,25 @@
 
 
 <div class="sidebar" id="sidebar">
+<c:set var="sessionInfo" value="${sessionScope.sessionInfo}" />
     <button id="closeSidebar"></button>
-    <a href="/Review/ReviewIndex">Review 버튼</a>
-    <a href="/Planner/PlannerIndex">Planner 버튼</a>
+    <%-- 로그인 시 --%>
+    <c:if test="${not empty sessionInfo.user_id}">
+        <a href="/user/sign-out" class="mr-5">로그아웃</a>
+        <a href="/MyPage/mypage?userId=${sessionInfo.user_id}" class="mr-5" >My Page</a>
+    </c:if>
+    <%-- 카카오 로그인 시 --%>
+    <c:if test="${not empty sessionInfo.kakao_id}">
+        <a href="/user/sign-out" class="mr-5">로그아웃</a>
+        <a href="/MyPage/mypage?userId=${sessionInfo.kakao_id}" class="mr-5" >My Page</a>
+    </c:if>
+    <%-- 비로그인 시 --%>
+    <c:if test="${ empty sessionInfo.user_id && empty sessionInfo.kakao_id }">
+        <a href="/user/sign-in-view" >로그인</a>
+    </c:if>
+    <a href="/board">공지사항</a>
+    <a href="/Review/ReviewIndex">Review</a>
+    <a href="/Planner/PlannerPage">Planner</a>
     <a href="Admin/signin">관리자 버튼</a>
 </div>
 <script>

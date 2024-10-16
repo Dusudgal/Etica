@@ -41,13 +41,16 @@
         <div class="row large" id="map" >지도</div>
         <div class="row">
             <div class="listSearch">
-                <div>
-                    <input class="touristSpotSearch" type="search"  placeholder="찾으시려는 관광지 키워드를 입력해주세요." />
-                </div>
+                <input class="touristSpotSearch" type="search"  placeholder="찾으시려는 관광지 키워드를 입력해주세요." />
             </div>
             <ul class="touristSpotListUl"> 
                 <!-- 관광지 정보가 스크롤 적용되는 ul 태그 -->
             </ul>
+            <div class="searchPageing">
+                <button class="prevPage">이전</button>
+                <span class="pageNumbers"></span>
+                <button class="nextPage">다음</button>
+            </div>
         </div>
     </div>
     <jsp:include page="PlannerPage_js.jsp"/>

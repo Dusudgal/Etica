@@ -20,12 +20,12 @@
 <body>
     <jsp:include page="./include/header.jsp" />
     <section class="contents my-5">
-        <div class="container">
+        <div class="container-fluid">
             <div class="planner-container">
                 <h2>즐겁게 여행을 떠나봅시다.</h2>
                 <div class="planner-div">
-                    <p> Etica를 통해 여행 계획을 스케줄링 해보세요. </p>
-                    <a href="/Planner/PlannerPage" class="button"> Etica </a>
+                    <p>Etica를 통해 여행 계획을 스케줄링 해보세요.</p>
+                    <a href="/Planner/PlannerPage" class="button">Etica</a>
                 </div>
             </div>
             <div id="imageContainer">
