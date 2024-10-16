@@ -4,12 +4,33 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
+<<<<<<< Updated upstream
     <list default="true" id="fb64b740-5d2c-4f56-9bc8-96b54522ed5b" name="Changes" comment="" />
+=======
+    <list default="true" id="1600bd56-929c-42b1-b87f-d84219dc72eb" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/eticaPlanner/src/main/java/com/eticaplanner/eticaPlanner/Admin/AdminController.java" beforeDir="false" afterPath="$PROJECT_DIR$/eticaPlanner/src/main/java/com/eticaplanner/eticaPlanner/Admin/AdminController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/eticaPlanner/src/main/java/com/eticaplanner/eticaPlanner/MainController.java" beforeDir="false" afterPath="$PROJECT_DIR$/eticaPlanner/src/main/java/com/eticaplanner/eticaPlanner/MainController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/eticaPlanner/src/main/java/com/eticaplanner/eticaPlanner/PlannerPage/controller/PlannerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/eticaPlanner/src/main/java/com/eticaplanner/eticaPlanner/PlannerPage/controller/PlannerController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/eticaPlanner/src/main/java/com/eticaplanner/eticaPlanner/PlannerPage/service/PlannerService.java" beforeDir="false" afterPath="$PROJECT_DIR$/eticaPlanner/src/main/java/com/eticaplanner/eticaPlanner/PlannerPage/service/PlannerService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/eticaPlanner/src/main/java/com/eticaplanner/eticaPlanner/mypage/MyPageController.java" beforeDir="false" afterPath="$PROJECT_DIR$/eticaPlanner/src/main/java/com/eticaplanner/eticaPlanner/mypage/MyPageController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/eticaPlanner/src/main/java/com/eticaplanner/eticaPlanner/mypage/service/MyPageService.java" beforeDir="false" afterPath="$PROJECT_DIR$/eticaPlanner/src/main/java/com/eticaplanner/eticaPlanner/mypage/service/MyPageService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/eticaPlanner/src/main/webapp/WEB-INF/views/Admin/list_travel.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/eticaPlanner/src/main/webapp/WEB-INF/views/Admin/list_travel.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/eticaPlanner/src/main/webapp/WEB-INF/views/MyPage/include/container.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/eticaPlanner/src/main/webapp/WEB-INF/views/MyPage/include/container.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/eticaPlanner/src/main/webapp/WEB-INF/views/MyPage/include/lookInformation.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/eticaPlanner/src/main/webapp/WEB-INF/views/MyPage/include/lookInformation.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/eticaPlanner/src/main/webapp/WEB-INF/views/MyPage/js/myPage_js.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/eticaPlanner/src/main/webapp/WEB-INF/views/MyPage/js/myPage_js.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/eticaPlanner/src/main/webapp/WEB-INF/views/MyPage/myPage.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/eticaPlanner/src/main/webapp/WEB-INF/views/MyPage/myPage.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/eticaPlanner/src/main/webapp/WEB-INF/views/Planner/ModifyPlannerPage.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/eticaPlanner/src/main/webapp/WEB-INF/views/Planner/ModifyPlannerPage.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/eticaPlanner/src/main/webapp/WEB-INF/views/Planner/ModifyPlannerPage_js.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/eticaPlanner/src/main/webapp/WEB-INF/views/Planner/ModifyPlannerPage_js.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/eticaPlanner/src/main/webapp/WEB-INF/views/Planner/PlannerPage.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/eticaPlanner/src/main/webapp/WEB-INF/views/Planner/PlannerPage.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/eticaPlanner/src/main/webapp/WEB-INF/views/Planner/PlannerPage_js.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/eticaPlanner/src/main/webapp/WEB-INF/views/Planner/PlannerPage_js.jsp" afterDir="false" />
+    </list>
+>>>>>>> Stashed changes
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+<<<<<<< Updated upstream
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$/eticaPlanner">
       <ProjectState />
@@ -46,6 +67,27 @@
   &quot;associatedIndex&quot;: 5
 }</component>
   <component name="ProjectId" id="2lJLsEECXIIlkGXAONqsZddMgvz" />
+=======
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "Dusudgal"
+  }
+}]]></component>
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "git@github.com:Dusudgal/Etica.git",
+    "accountId": "640e5706-364b-41cf-a74d-fd3302a32918"
+  }
+}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 8
+}</component>
+  <component name="ProjectId" id="2nDsPAGXFF7tYwThYnfwhclqnlW" />
+>>>>>>> Stashed changes
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -53,11 +95,16 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "RunOnceActivity.ShowReadmeOnStart": "true",
+<<<<<<< Updated upstream
     "git-widget-placeholder": "admin",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/kimyujeong/etica/eticaPlanner",
     "nodejs_package_manager_path": "npm",
     "vue.rearranger.settings.migration": "true"
+=======
+    "git-widget-placeholder": "planner",
+    "kotlin-language-version-configured": "true"
+>>>>>>> Stashed changes
   }
 }]]></component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />

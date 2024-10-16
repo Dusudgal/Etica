@@ -5,7 +5,7 @@
       <table class="middle-table">
         <tr>
           <th>아이디</th>
-          <td>${userInfo.userId}</td>
+          <td>${user.userId}</td>
         </tr>
         <tr>
           <th>비밀번호</th>

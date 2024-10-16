@@ -3,6 +3,8 @@ package com.eticaplanner.eticaPlanner.mypage;
 import com.eticaplanner.eticaPlanner.PlannerPage.dto.TravelTitlePlanDTO;
 import com.eticaplanner.eticaPlanner.PlannerPage.service.PlannerService;
 import com.eticaplanner.eticaPlanner.SessionDto;
+import com.eticaplanner.eticaPlanner.kakao.dto.KakaoUserDto;
+import com.eticaplanner.eticaPlanner.user.dto.UserDto;
 import com.eticaplanner.eticaPlanner.user.entity.UserEntity;
 import com.eticaplanner.eticaPlanner.user.repository.UserRepository;
 import com.eticaplanner.eticaPlanner.mypage.service.MyPageService;
@@ -47,21 +49,19 @@ public class MyPageController {
             return "redirect:/user/sign-in-view";
         }
 
-        String userId = sessionInfo.getUser_id();
-        UserEntity userInfo;
+        String userId;
 
-        if (userId != null) {
-            userInfo = myPageService.memberRight(userId);
+        if (sessionInfo.getUser_id() != null) {
+            UserDto user = myPageService.memberRight(sessionInfo.getUser_id());
+            userId = sessionInfo.getUser_id();
+            model.addAttribute("user", user);
         } else {
-            // 카카오 사용자 정보 처리 (필요 시)
-            String kakaoId = sessionInfo.getKakao_id();
-            userInfo = myPageService.memberRight(kakaoId); // 카카오 ID를 사용하여 사용자 정보를 가져옴
+            // 카카오 사용자 정보 처리
+            userId = sessionInfo.getKakao_id();
+            UserDto user = new UserDto();
+            user.setUser_email(sessionInfo.getKakao_email());
+            model.addAttribute("user", user);
         }
-
-        model.addAttribute("userInfo", userInfo);
-
-        UserEntity user = userRepository.findByUserId(userId != null ? userId : sessionInfo.getKakao_id());
-        model.addAttribute("user", user);
 
         List<TravelTitlePlanDTO> plannerList = plannerService.SelectPlanTitle(userId != null ? userId : sessionInfo.getKakao_id());
         model.addAttribute("plannerList", plannerList);

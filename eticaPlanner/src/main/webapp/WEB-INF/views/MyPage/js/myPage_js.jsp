@@ -50,30 +50,5 @@ document.addEventListener("DOMContentLoaded", () => {
     })
 
 })
-/*document.addEventListener("DOMContentLoaded", () => {
-    const phonenumberConfirm = document.querySelector(".phonenumber-confirm");
-
-    const phonenumberForm = document.getElementById("phonenumber-form")
-*/
-    // passwordConfirm.addEventListener("mousedown", () => {
-    //     passwordform.textContent = "${user.userPassword}";
-    // });
-    // passwordConfirm.addEventListener("mouseup", () => {
-    //     passwordform.textContent = "******";
-    // });
-    // passwordConfirm.addEventListener("mouseleave", () => {
-    //     passwordform.textContent = "******";
-    // });
-/*    if (phonenumberConfirm && phonenumberForm) {  // 요소가 존재하는지 확인
-        phonenumberConfirm.addEventListener("mousedown", () => {
-            phonenumberForm.textContent = "${user.userPhone}" // textContent를 통해 HTML 텍스트를 변경
-        });
-        phonenumberConfirm.addEventListener("mouseup", () => {
-            phonenumberForm.textContent = "010-****-****"; // textContent를 통해 HTML 텍스트를 변경
-        });
-    } else {
-        console.error("Required elements are not found in the DOM.");
-    }
-})*/
 
 </script>

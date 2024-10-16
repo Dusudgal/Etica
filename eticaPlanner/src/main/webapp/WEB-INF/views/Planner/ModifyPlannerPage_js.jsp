@@ -6,7 +6,10 @@
 <script type="text/javascript">
     document.querySelector('.touristSpotSearch').addEventListener('keyup' , (event) => {
         if(event.keyCode === 13){
-            findtouristSpot(event)
+            currentPage = 1; // 페이지 초기화
+            keyword = event.target.value;
+            findtouristSpot(keyword  , currentPage)
+            event.target.value = ""; // 검색창 초기화
         }
     });
     // 검색하는 관광지 Ul 태그
@@ -24,32 +27,34 @@
     let memoMapList = {};
     var positions = [];
     let markers = [];
+
+    let currentPage = 0;
+    let totalPages = 0;
+    let Searchkeyword = "";
+
     // 카카오 map을 띄우는 곳
-        let mapcontainer = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
-        let options = { //지도를 생성할 때 필요한 기본 옵션
-    	    center: new kakao.maps.LatLng(33.450701, 126.570667), //지도의 중심좌표.
-    	    level: 3 //지도의 레벨(확대, 축소 정도)
-        };
+    let mapcontainer = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
+    let options = { //지도를 생성할 때 필요한 기본 옵션
+    	center: new kakao.maps.LatLng(33.450701, 126.570667), //지도의 중심좌표.
+    	level: 3 //지도의 레벨(확대, 축소 정도)
+    };
 
     let map = new kakao.maps.Map(mapcontainer, options); //지도 생성 및 객체 리턴
 
 
         // 관광지 검색 api 사용
-        async function findtouristSpot(event){
-            const data = event.target.value;
+        async function findtouristSpot(keyword , currentPage){
+            const encodedKeyword = encodeURIComponent(keyword);
+            const page = currentPage;
             try {
-                const response = await fetch( '/Planner/TourApiSearch' ,
-                    {  method: 'POST' ,
-                    headers : { 'Content-Type' : 'application/json' } ,
-                    body: JSON.stringify({
-                        keyword : data
-                    })
-                });
+                const response = await fetch(`/Planner/TourApiSearch?keyword=\${encodedKeyword}&page=\${page}`);
                 if (!response.ok) {
                     throw new Error("데이터를 받아오지 못하고있습니다.");
                 }
                 const jsonResponse = await response.json();
                 const jsondata = jsonResponse.response?.body?.items?.item || [];
+
+                totalPages = Math.ceil(jsonResponse.response.body.totalCount / 30);
 
                 // 데이터를 검색했는데 데이터가 있는 경우
                 if (Array.isArray(jsondata) && jsondata.length > 0) {
@@ -80,11 +85,41 @@
                     errmessage.appendChild(document.createTextNode(`검색하신 \${codeString}에 대한 정보가 없습니다.`));
                     newli.appendChild(errmessage);
                 }
-
-                event.target.value = ""; // 검색창 초기화
+                updatePagination(); // 페이지 네이션
             }catch (error) {console.error('Error fetching data:', error);
         }
     }
+
+    function updatePagination() {
+        const pageNumbersContainer = document.querySelector('.pageNumbers');
+        pageNumbersContainer.innerHTML = ''; // 기존 페이지 번호 초기화
+
+        for (let i = 1; i <= totalPages; i++) {
+            const pageButton = document.createElement('button');
+            pageButton.textContent = i;
+            pageButton.className = 'pageButton';
+            pageButton.onclick = () => {
+                currentPage = i; // 클릭한 페이지로 변경
+                findtouristSpot(keyword  , currentPage); // 데이터 요청
+            };
+            pageNumbersContainer.appendChild(pageButton);
+        }
+    }
+
+    // 페이지 버튼 클릭 이벤트
+    document.querySelector('.prevPage').onclick = () => {
+        if (currentPage > 1) {
+            currentPage--;
+            findtouristSpot(keyword  , currentPage);
+        }
+    };
+
+    document.querySelector('.nextPage').onclick = () => {
+        if (currentPage < totalPages) {
+            currentPage++;
+            findtouristSpot(keyword  , currentPage);
+        }
+    };
 
     function tourBtnClick(e){
         //버튼 위에 부모인 li태그에서 자식의 정보를 불러오기 위한 tourli
@@ -146,9 +181,9 @@
         const title = document.createElement('H4');
         const img = document.createElement('img');
         const newP = document.createElement('p');
-        newP.textContent = pText;
+        newP.textContent = pText || "";
         title.textContent = h4Text;
-        img.src = imgsrc;
+        img.src = imgsrc || "";
         img.onerror = () => {img.style.display = 'none';};
         li.appendChild(img);
         li.appendChild(title);
