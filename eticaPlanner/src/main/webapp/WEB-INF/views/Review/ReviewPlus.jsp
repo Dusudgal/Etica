@@ -1,6 +1,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page language="java" contentType="text/html; charset=utf-8"
-    pageEncoding="utf-8"%>
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -11,17 +10,20 @@
     <title>Review Plus</title>
 </head>
 <body>
-    <div class="button-container">
-        <h1>Review Plus</h1>
+    <div class="bodies">
+        <div class="button-container">
         <a href="/Review/ReviewIndex" class="button">Review Home</a> <!-- 리뷰 홈으로 돌아가기 -->
         <a href="/" class="button">Home</a> <!-- 홈으로 돌아가기 -->
+        </div>
     </div>
-    <div class="review_box">
-        <div class="image"></div>
-        <div class="title">리뷰 제목</div>
-        <div class="review">리뷰 내용</div>
-        <button class="more-button">더보기</button>
-    </div>
-
+    <h1>${tourTitle}</h1>
+    <div class="reviews">
+            <c:forEach var="review" items="${reviews}">
+                <div class="review_box2"> <!-- 각 리뷰를 감싸는 div 추가 -->
+                    <h3 class="title">${review.reviewTitle}</h3>
+                    <p class="review">${review.reviewContent}</p>
+                </div>
+            </c:forEach>
+        </div>
 </body>
 </html>

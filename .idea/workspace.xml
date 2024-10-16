@@ -1,55 +1,51 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
-    <list default="true" id="1600bd56-929c-42b1-b87f-d84219dc72eb" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/eticaPlanner/src/main/java/com/eticaplanner/eticaPlanner/Admin/AccountLockedException.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/eticaPlanner/src/main/java/com/eticaplanner/eticaPlanner/Admin/entity/AdminDTo.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/eticaPlanner/src/main/java/com/eticaplanner/eticaPlanner/Admin/entity/AdminEntity.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/eticaPlanner/src/main/java/com/eticaplanner/eticaPlanner/Admin/repository/AdminRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/eticaPlanner/src/main/java/com/eticaplanner/eticaPlanner/EticaPlannerApplication.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/eticaPlanner/src/main/java/com/eticaplanner/eticaPlanner/MainController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/eticaPlanner/src/main/java/com/eticaplanner/eticaPlanner/PlannerPage/Repository/TravelDetailPlanRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/eticaPlanner/src/main/java/com/eticaplanner/eticaPlanner/PlannerPage/Repository/TravelTitlePlanRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/eticaPlanner/src/main/java/com/eticaplanner/eticaPlanner/PlannerPage/controller/ApiComponent.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/eticaPlanner/src/main/java/com/eticaplanner/eticaPlanner/PlannerPage/dto/PlannerDTO.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/eticaPlanner/src/main/java/com/eticaplanner/eticaPlanner/PlannerPage/dto/TravelTitlePlanDTO.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/eticaPlanner/src/main/java/com/eticaplanner/eticaPlanner/SessionDto.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/eticaPlanner/src/main/java/com/eticaplanner/eticaPlanner/config/RedisConfig.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/eticaPlanner/src/main/java/com/eticaplanner/eticaPlanner/mypage/entity/MyPageEntity.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/eticaPlanner/src/main/java/com/eticaplanner/eticaPlanner/mypage/repository/MyPageRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/eticaPlanner/src/main/java/com/eticaplanner/eticaPlanner/mypage/service/MyPageDao.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/eticaPlanner/src/main/java/com/eticaplanner/eticaPlanner/user/dto/UserDto.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/eticaPlanner/src/main/java/com/eticaplanner/eticaPlanner/user/repository/UserRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/eticaPlanner/src/main/resources/application.yml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/eticaPlanner/src/main/resources/static/Resources/Img/Eti.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/eticaPlanner/src/main/resources/static/Resources/kakao_login_medium_wide.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/eticaPlanner/src/main/webapp/WEB-INF/views/Admin/JS/loginConfirm.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/eticaPlanner/src/main/webapp/WEB-INF/views/Admin/login_ng.jsp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/eticaPlanner/src/main/webapp/WEB-INF/views/Admin/modify_ng.jsp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/eticaPlanner/src/main/webapp/WEB-INF/views/Admin/modify_ok.jsp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/eticaPlanner/src/main/webapp/WEB-INF/views/Admin/signin.jsp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/eticaPlanner/src/main/webapp/WEB-INF/views/MyPage/include/changePassword.jsp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/eticaPlanner/src/main/webapp/WEB-INF/views/MyPage/include/container.jsp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/eticaPlanner/src/main/webapp/WEB-INF/views/MyPage/include/imsy.jsp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/eticaPlanner/src/main/webapp/WEB-INF/views/MyPage/include/lookInformation.jsp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/eticaPlanner/src/main/webapp/WEB-INF/views/MyPage/js/myPage_js.jsp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/eticaPlanner/src/main/webapp/WEB-INF/views/MyPage/myPage.jsp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/eticaPlanner/src/main/webapp/WEB-INF/views/Planner/PlanSaveSuccessPage.jsp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/eticaPlanner/src/main/webapp/WEB-INF/views/Planner/PlanSavefail.jsp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/eticaPlanner/src/main/webapp/WEB-INF/views/Planner/PlannerIndex_js.jsp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/eticaPlanner/src/main/webapp/WEB-INF/views/User/signUp.jsp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/eticaPlanner/src/main/webapp/WEB-INF/views/include/Admin/footer.jsp" beforeDir="false" />
-    </list>
+    <list default="true" id="fb64b740-5d2c-4f56-9bc8-96b54522ed5b" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 8
-}]]></component>
-  <component name="ProjectId" id="2nDsPAGXFF7tYwThYnfwhclqnlW" />
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$/eticaPlanner">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="ExternalProjectsManager">
+    <system id="GRADLE">
+      <state>
+        <projects_view>
+          <tree_state>
+            <expand />
+            <select />
+          </tree_state>
+        </projects_view>
+      </state>
+    </system>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;yujeong-claudia&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;git@github.com:Dusudgal/Etica.git&quot;,
+    &quot;accountId&quot;: &quot;22449f72-4914-4e17-82c4-10a151ae48b5&quot;
+  }
+}</component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 5
+}</component>
+  <component name="ProjectId" id="2lJLsEECXIIlkGXAONqsZddMgvz" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -57,18 +53,26 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "kotlin-language-version-configured": "true"
+    "git-widget-placeholder": "admin",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/kimyujeong/etica/eticaPlanner",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="1600bd56-929c-42b1-b87f-d84219dc72eb" name="Changes" comment="" />
-      <created>1728518954636</created>
+      <changelist id="fb64b740-5d2c-4f56-9bc8-96b54522ed5b" name="Changes" comment="" />
+      <created>1724893437983</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1728518954636</updated>
+      <updated>1724893437983</updated>
+      <workItem from="1724893438693" duration="24000" />
     </task>
     <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
   </component>
 </project>

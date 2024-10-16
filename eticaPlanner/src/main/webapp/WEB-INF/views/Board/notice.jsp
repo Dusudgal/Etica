@@ -20,18 +20,18 @@
             padding: 20px;
             background-color: #ffffff;
             border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            margin-top: 50px;
         }
 
         h2 {
             text-align: center;
-            color: #d63384;
+            color: #00BFFF;
         }
 
         input, textarea {
             width: 100%;
             border-radius: 5px;
-            border: 1px solid #d63384;
+            border: 1px solid #00BFFF;
             padding: 10px;
             box-sizing: border-box;
             margin-bottom: 10px;
@@ -45,7 +45,7 @@
 
         button {
             width: 100%;
-            background-color: #d63384;
+            background-color: #00BFFF;
             color: white;
             border: none;
             padding: 10px;
@@ -60,11 +60,10 @@
         }
 
         .card {
-            background-color: #f8d3e0;
+            background-color: #F0F8FF;
             border-radius: 5px;
             padding: 15px;
             margin-bottom: 10px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         }
 
         .username {
@@ -95,7 +94,7 @@
         }
 
         .update-btn {
-            background-color: #ffa500;
+            background-color: #00BFFF;
             color: white;
         }
 
@@ -109,6 +108,7 @@
     </style>
 </head>
 <body>
+<jsp:include page="/WEB-INF/views/Admin/login_ok.jsp"/>
 <div class="wrap">
     <h2>공지사항 게시판</h2>
     <input type="text" id="title" placeholder="제목을 입력하세요">
@@ -116,7 +116,11 @@
     <button onclick="postMessage()">공지 올리기</button>
     <div id="message-list"></div>
 </div>
-
+<%@ page session="true" %>
+<!-- 세션에서 admin_id 가져오기 -->
+<script type="text/javascript">
+    var adminId = "<%= (String) session.getAttribute("admin_id") %>";
+</script>
 <script>
     function escapeHtml(unsafe) {
         return unsafe
@@ -162,7 +166,7 @@
         }
 
         var message = {
-            username: 'admin', // 관리자 이름으로 고정
+            username: adminId, // 관리자 이름으로 고정
             title: title,
             contents: contents
         };

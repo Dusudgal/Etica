@@ -10,25 +10,23 @@
     <title>Review Edit</title>
 </head>
 <body>
-    <div class="button-container">
+    <div class="revieweditmy_bodies">
         <h1>Review Edit</h1>
         <a href="/Review/ReviewIndex" class="button">Review Home</a>
         <a href="/" class="button">Home</a>
     </div>
-
-    <div class="reviews">
+    <div class="review_box3">
         <c:if test="${not empty review}">
-            <form action="/Review/update" method="post"> <!-- 실제 업데이트를 수행할 액션 -->
-                <input type="hidden" name="reviewId" value="${review.reviewId}"/> <!-- 리뷰 ID를 숨은 필드로 추가 -->
-                <label for="reviewTitle">제목:</label>
+            <form action="/Review/update" method="post">
+                <input type="hidden" name="reviewId" value="${review.reviewId}"/>
+                <h2>${review.tourTitle}</h2>
+                <label for="reviewTitle">제목</label>
                 <input type="text" name="reviewTitle" value="${review.reviewTitle}" required/><br/>
-
-                <label for="reviewContent">내용:</label>
-                <textarea name="reviewContent" required>${review.reviewContent}</textarea><br/>
-
-                <button type="submit">수정 완료</button>
+                <label for="reviewContent">내용</label>
+                <textarea name="reviewContent" rows="4" required>${review.reviewContent}</textarea><br/> <!-- textarea로 변경 -->
+                <button type="submit" class="editbutton">수정 완료</button>
+                <a href="/Review/ReviewMy" class="editbutton">취소</a>
             </form>
-            <a href="/Review/ReviewMy">취소</a>
         </c:if>
         <c:if test="${empty review}">
             <p>리뷰를 불러오는 데 실패했습니다.</p>

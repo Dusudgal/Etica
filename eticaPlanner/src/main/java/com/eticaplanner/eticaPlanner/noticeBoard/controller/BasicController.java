@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
@@ -28,11 +29,14 @@ public class BasicController {
     }
 
     // 메모 목록 페이지 (페이지네이션 제외)
-    @GetMapping("/board/notice")
-    public String memo(Model model) {
+    @GetMapping("/admin/notice")
+    public ModelAndView memo(Model model) {
+        System.out.println("[AdminController] admin_notice()");
         List<NoticeListResponseDto> notices = noticeService.getAllMemos(); // 메모 목록 가져오기
         model.addAttribute("notices", notices); // 뷰로 메모 전달
-        return "Board/notice"; // Board/notice.jsp로 이동
+        ModelAndView mav = new ModelAndView("template/Adminlayout");
+        mav.addObject("viewName","Board/notice");
+        return mav; // Board/notice.jsp로 이동
     }
 
     // 메모 상세보기 페이지

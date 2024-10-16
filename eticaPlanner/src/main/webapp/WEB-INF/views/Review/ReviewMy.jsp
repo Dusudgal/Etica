@@ -11,7 +11,7 @@
     <title>My Review</title>
 </head>
 <body>
-    <div class="button-container">
+    <div class="revieweditmy_bodies">
         <h1>My Review</h1>
         <a href="/Review/ReviewIndex" class="button">Review Home</a>
         <a href="/" class="button">Home</a>
@@ -21,26 +21,23 @@
         <c:set var="sessionInfo" value="${sessionScope.sessionInfo}" />
         <c:if test="${not empty userReviews}">
             <c:forEach var="review" items="${userReviews}">
-                <div class="review_box">
-                    <div class="reviews">
-                        <div class="image">
-                        </div>
-                            <form action="/Review/ReviewEdit" method="post" >
-                                <input type="hidden" value="${review.reviewId}" name="reviewId"/>
-                                <h3 class="review-title">${review.reviewTitle}</h3>
-                                <p class="review-contents">${review.reviewContent}</p>
-                                <c:if test="${not empty sessionInfo.user_id }"> <!-- 로그인한 경우만 표시 -->
-                                    <button type="submit" >수정</button>
-                                </c:if>
+                <div class="review_box2">
+                        <form action="/Review/ReviewEdit" method="post" style="display:inline;">
+
+                            <input type="hidden" value="${review.reviewId}" name="reviewId"/>
+                            <h2 >${review.tourTitle}</h2>
+                            <h3 class="review-title">${review.reviewTitle}</h3>
+                            <p class="review-contents">${review.reviewContent}</p>
+                            <c:if test="${not empty sessionInfo.user_id }"> <!-- 로그인한 경우만 표시 -->
+                                <button type="submit" class="button">수정</button>
+                            </c:if>
+                        </form>
+                        <c:if test="${not empty sessionInfo.user_id}"> <!-- 로그인한 경우만 표시 -->
+                            <form action="/Review/delete" method="post" style="display:inline;">
+                                <input type="hidden" name="reviewId" value="${review.reviewId}" /> <!-- 리뷰 ID를 숨긴 필드로 추가 -->
+                                <button type="submit" class="button" onclick="return confirm('정말 삭제하시겠습니까?');" >삭제</button>
                             </form>
-                             <c:if test="${not empty sessionInfo.user_id}"> <!-- 로그인한 경우만 표시 -->
-                                        <form action="/Review/delete" method="post" style="display:inline;">
-                                            <input type="hidden" name="reviewId" value="${review.reviewId}" /> <!-- 리뷰 ID를 숨긴 필드로 추가 -->
-                                            <button type="submit" onclick="return confirm('정말 삭제하시겠습니까?');">삭제</button>
-                                        </form>
-                                    </c:if>
-                        </div>
-                    </div>
+                        </c:if>
                 </div>
             </c:forEach>
         </c:if>

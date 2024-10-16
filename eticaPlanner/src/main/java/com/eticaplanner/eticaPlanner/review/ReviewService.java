@@ -29,6 +29,7 @@ public class ReviewService {
     // 생성 후 저장
     public boolean saveReview(ReviewDto reviewDto, String userId) {
         ReviewEntity reviewEntity = new ReviewEntity();
+        reviewEntity.setTourTitle(reviewDto.getTourTitle()); // 관광지 이름
         reviewEntity.setReTitle(reviewDto.getReviewTitle()); // 리뷰 제목
         reviewEntity.setReText(reviewDto.getReviewContent()); // 리뷰 내용
         reviewEntity.setUserId(userId); // 사용자 ID
@@ -55,6 +56,7 @@ public class ReviewService {
             // 로그 출력 (저장된 리뷰 확인)
             for (ReviewDto reviewDto : reviewDtoList) {
                 // 관광지 번호 출력 부분 제거
+                System.out.println("관광지 이름: " + reviewDto.getTourTitle());
                 System.out.println("리뷰 ID: " + reviewDto.getReviewId()); // 리뷰 ID 출력
                 System.out.println("리뷰 제목: " + reviewDto.getReviewTitle());
                 System.out.println("리뷰 내용: " + reviewDto.getReviewContent());
@@ -67,9 +69,38 @@ public class ReviewService {
     }
 
 
+    // 관광지별 리뷰 조회
+    public List<ReviewDto> findReviewsByTourTitle(String tourTitle) {
+        System.out.println("[ReviewService] searchReviewsByTourTitle()");
+
+        // 관광지 이름으로 리뷰 정보를 조회하는 로직
+        List<ReviewEntity> tourReviews = reviewRepository.findByTourTitle(tourTitle); // List<ReviewEntity>
+
+        // ReviewEntity 리스트를 ReviewDto 리스트로 변환
+        List<ReviewDto> reviewDtoList = tourReviews.stream()
+                .map(this::convertToDto) // 엔티티를 DTO로 변환
+                .collect(Collectors.toList());
+
+        if (!reviewDtoList.isEmpty()) {
+            // 로그 출력 (저장된 리뷰 확인)
+            for (ReviewDto reviewDto : reviewDtoList) {
+                System.out.println("관광지 이름: " + reviewDto.getTourTitle());
+                System.out.println("리뷰 ID: " + reviewDto.getReviewId()); // 리뷰 ID 출력
+                System.out.println("리뷰 제목: " + reviewDto.getReviewTitle());
+                System.out.println("리뷰 내용: " + reviewDto.getReviewContent());
+            }
+        } else {
+            System.out.println("해당 관광지에 대한 리뷰가 없습니다.");
+        }
+
+        return reviewDtoList; // 변환된 DTO 리스트 반환
+    }
+
+
     // ReviewEntity를 ReviewDto로 변환하는 메서드
     private ReviewDto convertToDto(ReviewEntity reviewEntity) {
         ReviewDto reviewDto = new ReviewDto();
+        reviewDto.setTourTitle(reviewEntity.getTourTitle());
         reviewDto.setReviewId(reviewEntity.getReviewId()); // 리뷰 ID 설정
         reviewDto.setReviewTitle(reviewEntity.getReTitle());
         reviewDto.setReviewContent(reviewEntity.getReText());
