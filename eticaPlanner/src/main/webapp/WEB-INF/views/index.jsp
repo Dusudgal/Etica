@@ -19,6 +19,21 @@
 </head>
 <body>
     <jsp:include page="./include/header.jsp" />
+    <!-- 공지사항 팝업 -->
+    <div id="noticePopup" style="display:none;">
+        <h2>공지사항</h2>
+        <c:choose>
+            <c:when test="${not empty notice}">
+                <p><strong>제목:</strong> <c:out value="${notice.title}" /></p>
+                <p><c:out value="${notice.contents}" /></p>
+            </c:when>
+            <c:otherwise>
+                <p>공지사항이 없습니다.</p>
+            </c:otherwise>
+        </c:choose>
+        <button class="popup-close-btn" onclick="closeNoticePopup()">닫기</button>
+        <span class="popup-no-show-24" onclick="setCookieFor24Hours()">24시간 동안 보지 않기</span>
+    </div>
     <section class="contents my-5">
         <div class="container-fluid">
             <div class="planner-container">

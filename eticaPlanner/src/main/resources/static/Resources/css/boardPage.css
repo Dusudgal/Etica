@@ -1,0 +1,45 @@
+body {
+    background-color: #ffffff; /* 하얀색 배경 */
+}
+
+h1 {
+    color: #0288d1; /* 제목 색상 (하늘색) */
+    text-align: center;
+    margin-top: 20px;
+}
+
+table {
+    width: 100%;
+    margin-top: 30px;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+th, td {
+    text-align: center;
+    padding: 12px;
+    border: 1px solid #0288d1; /* 테두리 색상 */
+}
+
+th {
+    background-color: #b3e5fc; /* 헤더 배경색 (밝은 하늘색) */
+    color: #fff; /* 헤더 글자 색상 */
+}
+
+tr:nth-child(even) {
+    background-color: #e1f5fe; /* 짝수 행 배경색 (밝은 하늘색) */
+}
+
+tr:hover {
+    background-color: #0288d1; /* 행 호버 효과 (진한 하늘색) */
+    color: #fff; /* 호버 시 글자 색상 */
+}
+
+a {
+    color: #0288d1; /* 링크 색상 (하늘색) */
+    text-decoration: none; /* 링크 밑줄 제거 */
+}
+
+a:hover {
+    text-decoration: underline; /* 링크 호버 시 밑줄 추가 */
+}

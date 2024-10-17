@@ -8,6 +8,7 @@ import com.eticaplanner.eticaPlanner.noticeBoard.repository.BoardRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,21 +19,29 @@ public class BoardService {
 
     private static final Logger logger = LoggerFactory.getLogger(BoardService.class);
 
+
+    private final BoardRepository boardRepository;
+
     @Autowired
-    private BoardRepository boardRepository;
+    public BoardService(BoardRepository boardRepository){
+        this.boardRepository = boardRepository;
+    }
 
     // 게시글 목록 조회 (DTO 반환, 페이지네이션 추가)
     public List<BoardListResponseDto> getBoards(int page, int pageSize) {
         logger.info("Fetching boards for page: {}, pageSize: {}", page, pageSize);
-        List<BoardListResponseDto> boards = boardRepository.findAll()
+
+        return boardRepository.findAll(PageRequest.of(page, pageSize))
                 .stream()
-                .skip(page * pageSize) // 페이지 계산
-                .limit(pageSize) // 페이지 크기만큼 제한
                 .map(BoardListResponseDto::new)
                 .collect(Collectors.toList());
-        logger.info("Retrieved {} boards", boards.size());
-        return boards;
     }
+
+    // 전체 게시글 개수 반환 메서드
+    public int getTotalMemosCount() {
+        return (int) boardRepository.count(); // 전체 메모 수 반환
+    }
+
 
     // 게시글 수 조회
     public long countBoards() {
