@@ -78,29 +78,14 @@ public class PlannerController {
     @GetMapping("/TourApiSearch")
     public ResponseEntity<TourApiResponse> tourApiSearch(@RequestParam("keyword") String keyword, @RequestParam("page") int page) {
         System.out.println("[PlannerController] tourApiSearch");
-
         TourApiResponse tourApiData = planService.getTourData(keyword , page);
-
         // totalCount가 0이고 items가 null인 경우 두 번째 API 호출
-        if (tourApiData.getResponse().getBody().getTotalCount() == 0) {
+        if(tourApiData.getResponse().getBody().getTotalCount() == 0) {
             TourApiResponse tourApiResponse = planService.getTourApiData(apikeys.tour_apikey(), keyword, page);
             return ResponseEntity.ok(tourApiResponse);
         }
 
         return ResponseEntity.ok(tourApiData); // 전체 응답 반환
-    }
-
-    @GetMapping("SelectPlanTitle")
-    public ResponseEntity<List<TravelTitlePlanDTO>> SelectPlanTitle(HttpSession session){
-        System.out.println("[PlannerController] SelectPlanTitle");
-        SessionDto userSession = (SessionDto)session.getAttribute("sessionInfo");
-
-        List<TravelTitlePlanDTO> plandto = planService.SelectPlanTitle(userSession.getKakao_id() != null ? userSession.getKakao_id() : userSession.getUser_id() );
-
-        if (plandto != null && !plandto.isEmpty()) {
-            return ResponseEntity.ok(plandto);
-        }
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
     }
 
     @PostMapping("ModifyPlan")
@@ -155,13 +140,6 @@ public class PlannerController {
             return ResponseEntity.ok("success");
         }
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("failure");
-    }
-
-    @GetMapping("PlannerIndex")
-    public ModelAndView plannerIndex(){
-        System.out.println("[PlannerController] PlannerIndex");
-        mav = new ModelAndView("Planner/PlannerIndex");
-        return mav;
     }
 
     @PostMapping("ViewPlan")

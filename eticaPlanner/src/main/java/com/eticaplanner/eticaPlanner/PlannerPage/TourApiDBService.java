@@ -39,25 +39,30 @@ public class TourApiDBService {
         RestTemplate restTemplate = new RestTemplate();
 
         String Tour_key = apikey.tour_apikey();
-        int numOfRows = 30;
         List<TourApiEntity> existingTourData = tourApiRepository.findAll();
+
+        // 기존 데이터의 고유 키 맵 생성
         Map<String, TourApiEntity> existingDataMap = existingTourData.stream()
                 .collect(Collectors.toMap(
-                        e -> e.getTitle() + "_" + e.getAddr(), // 고유 키 생성
+                        e -> e.getTour_title() + "_" + e.getTour_addr(), // 고유 키 생성
                         Function.identity(),
                         (existing, replacement) -> existing // 기존 값 유지
                 ));
 
+        int numOfRows = 30;
         for (String keyword : SearchKeyword) {
             int pageNo = 1;
             int totalCount = 0;
-            try{
-                System.out.println(keyword+" 시작");
-                Thread.sleep(1000);
-            }catch (Exception e){
+
+            try {
+                System.out.println(keyword + " 시작");
+                Thread.sleep(1000); // API 호출 사이 대기
+            } catch (Exception e) {
                 System.out.println(e);
             }
+
             List<TourApiEntity> TourData = new ArrayList<>();
+
             do {
                 try {
                     String encodedKeyword = URLEncoder.encode(keyword, "UTF-8");
@@ -68,40 +73,42 @@ public class TourApiDBService {
                     TourApiResponse response = restTemplate.getForObject(uri, TourApiResponse.class);
 
                     // 응답의 헤더가 성공인지 체크
-                    if (response != null && response.getResponse() != null && response.getResponse().getHeader() != null) {
-                        String resultCode = response.getResponse().getHeader().getResultCode();
-                            totalCount = response.getResponse().getBody().getTotalCount();
-                            List<TourApiDTO> items = response.getResponse().getBody().getItems().getItem();
+                    if (response == null || response.getResponse() == null || response.getResponse().getHeader() == null) {
+                        System.out.println("Error: Response is null");
+                        break; // 응답 헤더 , response가 null인 경우 반복 종료
+                    }
 
-                            // items 처리 로직 추가
-                            if (items != null) {
-                                for (TourApiDTO item : items) {
-                                    TourApiEntity tourEntity = new TourApiEntity(item);
+                    String resultCode = response.getResponse().getHeader().getResultCode();
+                    totalCount = response.getResponse().getBody().getTotalCount();
+                    List<TourApiDTO> items = response.getResponse().getBody().getItems().getItem();
 
-                                    // 고유 키 생성
-                                    String uniqueKey = tourEntity.getTitle() + "_" + tourEntity.getAddr();
-                                    TourApiEntity existingEntity = existingDataMap.get(uniqueKey);
-                                    if (existingEntity != null) {
-                                        // 기존 데이터가 있다면 업데이트
-                                        existingEntity.updateFrom(tourEntity);
-                                        TourData.add(existingEntity);
-                                    } else {
-                                        // 데이터가 없다면 새로 추가
-                                        TourData.add(tourEntity);
-                                    }
-                                }
-                            }
-                    } else {
-                        System.out.println("Error: No response or header is null");
-                        break; // 응답이 없거나 헤더가 null인 경우 반복 종료
+                    // items 처리 로직 추가
+                    if (items == null || items.isEmpty()) {
+                        System.out.println("Warning: No items found for keyword: " + keyword);
+                        break; // items가 null이거나 비어있는 경우 반복 종료
+                    }
+
+                    for (TourApiDTO item : items) {
+                        TourApiEntity tourEntity = new TourApiEntity(item);
+
+                        // 고유 키 생성
+                        String uniqueKey = tourEntity.getTour_title() + "_" + tourEntity.getTour_addr();
+                        TourApiEntity existingEntity = existingDataMap.get(uniqueKey);
+
+                        if (existingEntity != null) {
+                            // 기존 데이터가 있다면 업데이트
+                            existingEntity.updateFrom(tourEntity);
+                            TourData.add(existingEntity);
+                        } else {
+                            // 데이터가 없다면 새로 추가
+                            TourData.add(tourEntity);
+                        }
                     }
                     // 페이지 단위로 저장
                     tourApiRepository.saveAll(TourData);
                     tourApiRepository.flush(); // 데이터베이스에 반영
 
-                    // TourData 초기화
                     TourData.clear(); // 다음 페이지를 위해 초기화
-
                     pageNo++;
                 } catch (Exception uriException) {
                     System.out.println(uriException.getMessage());
@@ -109,7 +116,8 @@ public class TourApiDBService {
                 }
             } while (pageNo <= (totalCount + numOfRows - 1) / numOfRows); // 남은 페이지 수 계산
         }
-        System.out.println("관광지 데이터 업데이트 완료");
-    }
 
+        System.out.println("관광지 데이터 업데이트 완료");
+
+    }
 }

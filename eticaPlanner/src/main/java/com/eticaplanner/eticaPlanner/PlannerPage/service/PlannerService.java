@@ -9,10 +9,12 @@ import com.eticaplanner.eticaPlanner.PlannerPage.Entity.TravelPlanConverter;
 import com.eticaplanner.eticaPlanner.PlannerPage.Repository.TourApiRepository;
 import com.eticaplanner.eticaPlanner.PlannerPage.Repository.TravelDetailPlanRepository;
 import com.eticaplanner.eticaPlanner.PlannerPage.Repository.TravelTitlePlanRepository;
+import com.eticaplanner.eticaPlanner.PlannerPage.TourApiDBService;
 import com.eticaplanner.eticaPlanner.PlannerPage.dto.*;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -25,7 +27,10 @@ import java.net.URI;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.stream.Collectors;
 
 @AllArgsConstructor
@@ -39,13 +44,16 @@ public class PlannerService {
     private final TravelDetailPlanRepository travelDetailPlanRepository;
     private final TravelRepository travelRepository;
     private final TourApiRepository tourApiRepository;
+    private final TourApiDBService tourApiDBService;
+    private final ExecutorService executorService = Executors.newFixedThreadPool(10);
 
     @Autowired
-    public PlannerService(TravelTitlePlanRepository travelTitlePlanRepository , TravelDetailPlanRepository travelDetailPlanRepository , TravelRepository travelRepository , TourApiRepository tourApiRepository) {
+    public PlannerService(TravelTitlePlanRepository travelTitlePlanRepository , TravelDetailPlanRepository travelDetailPlanRepository , TravelRepository travelRepository , TourApiRepository tourApiRepository , TourApiDBService tourApiDBService) {
         this.travelTitlePlanRepository = travelTitlePlanRepository;
         this.travelDetailPlanRepository = travelDetailPlanRepository;
         this.travelRepository = travelRepository;
         this.tourApiRepository = tourApiRepository;
+        this.tourApiDBService = tourApiDBService;
     }
 
     public Boolean planCreate(PlannerDTO data, String userid){
@@ -80,37 +88,6 @@ public class PlannerService {
         return userSelectinfo;
     }
 
-//    @Transactional
-//    public Boolean planModify(PlannerDTO planDto, String loginUser) {
-//        System.out.println("[PlannerService] planModify");
-//
-//        TravelTitlePlanDTO tourTitleData = planDto.getTourTitleData();
-//        List<TravelDetailDTO> tourMemoData = planDto.getTourMemoData();
-//
-//        result = false;
-//
-//        if(tourTitleData != null &&
-//                !tourTitleData.getTour_title().isEmpty()){
-//
-//            TravelTitlePlanEntity existingTitlePlan = travelTitlePlanRepository.findById(tourTitleData.getPlanNo()).orElse(null);
-//            if (existingTitlePlan != null) {
-//                // 제목, 시작일, 종료일 업데이트
-//                existingTitlePlan.setPlanTitle(tourTitleData.getTour_title());
-//                existingTitlePlan.setTravelStartDay(LocalDate.parse(tourTitleData.getStartDate()));
-//                existingTitlePlan.setTravelEndDay(LocalDate.parse(tourTitleData.getEndDate()));
-//                TravelTitlePlanEntity savedata = travelTitlePlanRepository.save(existingTitlePlan);
-//
-//                if (savedata.getPlanNo() != null) {
-//                    List<TravelDetailPlanEntity> travelDetailPlans = TravelPlanConverter.travelDetailDTOToEntity(tourMemoData, savedata.getPlanNo(), loginUser);
-//                    // TravelDetailPlanEntity 저장
-//                    travelDetailPlanRepository.deleteByPlanNoAndUserId(savedata.getPlanNo(), loginUser);
-//                    List<TravelDetailPlanEntity> detailSaveData = travelDetailPlanRepository.saveAll(travelDetailPlans);
-//                    result = true;
-//                }
-//            }else return result;
-//        }else return result;
-//        return result;
-//    }
     @Transactional
     public Boolean planModify(PlannerDTO planDto, String loginUser) {
         System.out.println("[PlannerService] planModify");
@@ -159,10 +136,13 @@ public class PlannerService {
     }
 
     public TourApiResponse getTourApiData(String Tour_key , String keyword, int page){
+        System.out.println("[plannerService] getTourApiData");
         RestTemplate restTemplate = new RestTemplate();
         TourApiResponse tourApiResponse = new TourApiResponse();
         int numOfRows = 30;
-
+        if(keyword.trim().length() == 0){
+            return empty();
+        }
         try {
             String encodedKeyword = URLEncoder.encode(keyword, StandardCharsets.UTF_8);
             String url = String.format("https://apis.data.go.kr/B551011/KorService1/searchKeyword1?numOfRows=%s&pageNo=%s&MobileOS=ETC&MobileApp=etica&_type=json&listYN=Y&arrange=A&keyword=%s&serviceKey=%s",
@@ -172,9 +152,16 @@ public class PlannerService {
             // TourApiResponse 객체로 응답 받기
             tourApiResponse = restTemplate.getForObject(uri , TourApiResponse.class);
 
+            executorService.submit(()->{
+                try{
+                    tourApiDBService.setNewKeywordData(keyword);
+                }catch (Exception e){
+                    System.out.println(e);
+                }
+            });
+
         } catch (RestClientException e) {
-            // 해당 키워드로 불러올 데이터가 없어서 에러가 날때 빈배열로 리턴
-            return new TourApiResponse();
+            return empty();
         } catch (Exception uriException) {
             System.out.println(uriException.getMessage());
         }
@@ -183,8 +170,11 @@ public class PlannerService {
 
     public TourApiResponse getTourData(String data , int page) {
         System.out.println("[plannerService] getTourData");
+        if(data.trim().length() == 0){
+            return empty();
+        }
         int size = 30;
-        Pageable pageable = PageRequest.of(page, size);
+        Pageable pageable = PageRequest.of(page - 1, size);
         Page<TourApiEntity> resultPage = tourApiRepository.findByKeyword("%" + data + "%", pageable);
 
         // TourApiResponse 객체 생성 및 데이터 설정
@@ -204,5 +194,18 @@ public class PlannerService {
         response.setResponse(responseBody);
 
         return response;
+    }
+
+    public TourApiResponse empty(){
+        TourApiResponse apiResponse = new TourApiResponse();
+        TourApiResponse.Response response = new TourApiResponse.Response();
+        TourApiResponse.Response.Body body = new TourApiResponse.Response.Body();
+        TourApiResponse.Response.Body.Items items = new TourApiResponse.Response.Body.Items();
+        body.setTotalCount(0); // 총 개수 0
+        items.setItem(new ArrayList<>()); // 빈 리스트 설정
+        body.setItems(items); // Body에 Items 설정
+        response.setBody(body); // Response에 Body 설정
+        apiResponse.setResponse(response); // TourApiResponse에 Response 설정
+        return apiResponse;
     }
 }

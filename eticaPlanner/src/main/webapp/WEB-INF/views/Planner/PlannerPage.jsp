@@ -47,9 +47,7 @@
                 <!-- 관광지 정보가 스크롤 적용되는 ul 태그 -->
             </ul>
             <div class="searchPageing">
-                <button class="prevPage">이전</button>
                 <span class="pageNumbers"></span>
-                <button class="nextPage">다음</button>
             </div>
         </div>
     </div>

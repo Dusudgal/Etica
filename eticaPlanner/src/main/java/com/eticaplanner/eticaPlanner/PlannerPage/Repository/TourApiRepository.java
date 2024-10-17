@@ -9,6 +9,6 @@ import org.springframework.data.jpa.repository.Query;
 
 public interface TourApiRepository extends JpaRepository<TourApiEntity, Integer> {
 
-    @Query("SELECT t FROM TourApiEntity t WHERE t.title LIKE %:keyword% OR t.addr LIKE %:keyword%")
+    @Query("SELECT t FROM TourApiEntity t WHERE t.tour_title LIKE %:keyword% OR t.tour_addr LIKE %:keyword%")
     Page<TourApiEntity> findByKeyword(@Param("keyword") String keyword, Pageable pageable);
 }

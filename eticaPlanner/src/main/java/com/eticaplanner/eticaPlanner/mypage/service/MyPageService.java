@@ -23,8 +23,8 @@ public class MyPageService {
         UserDto dto = new UserDto();
         UserEntity entity= userRepository.findByUserId(user_id);
         dto.setUser_id(entity.getUserId());
-        dto.setUser_email(entity.getUserEmail());
         dto.setUser_birth(entity.getUserBirth());
+        dto.setUser_phone(entity.getUserPhone());
         dto.setUser_name(entity.getUserName());
         return dto;
     }
