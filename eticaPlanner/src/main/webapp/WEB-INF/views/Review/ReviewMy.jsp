@@ -44,23 +44,25 @@
         <c:if test="${empty userReviews}">
             <p>작성한 리뷰가 없습니다.</p>
         </c:if>
+
+
     </div>
-<div class="pagination">
-    <c:forEach var="i" begin="1" end="${totalPages}">
-        <c:choose>
-            <c:when test="${i == currentPage}">
-                <span class="current-page">${i}</span>
-            </c:when>
+    <div class="pagination">
+        <c:forEach var="i" begin="1" end="${totalPages}">
+            <c:choose>
+                <c:when test="${i == currentPage}">
+                    <span class="current-page">${i}</span>
+                </c:when>
             <c:otherwise>
                 <a href="?currentPage=${i}" class="button">${i}</a>
             </c:otherwise>
         </c:choose>
     </c:forEach>
 
-    <c:if test="${currentPage < totalPages}">
-        <a href="?currentPage=${totalPages}" class="button">마지막</a>
-    </c:if>
-</div>
+        <c:if test="${currentPage < totalPages}">
+            <a href="?currentPage=${totalPages}" class="button">마지막</a>
+        </c:if>
+    </div>
 
 
 </body>

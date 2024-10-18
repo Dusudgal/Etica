@@ -9,15 +9,8 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
 import java.time.LocalDateTime;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -73,15 +66,15 @@ public class ReviewService {
     }
 
 
-    // 관광지별 리뷰 조회
-    public List<ReviewDto> findReviewsByTourTitle(String tourTitle) {
-        System.out.println("[ReviewService] searchReviewsByTourTitle()");
+    // 관광지별 리뷰 페이징 조회
+    public Page<ReviewDto> findReviewsByTourTitle(String tourTitle, int currentPage, int pageSize) {
+        System.out.println("[ReviewService] findReviewsByTourTitle()");
 
-        // 관광지 이름으로 리뷰 정보를 조회하는 로직
-        List<ReviewEntity> tourReviews = reviewRepository.findByTourTitle(tourTitle); // List<ReviewEntity>
+        Pageable pageable = PageRequest.of(currentPage - 1, pageSize);
+        Page<ReviewEntity> tourReviews = reviewRepository.findByTourTitle(tourTitle, pageable); // 페이징된 리뷰 정보 조회
 
         // ReviewEntity 리스트를 ReviewDto 리스트로 변환
-        List<ReviewDto> reviewDtoList = tourReviews.stream()
+        List<ReviewDto> reviewDtoList = tourReviews.getContent().stream()
                 .map(this::convertToDto) // 엔티티를 DTO로 변환
                 .collect(Collectors.toList());
 
@@ -97,8 +90,9 @@ public class ReviewService {
             System.out.println("해당 관광지에 대한 리뷰가 없습니다.");
         }
 
-        return reviewDtoList; // 변환된 DTO 리스트 반환
+        return new PageImpl<>(reviewDtoList, pageable, tourReviews.getTotalElements()); // 변환된 DTO 리스트 반환
     }
+
 
 
     // ReviewEntity를 ReviewDto로 변환하는 메서드
