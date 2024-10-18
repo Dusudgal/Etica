@@ -5,6 +5,7 @@ import com.eticaplanner.eticaPlanner.PlannerPage.Repository.TourApiRepository;
 import com.eticaplanner.eticaPlanner.PlannerPage.controller.ApiComponent;
 import com.eticaplanner.eticaPlanner.PlannerPage.dto.TourApiDTO;
 import com.eticaplanner.eticaPlanner.PlannerPage.dto.TourApiResponse;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -13,6 +14,9 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -21,19 +25,37 @@ public class TourApiDBService {
 
     private final ApiComponent apikey;
     private final TourApiRepository tourApiRepository;
+    //중복 키워드를 문제 없이 처리하기 위해서 만든 변수
+    private final ConcurrentHashMap<String, Lock> keywordLocks = new ConcurrentHashMap<>();
 
     public TourApiDBService(ApiComponent apikey , TourApiRepository tourApiRepository) {
         this.apikey = apikey;
         this.tourApiRepository = tourApiRepository;
     }
-    public void setServerData(){
+
+    public synchronized void setServerData(){
         String[] SearchKeyword = new String[]{"서울", "부산", "대구", "인천", "광주", "대전", "울산", "세종", "경기", "강원", "충북", "충남", "전북", "전남", "경북", "경남", "제주"};
         setTourData(SearchKeyword);
     }
+
     public void setNewKeywordData(String newKeyword){
-        setTourData(new String[]{newKeyword});
+        // 키워드에 대한 락 생성 또는 가져오기
+        Lock lock = keywordLocks.computeIfAbsent(newKeyword, k -> new ReentrantLock());
+        // 락
+        lock.lock();
+        try {
+            // 이미 처리 중인 키워드인지 체크
+            if (!lock.tryLock()) {
+                return; // 이미 처리 중인 경우 메서드 종료
+            }
+            setTourData(new String[]{newKeyword});
+        } finally {
+            lock.unlock(); // 처리 완료 후 락 해제
+            keywordLocks.remove(newKeyword); // 키워드 제거
+        }
     }
 
+    @Transactional
     public void setTourData(String[] SearchKeyword) {
         System.out.println("관광지 데이터 업데이트 시작");
         RestTemplate restTemplate = new RestTemplate();
@@ -66,8 +88,21 @@ public class TourApiDBService {
             do {
                 try {
                     String encodedKeyword = URLEncoder.encode(keyword, "UTF-8");
-                    String url = String.format("https://apis.data.go.kr/B551011/KorService1/searchKeyword1?numOfRows=%s&pageNo=%s&MobileOS=ETC&MobileApp=etica&_type=json&listYN=Y&arrange=D&keyword=%s&serviceKey=%s",
-                            numOfRows, pageNo, encodedKeyword, Tour_key);
+
+                    StringBuilder urlBuilder = new StringBuilder("https://apis.data.go.kr/B551011/KorService1/searchKeyword1?");
+                    urlBuilder.append(String.format("numOfRows=%s", numOfRows))
+                            .append("&")
+                            .append(String.format("pageNo=%s", pageNo))
+                            .append("&MobileOS=ETC")
+                            .append("&MobileApp=etica")
+                            .append("&_type=json")
+                            .append("&listYN=Y")
+                            .append("&arrange=A")
+                            .append(String.format("&keyword=%s", encodedKeyword))
+                            .append("&serviceKey=")
+                            .append(Tour_key);
+
+                    String url = urlBuilder.toString();
                     URI uri = new URI(url);
 
                     TourApiResponse response = restTemplate.getForObject(uri, TourApiResponse.class);

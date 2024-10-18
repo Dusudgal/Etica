@@ -32,6 +32,7 @@
     </div>
     <div class="container">
         <div class="row">
+            <div> 일정 <br> </div>
             <div id="dayButtons"></div>
         </div>
         <div class="row">

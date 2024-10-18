@@ -1,6 +1,5 @@
 package com.eticaplanner.eticaPlanner.PlannerPage.service;
 
-import com.eticaplanner.eticaPlanner.Admin.entity.TravelEntity;
 import com.eticaplanner.eticaPlanner.Admin.repository.TravelRepository;
 import com.eticaplanner.eticaPlanner.PlannerPage.Entity.TourApiEntity;
 import com.eticaplanner.eticaPlanner.PlannerPage.Entity.TravelDetailPlanEntity;
@@ -14,7 +13,6 @@ import com.eticaplanner.eticaPlanner.PlannerPage.dto.*;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -140,13 +138,24 @@ public class PlannerService {
         RestTemplate restTemplate = new RestTemplate();
         TourApiResponse tourApiResponse = new TourApiResponse();
         int numOfRows = 30;
-        if(keyword.trim().length() == 0){
+        if(keyword.trim().isEmpty()){
             return empty();
         }
         try {
-            String encodedKeyword = URLEncoder.encode(keyword, StandardCharsets.UTF_8);
-            String url = String.format("https://apis.data.go.kr/B551011/KorService1/searchKeyword1?numOfRows=%s&pageNo=%s&MobileOS=ETC&MobileApp=etica&_type=json&listYN=Y&arrange=A&keyword=%s&serviceKey=%s",
-                    numOfRows, page, encodedKeyword, Tour_key);
+            StringBuilder urlBuilder = new StringBuilder("https://apis.data.go.kr/B551011/KorService1/searchKeyword1?");
+            urlBuilder.append(String.format("numOfRows=%s", numOfRows))
+                    .append("&")
+                    .append(String.format("pageNo=%s", page))
+                    .append("&MobileOS=ETC")
+                    .append("&MobileApp=etica")
+                    .append("&_type=json")
+                    .append("&listYN=Y")
+                    .append("&arrange=A")
+                    .append(String.format("&keyword=%s", URLEncoder.encode(keyword, StandardCharsets.UTF_8)))
+                    .append("&serviceKey=")
+                    .append(Tour_key);
+
+            String url = urlBuilder.toString();
             URI uri = new URI(url);
 
             // TourApiResponse 객체로 응답 받기
@@ -156,10 +165,11 @@ public class PlannerService {
                 try{
                     tourApiDBService.setNewKeywordData(keyword);
                 }catch (Exception e){
-                    System.out.println(e);
+                    System.out.println("오류 발생: " + e.getMessage());
                 }
             });
 
+            // 키워드로 검색시 데이터가 없을경우 빈파일로 처리
         } catch (RestClientException e) {
             return empty();
         } catch (Exception uriException) {
@@ -168,14 +178,14 @@ public class PlannerService {
         return tourApiResponse;
     }
 
-    public TourApiResponse getTourData(String data , int page) {
+    public TourApiResponse getTourData(String keyword , int page) {
         System.out.println("[plannerService] getTourData");
-        if(data.trim().length() == 0){
+        if(keyword.trim().isEmpty()){
             return empty();
         }
         int size = 30;
         Pageable pageable = PageRequest.of(page - 1, size);
-        Page<TourApiEntity> resultPage = tourApiRepository.findByKeyword("%" + data + "%", pageable);
+        Page<TourApiEntity> resultPage = tourApiRepository.findByKeyword("%" + keyword + "%", pageable);
 
         // TourApiResponse 객체 생성 및 데이터 설정
         TourApiResponse response = new TourApiResponse();
@@ -184,12 +194,21 @@ public class PlannerService {
 
         // 총 개수 및 아이템 리스트 설정
         body.setTotalCount((int) resultPage.getTotalElements());
-
         body.setItems(new TourApiResponse.Response.Body.Items());
+        // 페이지로 불러온 데이터 DTO에 저장
         body.getItems().setItem(resultPage.getContent().stream()
                 .map(TourApiDTO::new)
                 .collect(Collectors.toList()));
 
+        if(body.getTotalCount() < 50){
+            executorService.submit(()->{
+                try{
+                    tourApiDBService.setNewKeywordData(keyword);
+                }catch (Exception e){
+                    System.out.println(e.getMessage());
+                }
+            });
+        }
         responseBody.setBody(body);
         response.setResponse(responseBody);
 
