@@ -19,6 +19,7 @@
 </head>
 <body>
     <jsp:include page="./include/header.jsp" />
+    <jsp:include page="./template/weather.jsp" />
     <section class="contents my-5">
         <div class="container-fluid">
             <div class="planner-container">

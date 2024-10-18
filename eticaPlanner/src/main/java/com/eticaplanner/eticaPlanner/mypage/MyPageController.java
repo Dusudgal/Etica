@@ -3,8 +3,6 @@ package com.eticaplanner.eticaPlanner.mypage;
 import com.eticaplanner.eticaPlanner.PlannerPage.dto.TravelTitlePlanDTO;
 import com.eticaplanner.eticaPlanner.PlannerPage.service.PlannerService;
 import com.eticaplanner.eticaPlanner.SessionDto;
-import com.eticaplanner.eticaPlanner.kakao.dto.KakaoUserDto;
-import com.eticaplanner.eticaPlanner.user.dto.UserDto;
 import com.eticaplanner.eticaPlanner.user.entity.UserEntity;
 import com.eticaplanner.eticaPlanner.user.repository.UserRepository;
 import com.eticaplanner.eticaPlanner.mypage.service.MyPageService;
@@ -39,6 +37,54 @@ public class MyPageController {
     public MyPageController(PlannerService plannerService) {
         this.plannerService = plannerService;
     }
+//    @GetMapping("/mypage")
+//    public String mypage(Model model, HttpSession session) {
+//        System.out.println("[MyPageController] mypage");
+//        String userId = (String) session.getAttribute("user_id");
+//        System.out.println(userId);
+//        if (userId == null) {
+//            return "redirect:/user/sign-in-view";
+//        }
+//
+//        UserEntity memberResult = myPageService.memberRight(userId);
+//
+//        model.addAttribute("userInfo", memberResult);
+//
+//        UserEntity user = userRepository.findByUserId(userId);
+//
+//        model.addAttribute("user", user);
+//
+//        model.addAttribute("viewName", "MyPage/myPage");
+//
+//        this.nextPage = "template/layout";
+//
+//        return this.nextPage;
+//    }
+//
+//    @PostMapping("/mypage")
+//    public String changePassword(Model model,
+//                                 @RequestParam("currentPassword") String currentPassword,
+//                                 @RequestParam("newPassword") String newPassword,
+//                                 @RequestParam("passwordConfirm") String passwordConfirm,
+//                                 HttpSession session) {
+//
+//        String userId = (String) session.getAttribute("user_id");
+//
+//        boolean changeConfirm = myPageService.changePassword(userId, currentPassword, newPassword, passwordConfirm);
+//
+//        if (changeConfirm) {
+//            model.addAttribute("message", "Successful");
+//        } else {
+//            model.addAttribute("message", "Fail");
+//        }
+//
+//        model.addAttribute("viewName", "MyPage/myPage");
+//
+//        this.nextPage = "template/layout";
+//        return this.nextPage;
+//    }
+
+    // 수정본
 
     @GetMapping("/mypage")
     public String mypage(Model model, HttpSession session) {
@@ -49,19 +95,21 @@ public class MyPageController {
             return "redirect:/user/sign-in-view";
         }
 
-        String userId;
+        String userId = sessionInfo.getUser_id();
+        UserEntity userInfo;
 
-        if (sessionInfo.getUser_id() != null) {
-            UserDto user = myPageService.memberRight(sessionInfo.getUser_id());
-            userId = sessionInfo.getUser_id();
-            model.addAttribute("user", user);
+        if (userId != null) {
+            userInfo = myPageService.memberRight(userId);
         } else {
-            // 카카오 사용자 정보 처리
-            userId = sessionInfo.getKakao_id();
-            UserDto user = new UserDto();
-            user.setUser_email(sessionInfo.getKakao_email());
-            model.addAttribute("user", user);
+            // 카카오 사용자 정보 처리 (필요 시)
+            String kakaoId = sessionInfo.getKakao_id();
+            userInfo = myPageService.memberRight(kakaoId); // 카카오 ID를 사용하여 사용자 정보를 가져옴
         }
+
+        model.addAttribute("userInfo", userInfo);
+
+        UserEntity user = userRepository.findByUserId(userId != null ? userId : sessionInfo.getKakao_id());
+        model.addAttribute("user", user);
 
         List<TravelTitlePlanDTO> plannerList = plannerService.SelectPlanTitle(userId != null ? userId : sessionInfo.getKakao_id());
         model.addAttribute("plannerList", plannerList);
@@ -81,6 +129,7 @@ public class MyPageController {
         if (sessionInfo == null) {
             return "redirect:/user/sign-in-view"; // 세션 정보가 없으면 로그인 페이지로 리다이렉트
         }
+
         String userId = sessionInfo.getUser_id();
 
         // 카카오 로그인인 경우 비밀번호 변경을 허용하지 않을 수 있음
