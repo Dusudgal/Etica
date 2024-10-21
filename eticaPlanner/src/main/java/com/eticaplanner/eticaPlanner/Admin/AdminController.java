@@ -2,14 +2,14 @@ package com.eticaplanner.eticaPlanner.Admin;
 
 import com.eticaplanner.eticaPlanner.Admin.entity.AdminDTo;
 import com.eticaplanner.eticaPlanner.Admin.entity.TravelDTO;
-import com.eticaplanner.eticaPlanner.Admin.entity.TravelEntity;
+import com.eticaplanner.eticaPlanner.PlannerPage.Entity.TourApiEntity;
 import com.eticaplanner.eticaPlanner.PlannerPage.TourApiDBService;
 import com.eticaplanner.eticaPlanner.PlannerPage.controller.ApiComponent;
 import com.eticaplanner.eticaPlanner.noticeBoard.dto.NoticeListResponseDto;
-import com.eticaplanner.eticaPlanner.noticeBoard.service.BoardService;
 import com.eticaplanner.eticaPlanner.noticeBoard.service.NoticeService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -69,6 +69,9 @@ public class AdminController {
         } catch (IllegalArgumentException e) {
             System.out.println("[AdminController] login Fail!");
             int failedAttempts = adminService.getFailedAttempts(admin_id);
+
+            // 이전에 입력한 아이디를 모델에 추가
+            model.addAttribute("previousAdminId", admin_id);
             model.addAttribute("failedAttempts",failedAttempts);
             return "Admin/login_ng";
         } catch (AccountLockedException e) {
@@ -147,26 +150,46 @@ public class AdminController {
         return mav;
     }
 
-    // 여행지 리스트 정렬
+    // 여행지 검색 기능 구현
     @GetMapping("/list_travel")
-    public ModelAndView getTravelList(Model model){
-        System.out.println("[AdminController] getTravelList()");
-        ModelAndView mav = new ModelAndView("template/Adminlayout");
-        List<TravelEntity> travels = adminService.getAllTravels();
-        model.addAttribute("travels", travels);
-        mav.addObject("travels",travels);
-        mav.addObject("viewName","Admin/list_travel");
+    public ModelAndView listTravel(@RequestParam(value = "query", defaultValue = "") String query,
+                                     @RequestParam(value = "page", defaultValue = "1") int page,
+                                     @RequestParam(value = "size", defaultValue = "10") int size,
+                                     Model model) {
+        Page<TourApiEntity> searchResults = adminService.searchTravels(query, page, size);
+        model.addAttribute("travels", searchResults.getContent());
+        model.addAttribute("totalPages", searchResults.getTotalPages());
+        model.addAttribute("currentPage", page);
+        model.addAttribute("query",query);
 
+        ModelAndView mav = new ModelAndView("template/Adminlayout");
+        mav.addObject("viewName", "Admin/list_travel");
+        return mav;
+    }
+
+    // 여행지 검색 기능 구현
+    @GetMapping("/search_travel")
+    public ModelAndView searchTravel(@RequestParam(value = "query", defaultValue = "") String query,
+                                     @RequestParam(value = "page", defaultValue = "1") int page,
+                                     @RequestParam(value = "size", defaultValue = "10") int size,
+                                     Model model) {
+        Page<TourApiEntity> searchResults = adminService.searchTravels(query, page - 1, size);
+        model.addAttribute("travels", searchResults.getContent());
+        model.addAttribute("totalPages", searchResults.getTotalPages());
+        model.addAttribute("currentPage", page);
+        model.addAttribute("query",query);
+
+        ModelAndView mav = new ModelAndView("template/Adminlayout");
+        mav.addObject("viewName", "Admin/list_travel");
         return mav;
     }
 
     // 관리자가 추가한 여행지 삭제
     @PostMapping("/delete_travel")
-    public String deleteTravel(@RequestParam("id") String travelName, RedirectAttributes redirectAttributes) {
-        System.out.println("[AdminController] delete_travel()");
+    public String deleteTravel(@RequestParam("id") Long travelId, RedirectAttributes redirectAttributes) {
         try {
-            adminService.deleteTravelByName(travelName);
-            redirectAttributes.addFlashAttribute("sucessMessage", "여행지가 성공적으로 삭제되었습니다.");
+            adminService.deleteTravelById(travelId);
+            redirectAttributes.addFlashAttribute("successMessage", "여행지가 성공적으로 삭제되었습니다.");
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("errorMessage", "여행지 삭제중 오류가 발생하였습니다.");
         }
@@ -177,7 +200,7 @@ public class AdminController {
     @GetMapping("/edit_travel")
     public ModelAndView showEditTravelPage(@RequestParam("id") Long travelId, Model model) {
         System.out.println("[AdminController] showEditTravelPage()");
-        TravelEntity travel = adminService.getTravelById(travelId);
+        TourApiEntity travel = adminService.getTravelById(travelId);
 
         // 카카오 API 키를 전달하여 뷰에 제공
         String mapKey = apiKeys.map_apikey();
@@ -215,6 +238,7 @@ public class AdminController {
 
         return mav;
     }
+
 
     //로그아웃
     @GetMapping("/logout")

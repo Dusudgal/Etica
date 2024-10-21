@@ -8,23 +8,30 @@ body {
     padding: 20px;
 }
 
+h2 {
+    margin: 0;
+    color : #00BFFF;
+}
+
 .header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 20px;
-}
-
-h2 {
-    margin: 0;
+    margin-bottom: 15px;
 }
 
 .add-button {
-    background-color: #F7B5CA;
+    background-color: #00BFFF;
     color: white;
-    padding: 10px 20px;
-    text-decoration: none;
-    border-radius: 5px;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.button-group {
+    display: flex;
+    gap: 10px;
 }
 
 .travel-container {
@@ -39,12 +46,13 @@ h2 {
     align-items: center;
     padding: 10px;
     background-color: #white;
-    border: 1px solid #F7B5CA;
+    border: 1px solid #00BFFF;
     border-radius: 5px;
 }
 
 .travel-content h3 {
     margin: 0 0 10px 0;
+    font-size: large;
 }
 
 .button-container {
@@ -52,8 +60,8 @@ h2 {
     gap: 10px;
 }
 
-button {
-    background-color: #F7B5CA;
+.edit-button {
+    background-color: #00BFFF;
     color: white;
     border: none;
     padding: 5px 10px;
@@ -61,6 +69,56 @@ button {
     cursor: pointer;
 }
 
+.delete-button {
+        background-color: #ff4d4f;
+        color: white;
+        border: none;
+        padding: 5px 10px;
+        border-radius: 3px;
+        cursor: pointer;
+}
+
 button:hover {
     background-color: #0056b3;
+}
+
+.pagination ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+}
+
+.pagination li {
+    margin: 0 5px;
+}
+
+.pagination a {
+    text-decoration: none;
+    color: #000;
+    padding: 5px 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.pagination a:hover {
+    background-color: #f0f0f0;
+}
+
+.search-input{
+    width: 700px;
+    height: 30px;
+    border: 1px solid #00BFFF;
+    margin-bottom: 20px;
+    border-radius: 4px;
+}
+
+.search-button{
+    background-color: #00BFFF;
+    margin-left: 10px;
+    border-radius: 4px;
+    width: 40px;
+    height: 30px;
+    color: white;
 }

@@ -20,31 +20,33 @@
 
 form input {
     border: none;
-    border-bottom: 1px solid #F7B5CA;
+    border-bottom: 1px solid #00BFFF;
     -webkit-appearance: none;
     box-shadow: none;
     border-radius: 0;
+    width: 220px;
 }
 
 form textarea {
-    border: 1px solid #F7B5CA;
+    border: 1px solid #00BFFF;
     vertical-align: top;
     margin-bottom: 20px;
 }
 
 #travel_name {
-    margin-bottom: 20px;
+    margin-bottom: 30px;
 }
 
 #travel_context {
-    width: 400px;
-    height: 200px;
-    vertical-align: top;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
 }
 
-#travel_X-marker, #travel_Y-marker {
-    margin-bottom: 20px;
+#travel_X_marker{
+    margin-bottom: 30px;
+}
+
+#travel_Y_marker {
+    margin-bottom: 30px;
 }
 
 .button-container {
@@ -53,11 +55,18 @@ form textarea {
     gap: 10px;
     margin-top: 50px;
 }
+.add-button{
+        color: #fff;
+        height: 30px;
+        width: 50px;
+        background-color: #00BFFF;
+        border: none;
+}
 
-button {
+.cancel-button {
     color: #fff;
     height: 30px;
     width: 50px;
-    background-color: #F7B5CA;
+    background-color: #ff4d4f;
     border: none;
 }

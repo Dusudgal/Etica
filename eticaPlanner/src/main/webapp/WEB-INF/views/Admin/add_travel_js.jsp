@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<script type="text/javascript" src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=${map_key}"></script>
+<script type="text/javascript" src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=${map_key}&libraries=services"></script>
 <script>
     // 지도 초기화 스크립트
     function initMap() {
@@ -21,20 +21,31 @@
 
         marker.setMap(map);
 
+        // 좌표 -> 주소 변환 객체
+        var geocoder = new kakao.maps.services.Geocoder();
+
         // 지도 클릭 이벤트를 등록
         kakao.maps.event.addListener(map, 'click', function(mouseEvent){
             //클릭한 위치를 마커 위치로 설정
             var latlng = mouseEvent.latLng;
 
-            marker.setPosition(latlng);
-
             //위도와 경도를 정수로 변환
             var lat = latlng.getLat().toFixed(5);
             var lng = latlng.getLng().toFixed(5);
 
+            marker.setPosition(latlng);
+
             //HTML 폼에 좌표 입력
             document.getElementById('travel_X_marker').value = lat;
             document.getElementById('travel_Y_marker').value = lng;
+
+            //좌표를 주소로 변환
+             geocoder.coord2Address(lng, lat, function(result, status) {
+                if(status === kakao.maps.services.Status.OK) {
+                    var detailAddr = result[0].road_address ? result[0].road_address.address_name : result[0].address.address_name;
+                    document.getElementById('travel_context').value = detailAddr;
+                }
+           });
         });
     }
 

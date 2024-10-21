@@ -12,7 +12,7 @@
             background-color: #ffffff; /* 하얀색 배경 */
         }
         h2 {
-            color: #d5006d; /* 제목 색상 */
+            color: #00BFFF; /* 제목 색상 */
             text-align: center;
             margin-top: 70px;
         }
@@ -25,18 +25,18 @@
         th, td {
             text-align: center;
             padding: 12px;
-            border: 1px solid #d5006d; /* 테두리 색상 */
+            border: 1px solid #00BFFF; /* 테두리 색상 */
         }
         th {
-            background-color: #ff8b8b; /* 헤더 배경색 */
+            background-color: #00BFFF; /* 헤더 배경색 */
             color: #fff; /* 헤더 글자 색상 */
         }
         tr:nth-child(even) {
-            background-color: #f4c3d7; /* 짝수 행 배경색 */
+            background-color: #F0F8FF; /* 짝수 행 배경색 */
         }
         tr:hover {
-            background-color: #ff8b8b; /* 행 호버 효과 */
-            color: #fff; /* 호버 시 글자 색상 */
+            background-color: #87CEFA; /* 행 호버 효과 */
+            color: #black; /* 호버 시 글자 색상 */
         }
         a {
             color: #d5006d; /* 링크 색상 */
@@ -51,7 +51,7 @@
              width: 150px;
              margin: 20px auto;
              padding: 10px 0;
-             background-color: #d5006d;
+             background-color: #00BFFF;
              color: white;
              text-align: center;
              border-radius: 5px;
@@ -66,7 +66,7 @@
 <body>
 <jsp:include page="login_ok.jsp"/>
 <div class="container">
-    <h2>메모 게시판</h2>
+    <h2>게시판 목록</h2>
     <table>
         <thead>
         <tr>
