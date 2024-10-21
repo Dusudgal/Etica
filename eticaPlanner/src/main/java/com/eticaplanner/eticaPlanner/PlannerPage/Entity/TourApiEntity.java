@@ -15,32 +15,32 @@ public class TourApiEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) // 기본 키 자동 생성 전략
-    private Long id; // 기본 키 필드
+    private Long tour_no; // 기본 키 필드
 
     @Column(nullable = false)
-    private String title;
+    private String tour_title;
 
-    private String img;
+    private String tour_img;
 
-    private String addr;
+    private String tour_addr;
 
-    private String mapx;
+    private String tour_mapx;
 
-    private String mapy;
+    private String tour_mapy;
 
     public TourApiEntity(TourApiDTO apiDTO){
-        this.img = apiDTO.getFirstimage2();
-        this.addr = apiDTO.getAddr1() + apiDTO.getAddr2();
-        this.title = apiDTO.getTitle();
-        this.mapx = apiDTO.getMapx();
-        this.mapy = apiDTO.getMapy();
+        this.tour_img = apiDTO.getFirstimage();
+        this.tour_addr = apiDTO.getAddr1() + apiDTO.getAddr2();
+        this.tour_title = apiDTO.getTitle();
+        this.tour_mapx = apiDTO.getMapx();
+        this.tour_mapy = apiDTO.getMapy();
     }
 
     public void updateFrom(TourApiEntity entity) {
-        this.title = entity.title;
-        this.img = entity.img;
-        this.addr = entity.addr;
-        this.mapx = entity.mapx;
-        this.mapy = entity.mapy;
+        this.tour_title = entity.tour_title;
+        this.tour_img = entity.tour_img;
+        this.tour_addr = entity.tour_addr;
+        this.tour_mapx = entity.tour_mapx;
+        this.tour_mapy = entity.tour_mapy;
     }
 }

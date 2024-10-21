@@ -52,7 +52,12 @@ public class AdminController {
                                  HttpSession session,
                                  Model model) {
         System.out.println("[AdminController] loginConfirm()");
-
+        AdminDTo adminuser =(AdminDTo) session.getAttribute("loginAdminVo");
+        if(adminuser != null){
+            model.addAttribute("viewName" , "Admin/login_ok");
+            this.nextPage = "template/AdminLayout";
+            return this.nextPage;
+        }
         try {
             AdminDTo admin = adminService.loginConfirm(admin_id, admin_pw);
             session.setAttribute("loginedAdminVo", admin);
@@ -223,6 +228,6 @@ public class AdminController {
     @PostMapping("/tour_api")
     public void  tourApi(){
         System.out.println("[AdminController] Tour_API()");
-        tourApiDBService.setServerData();
+        tourApiDBService.setServerUpdateData();
     }
 }

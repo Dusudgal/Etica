@@ -1,18 +1,19 @@
 /* 전체 화면을 채우는 컨테이너 */
-body{
-    background : #ddd;
+body {
+    background: #ffe;
+    height: 100vh;
 }
+
 .container {
     display: flex;
     flex-direction: row;
-    height: 100vh;
+    height: 94vh;
     margin: 0;
     overflow: hidden;
 }
 
 input {
     border: none;
-    border: 0 0 1px 0;
     border-bottom: 1px solid #ccc;
 }
 
@@ -23,6 +24,7 @@ input:focus {
 
 /* 각 줄 스타일 */
 .row {
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     display: flex;
     flex-direction: column; /* 세로 방향으로 나열 */
     align-items: center;
@@ -30,6 +32,8 @@ input:focus {
     border: 1px solid #fff; /* 줄 사이에 경계선 추가 */
     font-size: 1.5rem;
     color: #000;
+    margin: 10px; /* 줄 간격 추가 */
+    border-radius: 8px; /* 둥글게 처리 */
 }
 
 /* 지도 화면 크기 조정 */
@@ -46,13 +50,30 @@ input:focus {
     align-items: stretch;
 }
 
-#dayButtons{
+#dayButtons {
     display: flex; /* 버튼을 가로로 나열 */
     flex-direction: column;
-    background-color:transparent;
+    background-color: transparent;
     color: pink;
     width: 100%;
     flex: 1;
+    overflow-y: auto; /* 수직 스크롤 활성화 */
+    scrollbar-width: none; /* Firefox에서 스크롤바 숨기기 */
+    -ms-overflow-style: none; /* IE 및 Edge에서 스크롤바 숨기기 */
+}
+/* Webkit 기반 브라우저에서 스크롤바 숨기기 */
+#dayButtons::-webkit-scrollbar {
+    display: none; /* 스크롤바 숨기기 */
+}
+
+#dayButtons button {
+    height : 35px;
+    margin: 0; /* 버튼의 마진 제거 */
+    padding: 0; /* 버튼의 패딩 제거 */
+}
+
+#dayButtons button:hover {
+    background: rgba(0, 123, 255, 0.1); /* 호버 시 배경색 추가 */
 }
 
 .row:nth-child(2) {
@@ -62,7 +83,7 @@ input:focus {
     flex-direction: column;
     justify-content: flex-start; /* 상단 정렬 */
     background-color: #fff;
-    margin-left : 1px;
+    margin-left: 1px;
 }
 
 .row:nth-child(4) {
@@ -80,40 +101,39 @@ input:focus {
     flex-direction: row; /* 수평 방향으로 나열 */
     width: 100%; /* 전체 너비 사용 */
     gap: 10px; /* 검색창과 버튼 간의 간격 설정 */
-    background : #fff;
-    margin-bottom : 1px;
+    background: #fff;
+    margin-bottom: 1px;
+    border-radius: 8px; /* 둥글게 처리 */
 }
-
 
 #title {
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    background : #fff;
-    justify-content: center;
-    align-items: center;
-    height : 40px;
-    margin-bottom : 1px;
-}
-#title > label{
-    margin-right : 5px;
+    background: #fff;
+    height: 40px;
+    margin-bottom: 1px;
+    border-radius: 8px; /* 둥글게 처리 */
 }
 
-/* 2번째 메모 할수 있는 일정 정보란 설정 */
+#title > label {
+    margin-right: 5px;
+}
+
+/* 2번째 메모 할 수 있는 일정 정보란 설정 */
 .touristSpotListUl {
     flex: 1;
     max-height: 99%; /* 부모 div의 크기에 맞게 최대 높이 설정 */
-    max-width: 99%;
     width: 99%;
     overflow-y: auto; /* 수직 스크롤 활성화 */
     list-style-type: disc;
-    padding-left: 2px;
+    padding-left: 5px; /* 리스트 패딩 증가 */
     margin: 0;
     background-color: #f9f9f9;
 }
 
-/* 리스트 항목 스타일 (선택 사항) */
+/* 리스트 항목 스타일 */
 .touristSpotListUl li {
     display: flex;
     flex-direction: column;
@@ -123,6 +143,13 @@ input:focus {
     box-sizing: border-box;
     border: 2px solid #ddd;
     background-color: #fff;
+    border-radius: 8px; /* 둥글게 처리 */
+    transition: box-shadow 0.3s; /* 부드러운 전환 효과 */
+}
+
+/* 리스트 항목 호버 효과 */
+.touristSpotListUl li:hover {
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); /* 호버 시 그림자 추가 */
 }
 
 /* 리스트 항목 이미지 스타일 */
@@ -131,9 +158,9 @@ input:focus {
     height: auto; /* 이미지 비율 유지 */
 }
 
-.touristSpotListUl li h5 {
+.touristSpotListUl li h4 {
     font-size: 1rem; /* 제목 글자 크기 설정 */
-    margin: 0 0 5px 0; /* 제목과 텍스트 사이의 간격 설정 */
+    margin: 0 5px 5px 0; /* 제목과 텍스트 사이의 간격 설정 */
 }
 
 .touristSpotListUl li p {
@@ -143,18 +170,25 @@ input:focus {
 
 /* 검색창 및 버튼 스타일 */
 .touristSpotSearch {
-    width : 240px;
+    width: 240px;
     padding: 8px; /* 입력 필드 패딩 설정 */
     flex: 1; /* 검색창이 가능한 넓이 차지 */
-    box-sizing: border-box;w
+    box-sizing: border-box;
 }
 
 .listSearch {
     border: 1px solid #fff;
 }
 
-.tourMemo{
+.tourMemo {
+    display: flex; /* 버튼을 가로로 나열 */
+    flex-direction: column; /* 수직 방향으로 나열 */
     overflow-y: auto;
+    scrollbar-width: none; /* Firefox에서 스크롤바 숨기기 */
+    -ms-overflow-style: none; /* IE 및 Edge에서 스크롤바 숨기기 */
+}
+.tourMemo::-webkit-scrollbar {
+    display: none; /* 스크롤바 숨기기 */
 }
 
 .touristSpotMemo {
@@ -163,13 +197,9 @@ input:focus {
     width: 99%;
     overflow-y: auto; /* 수직 스크롤 활성화 */
     list-style-type: disc; /* 기본 리스트 스타일 유지 */
-    padding-left: 2px; /* 기본 리스트 패딩 */
+    padding-left: 5px; /* 기본 리스트 패딩 */
     margin: 0;
     background-color: #f9f9f9; /* 배경색 */
-}
-img{
-    width: 80px;
-    higth: 100px;
 }
 
 /* 리스트 항목 스타일 */
@@ -180,8 +210,15 @@ img{
     margin-bottom: 10px; /* 항목 간의 간격 설정 */
     padding: 10px; /* 항목 내 여백 설정 */
     box-sizing: border-box; /* 패딩과 테두리를 요소의 전체 너비/높이에 포함 */
-    border: 2px solid #fff; /* 항목 테두리 추가 */
+    border: 2px solid #ddd; /* 항목 테두리 추가 */
     background-color: #fff; /* 항목 배경색 */
+    border-radius: 8px; /* 둥글게 처리 */
+    transition: box-shadow 0.3s; /* 부드러운 전환 효과 */
+}
+
+/* 리스트 항목 호버 효과 */
+.touristSpotMemo li:hover {
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); /* 호버 시 그림자 추가 */
 }
 
 /* 리스트 항목 이미지 스타일 */
@@ -190,7 +227,7 @@ img{
     height: 80px; /* 이미지 비율 유지 */
 }
 
-.touristSpotMemo li h4 {
+.touristSpotMemo > li > h4 {
     font-size: 1rem; /* 제목 글자 크기 설정 */
     margin: 0 0 5px 0; /* 제목과 텍스트 사이의 간격 설정 */
 }
@@ -200,10 +237,15 @@ img{
     margin: 0; /* 본문과 주변 요소 간의 간격 제거 */
 }
 
-button{
-    background : #fff;
-    border : none;
+button {
+    background: #fff;
+    border: none;
+    border-radius: 4px; /* 둥글게 처리 */
+    padding: 10px 10px; /* 버튼 패딩 추가 */
+    cursor: pointer; /* 커서 변경 */
+    transition: background 0.3s; /* 부드러운 전환 효과 */
 }
 
-
-
+button:hover {
+    background: #f0f0f0; /* 호버 시 색상 변경 */
+}
