@@ -25,6 +25,9 @@
 </head>
 <body>
     <div id="title">
+        <a href="/">
+            <img src="<c:url value='/Resources/Img/Eti.png' />" >
+        </a>
         <input type="hidden" id="planNo">
         <label>제목 : <input type="text" id="TourTitle"> </label>
         <label>여행 첫째 날짜: <input type="date" id="startDate"> </label>
@@ -50,9 +53,7 @@
                 <!-- 관광지 정보가 스크롤 적용되는 ul 태그 -->
             </ul>
             <div class="searchPageing">
-                <button class="prevPage">이전</button>
                 <span class="pageNumbers"></span>
-                <button class="nextPage">다음</button>
             </div>
         </div>
     </div>

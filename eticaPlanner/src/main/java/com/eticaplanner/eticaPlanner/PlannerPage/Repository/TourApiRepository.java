@@ -20,8 +20,10 @@ public interface TourApiRepository extends JpaRepository<TourApiEntity, Long> {
     // 여행지 이름으로 삭제하는 부분
     @Modifying
     @Transactional
-    @Query("DELETE FROM TourApiEntity t WHERE t.id = :id")
+    @Query("DELETE FROM TourApiEntity t WHERE t.tour_title = :id")
     void deleteById(@Param("id") Long id);
 
-    List<TourApiEntity> findByTitleLike(String keyword);
+    @Query("SELECT t FROM TourApiEntity t WHERE t.tour_title LIKE %:keyword%")
+    List<TourApiEntity> findByTitleLike(@Param("keyword") String keyword);
+
 }

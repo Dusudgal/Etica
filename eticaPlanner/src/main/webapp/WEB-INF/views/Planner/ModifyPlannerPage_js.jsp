@@ -30,6 +30,8 @@
 
     let currentPage = 0;
     let totalPages = 0;
+    let currentPageGroup = 1; // 현재 페이지 그룹
+    const pagesPerGroup = 5; // 한 그룹에 표시할 페이지 수
     let Searchkeyword = "";
 
     // 카카오 map을 띄우는 곳
@@ -94,32 +96,45 @@
         const pageNumbersContainer = document.querySelector('.pageNumbers');
         pageNumbersContainer.innerHTML = ''; // 기존 페이지 번호 초기화
 
-        for (let i = 1; i <= totalPages; i++) {
+        // 총 페이지 수 계산
+        const totalPageGroups = Math.ceil(totalPages / pagesPerGroup); // 페이지 그룹의 총 수
+        const startPage = (currentPageGroup - 1) * pagesPerGroup + 1; // 현재 그룹의 시작 페이지
+        const endPage = Math.min(startPage + pagesPerGroup - 1, totalPages); // 현재 그룹의 끝 페이지
+
+        // 페이지 버튼 생성
+        for (let i = startPage; i <= endPage; i++) {
             const pageButton = document.createElement('button');
             pageButton.textContent = i;
             pageButton.className = 'pageButton';
             pageButton.onclick = () => {
                 currentPage = i; // 클릭한 페이지로 변경
-                findtouristSpot(keyword  , currentPage); // 데이터 요청
+                findtouristSpot(keyword, currentPage); // 데이터 요청
             };
             pageNumbersContainer.appendChild(pageButton);
         }
+
+        // 이전 그룹 버튼
+        if (currentPageGroup > 1) {
+            const prevGroupButton = document.createElement('button');
+            prevGroupButton.textContent = '이전';
+            prevGroupButton.onclick = () => {
+                currentPageGroup--;
+                updatePagination(); // 페이지 번호 업데이트
+            };
+            pageNumbersContainer.prepend(prevGroupButton);
+        }
+
+        // 다음 그룹 버튼
+        if (currentPageGroup < totalPageGroups) {
+            const nextGroupButton = document.createElement('button');
+            nextGroupButton.textContent = '다음';
+            nextGroupButton.onclick = () => {
+                currentPageGroup++;
+                updatePagination(); // 페이지 번호 업데이트
+            };
+            pageNumbersContainer.appendChild(nextGroupButton);
+        }
     }
-
-    // 페이지 버튼 클릭 이벤트
-    document.querySelector('.prevPage').onclick = () => {
-        if (currentPage > 1) {
-            currentPage--;
-            findtouristSpot(keyword  , currentPage);
-        }
-    };
-
-    document.querySelector('.nextPage').onclick = () => {
-        if (currentPage < totalPages) {
-            currentPage++;
-            findtouristSpot(keyword  , currentPage);
-        }
-    };
 
     function tourBtnClick(e){
         //버튼 위에 부모인 li태그에서 자식의 정보를 불러오기 위한 tourli

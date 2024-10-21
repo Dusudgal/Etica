@@ -1,5 +1,5 @@
 .weather-container{
-    white-space: nowrap;
+    white-space: nowrap;      /* 세로 방향으로 정렬 */
 }
 .weather-item {
     display: inline-block;

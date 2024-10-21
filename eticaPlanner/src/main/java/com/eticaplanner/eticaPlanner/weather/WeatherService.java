@@ -70,7 +70,7 @@ public class WeatherService {
         LocalDateTime time = LocalDateTime.now();
 
         if (time.getMinute() < 30) {
-            time = time.minusHours(1);
+            time = time.minusHours(2);
         }
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH00");
@@ -126,7 +126,7 @@ public class WeatherService {
         }
     }
 
-    @Scheduled(cron = "0 20 * * * ?")
+    @Scheduled(cron = "0 24 * * * ?")
 //    @Scheduled(fixedRate = 60000)
     public void scheduledWeatherUpdate() {
         System.out.println("scheduledWeatherUpdate");

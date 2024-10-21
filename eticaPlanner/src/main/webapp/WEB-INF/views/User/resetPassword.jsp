@@ -32,6 +32,19 @@
         let confirmPassword = $("#confirmPassword").val().trim();
         let token = $("input[name='token']").val(); // hidden input에서 token 가져오기
 
+        // 비밀번호 정규식 검사
+        let regex = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*()])[a-zA-Z\d!@#$%^&*()]{8,12}$/;
+        // 비밀번호 유효성 검사
+        if(!regex.test(newPassword)) {
+            alert("비밀번호는 8자 이상 12자 이하이며, 영문 대소문자, 숫자, 특수문자를 모두 포함해야 합니다.");
+            return false;
+        }
+
+        if(newPassword !== confirmPassword){
+            alert("비밀번호가 일치하지않습니다.")
+            return false;
+        }
+
         $.post("/user/reset-password/confirm", { "token": token, "newPassword": newPassword, "confirmPassword": confirmPassword })
             .done(function(data) {
                 if (data.code === 200) {

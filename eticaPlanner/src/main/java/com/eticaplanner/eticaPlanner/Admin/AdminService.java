@@ -176,10 +176,10 @@ public class AdminService {
     public void updateTravel(TravelDTO travelDTO) {
         TourApiEntity travelEntity = tourApiRepository.findById(travelDTO.getTravel_no())
                 .orElseThrow(() -> new IllegalArgumentException("해당 여행지를 찾을 수 없습니다."));
-        travelEntity.setTitle(travelDTO.getTravel_name());
-        travelEntity.setAddr(travelDTO.getTravel_context());
-        travelEntity.setMapx(travelDTO.getTravel_X_marker());
-        travelEntity.setMapy(travelDTO.getTravel_Y_marker());
+        travelEntity.setTour_title(travelDTO.getTravel_name());
+        travelEntity.setTour_addr(travelDTO.getTravel_context());
+        travelEntity.setTour_mapx(travelDTO.getTravel_X_marker());
+        travelEntity.setTour_mapy(travelDTO.getTravel_Y_marker());
         tourApiRepository.save(travelEntity);
     }
 

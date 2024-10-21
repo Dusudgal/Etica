@@ -4,19 +4,25 @@
     <div class="middle-container">
         <h2 class="planner-title">여행 플래너 목록</h2>
         <div class="planner-list">
-            <c:forEach var="planner" items="${plannerList}">
-                <form action="${pageContext.request.contextPath}/Planner/ViewPlan" method="POST" class="planner-form">
-                    <label class="planner-label">
+            <table>
+                <c:forEach var="planner" items="${plannerList}">
+                    <div class="planner-form">
                         <p>${planner.tour_title}</p>
-                        <input type="hidden" name="tour_title" value="${planner.tour_title}">
-                    </label>
-                    <div class="button-group">
-                        <a href="#" class="planner-button">조회</a>
-                        <a href="#" class="planner-button">수정</a>
-                        <a href="#" class="planner-button">삭제</a>
+                        <form action="${pageContext.request.contextPath}/Planner/ViewPlan" method="POST">
+                            <input type="hidden" name="tour_title" value="${planner.tour_title}">
+                            <button type="submit" class="planner-button">조회</button>
+                        </form>
+                        <form action="${pageContext.request.contextPath}/Planner/ModifyPlan" method="POST">
+                            <input type="hidden" name="tour_title" value="${planner.tour_title}">
+                            <button type="submit" class="planner-button">수정</button>
+                        </form>
+                        <form action="${pageContext.request.contextPath}/Planner/DeletePlan" method="POST">
+                            <input type="hidden" name="tour_title" value="${planner.tour_title}">
+                            <button type="submit" class="planner-button">삭제</button>
+                        </form>
                     </div>
-                </form>
-            </c:forEach>
+                </c:forEach>
+            </table>
         </div>
     </div>
 </div>

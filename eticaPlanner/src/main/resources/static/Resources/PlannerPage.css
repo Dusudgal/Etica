@@ -249,3 +249,34 @@ button {
 button:hover {
     background: #f0f0f0; /* 호버 시 색상 변경 */
 }
+
+#title {
+    display: flex; /* Flexbox 설정 */
+    align-items: center; /* 세로 중앙 정렬 */
+    justify-content: flex-start; /* 왼쪽 정렬 */
+    background: #fff;
+    height: 40px;
+    margin-bottom: 1px;
+    border-radius: 8px; /* 둥글게 처리 */
+    padding: 0; /* 패딩 제거 */
+}
+
+#title > a {
+    margin-right: 450px; /* 이미지와 다른 요소 간의 간격 */
+}
+
+#title > a > img {
+    height: 40px; /* 이미지 높이 설정 */
+    margin: 0; /* 여백 제거 */
+}
+
+/* 모든 label 요소 간의 여백 제거 */
+#title label {
+    margin: 0; /* 여백 제거 */
+    padding: 0 10px; /* 좌우 패딩 추가 (선택 사항) */
+}
+
+#title > button {
+    margin-left: 10px; /* 버튼과 다른 요소 간의 간격 */
+    padding: 0 10px; /* 버튼 패딩 */
+}

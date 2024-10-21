@@ -52,7 +52,6 @@
                 if (!response.ok) {
                     throw new Error("데이터를 받아오지 못하고있습니다.");
                 }
-                console.log(response);
                 const jsonResponse = await response.json();
                 const jsondata = jsonResponse.response?.body?.items?.item || [];
 

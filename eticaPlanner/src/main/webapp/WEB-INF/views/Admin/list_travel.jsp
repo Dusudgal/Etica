@@ -30,16 +30,16 @@
                     <c:forEach var="travel" items="${travels}">
                         <div class="travel-box">
                             <div class="travel-content">
-                                <h3>${travel.title}</h3>
-                                <p>${travel.addr}</p>
+                                <h3>${travel.tour_title}</h3>
+                                <p>${travel.tour_addr}</p>
                             </div>
                             <div class="button-container">
                                 <form action="<c:url value='/Admin/edit_travel'/>" method="get">
-                                    <input type="hidden" name="id" value="${travel.id}"/>
+                                    <input type="hidden" name="id" value="${travel.tour_no}"/>
                                     <button type="submit" class="edit-button">수정</button>
                                 </form>
                                 <form action="<c:url value='/Admin/delete_travel'/>" method="post" style="display:inline;">
-                                    <input type="hidden" name="id" value="${travel.id}"/>
+                                    <input type="hidden" name="id" value="${travel.tour_no}"/>
                                     <button type="submit" class="delete-button" onclick="return confirm('정말 삭제하시겠습니까?')">삭제</button>
                                 </form>
                             </div>

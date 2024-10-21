@@ -18,7 +18,7 @@
             <a href="/board" class="mr-5">공지사항</a>
             <a href="/Review/ReviewIndex" class="mr-5">Review</a>
             <a href="/Planner/PlannerPage" class="mr-5">Planner</a>
-            <a href="Admin/signin" class="mr-5">관리자 로그인</a>
+            <a href="/Admin/signin" class="mr-5">관리자 로그인</a>
         <%-- 로그인 시 --%>
             <c:if test="${not empty sessionInfo.user_id}">
                 <a href="/MyPage/mypage?userId=${sessionInfo.user_id}" class="mr-5" >My Page</a>

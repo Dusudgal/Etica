@@ -1,12 +1,12 @@
 * {
     box-sizing: border-box;
+    text-align : center;
 }
 
 body {
     font-family: Arial, sans-serif;
     margin-top: 0;
     padding: 0;
-    background-color: #f8f9fa; /* 배경색 추가 */
 }
 
 .contents {
@@ -16,6 +16,7 @@ body {
     flex-direction: column; /* 세로 방향으로 정렬 */
     align-items: center; /* 중앙 정렬 */
 }
+
 
 .container-fluid {
     display: flex; /* 가로 정렬 */
@@ -38,6 +39,9 @@ body {
     flex-direction: column; /* 버튼을 수직으로 배치 */
     align-items: flex-start; /* 왼쪽 정렬 */
     margin-right: 20px; /* 오른쪽 여백 추가 */
+}
+.planner-container > p {
+    text-align : left;
 }
 
 .button {
@@ -76,4 +80,5 @@ body {
 
 .planner-div {
     margin-top: auto; /* 여백을 자동으로 설정하여 아래쪽으로 이동 */
+    text-align : left;
 }
