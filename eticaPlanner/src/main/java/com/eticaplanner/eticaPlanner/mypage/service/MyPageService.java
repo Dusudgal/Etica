@@ -1,8 +1,6 @@
 package com.eticaplanner.eticaPlanner.mypage.service;
 
 import com.eticaplanner.eticaPlanner.common.EncryptUtils;
-import com.eticaplanner.eticaPlanner.kakao.dto.KakaoUserDto;
-import com.eticaplanner.eticaPlanner.user.dto.UserDto;
 import com.eticaplanner.eticaPlanner.user.entity.UserEntity;
 import com.eticaplanner.eticaPlanner.user.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,14 +17,8 @@ public class MyPageService {
     UserRepository userRepository;
 
 
-    public UserDto memberRight(String user_id) {
-        UserDto dto = new UserDto();
-        UserEntity entity= userRepository.findByUserId(user_id);
-        dto.setUser_id(entity.getUserId());
-        dto.setUser_birth(entity.getUserBirth());
-        dto.setUser_phone(entity.getUserPhone());
-        dto.setUser_name(entity.getUserName());
-        return dto;
+    public UserEntity memberRight(String user_id) {
+        return myPageDao.isMember(user_id);
     }
 
     public UserEntity findByUserId(String user_id) {
