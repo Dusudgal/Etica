@@ -23,7 +23,7 @@ body{
 
 .login-wrapper > h2 {
     font-size:60px;
-    color: #F7B5CA;
+    color: #00BFFF;
     margin-bottom: 40px;
 }
 #admin-login{
@@ -48,5 +48,5 @@ body{
 #admin-login > input[type=submit] {
     color:#fff;
     margin-top: 20px;
-    background-color: #F7B5CA;
+    background-color: #00BFFF;
 }

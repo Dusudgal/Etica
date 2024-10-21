@@ -21,8 +21,8 @@
                     <input type="text" id="travel_name" name="travel_name">
                 </div>
                 <div>
-                    <label for="travel_context">여행지 설명</label>
-                    <textarea type="text" id="travel_context" name="travel_context"></textarea>
+                    <label for="travel_context">여행지 주소</label>
+                    <input type="text" id="travel_context" name="travel_context"></input>
                 </div>
                 <div>
                     <label for="travel_X-marker">여행지 X좌표</label>

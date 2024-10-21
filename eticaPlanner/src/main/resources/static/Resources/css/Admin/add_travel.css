@@ -24,6 +24,7 @@ form input {
     -webkit-appearance: none;
     box-shadow: none;
     border-radius: 0;
+    width: 220px;
 }
 
 form textarea {
@@ -33,18 +34,19 @@ form textarea {
 }
 
 #travel_name {
-    margin-bottom: 20px;
+    margin-bottom: 30px;
 }
 
 #travel_context {
-    width: 400px;
-    height: 200px;
-    vertical-align: top;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
 }
 
-#travel_X-marker, #travel_Y-marker {
-    margin-bottom: 20px;
+#travel_X_marker{
+    margin-bottom: 30px;
+}
+
+#travel_Y_marker {
+    margin-bottom: 30px;
 }
 
 .button-container {

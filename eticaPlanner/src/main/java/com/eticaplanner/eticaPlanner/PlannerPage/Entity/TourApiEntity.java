@@ -1,5 +1,6 @@
 package com.eticaplanner.eticaPlanner.PlannerPage.Entity;
 
+import com.eticaplanner.eticaPlanner.Admin.entity.TravelDTO;
 import com.eticaplanner.eticaPlanner.PlannerPage.dto.TourApiDTO;
 import jakarta.persistence.*;
 import lombok.*;
@@ -34,6 +35,14 @@ public class TourApiEntity {
         this.title = apiDTO.getTitle();
         this.mapx = apiDTO.getMapx();
         this.mapy = apiDTO.getMapy();
+    }
+
+    public TourApiEntity(TravelDTO travelDTO) {
+        this.img = "";
+        this.addr = travelDTO.getTravel_context();
+        this.title = travelDTO.getTravel_name();
+        this.mapx = travelDTO.getTravel_X_marker();
+        this.mapy = travelDTO.getTravel_Y_marker();
     }
 
     public void updateFrom(TourApiEntity entity) {

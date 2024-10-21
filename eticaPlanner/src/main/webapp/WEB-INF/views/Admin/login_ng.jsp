@@ -13,7 +13,7 @@
         <div class="login-wrapper">
             <h2>ETICA ADMIN</h2>
             <form method="post" action="<c:url value='/Admin/loginconfirm'/>" id="admin-login">
-                <input type="text" name="admin_id" placeholder="아이디를 입력하세요.">
+                <input type="text" name="admin_id" placeholder="아이디를 입력하세요." value="${previousAdminId}">
                 <input type="password" name="admin_pw" placeholder="비밀번호를 입력하세요.">
             <input type="submit" value="로그인">
             <h3> 로그인이 실패하였습니다. 틀린 횟수: ${failedAttempts}/5 </h3>

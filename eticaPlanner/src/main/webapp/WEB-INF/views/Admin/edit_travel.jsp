@@ -10,28 +10,28 @@
 </head>
 <body>
     <jsp:include page="login_ok.jsp"/>
-    <div class ="layout-wrapper">
-        <div class ="map-placeholder" id="map">
+    <div class="layout-wrapper">
+        <div class="map-placeholder" id="map">
             지도
         </div>
         <div class="form-container">
             <form method="post" action="<c:url value='/Admin/update_travel'/>" id="travelform">
-                <input type="hidden" name="travel_no" value="${travel.travelNo}"/>
+                <input type="hidden" name="travel_no" value="${travel.id}"/>
                 <div>
                     <label for="travel_name">여행지 이름</label>
-                    <input type="text" id="travel_name" name="travel_name" value="${travel.travelName}" required>
+                    <input type="text" id="travel_name" name="travel_name" value="${travel.title}" required>
                 </div>
                 <div>
-                    <label for="travel_context">여행지 설명</label>
-                    <textarea type="text" id="travel_context" name="travel_context" required>${travel.travelText}</textarea>
+                    <label for="travel_context">여행지 주소</label>
+                    <input type="text" id="travel_context" name="travel_context" value="${travel.addr}" required>
                 </div>
                 <div>
                     <label for="travel_X-marker">여행지 X좌표</label>
-                    <input type="text" id="travel_X_marker" name="travel_X_marker" value="${travel.travelXcd}" required>
+                    <input type="text" id="travel_X_marker" name="travel_X_marker" value="${travel.mapx}" required>
                 </div>
                 <div>
                     <label for="travel_Y-marker">여행지 Y좌표</label>
-                    <input type="text" id="travel_Y_marker" name="travel_Y_marker" value="${travel.travelYcd}" required>
+                    <input type="text" id="travel_Y_marker" name="travel_Y_marker" value="${travel.mapy}" required>
                 </div>
             </form>
             <div class="button-container">

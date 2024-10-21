@@ -3,13 +3,15 @@ package com.eticaplanner.eticaPlanner.Admin;
 import com.eticaplanner.eticaPlanner.Admin.entity.AdminDTo;
 import com.eticaplanner.eticaPlanner.Admin.entity.AdminEntity;
 import com.eticaplanner.eticaPlanner.Admin.entity.TravelDTO;
-import com.eticaplanner.eticaPlanner.Admin.entity.TravelEntity;
 import com.eticaplanner.eticaPlanner.Admin.repository.AdminRepository;
 import com.eticaplanner.eticaPlanner.Admin.repository.TravelRepository;
+import com.eticaplanner.eticaPlanner.PlannerPage.Entity.TourApiEntity;
+import com.eticaplanner.eticaPlanner.PlannerPage.Repository.TourApiRepository;
 import com.eticaplanner.eticaPlanner.common.EncryptUtils;
-import jakarta.persistence.PersistenceContext;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.pulsar.PulsarProperties;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.Duration;
@@ -24,6 +26,9 @@ public class AdminService {
 
     @Autowired
     private TravelRepository travelRepository;
+
+    @Autowired
+    private TourApiRepository tourApiRepository;
 
     private AdminDTo ADTO;
 
@@ -135,20 +140,26 @@ public class AdminService {
     // 여행지 데이터베이스에 추가
     public Boolean addTravel(TravelDTO travelDTO) {
         System.out.println("[AdminService] addTravel");
-        TravelEntity result = travelRepository.save(new TravelEntity(travelDTO));
+        TourApiEntity result = tourApiRepository.save(new TourApiEntity(travelDTO));
 
         return result != null;
     }
 
     // 여행지 찾기
-    public List<TravelEntity> getAllTravels(){
-        return travelRepository.findAll();
+    public List<TourApiEntity> getAllTravels(){
+        return tourApiRepository.findAll();
+    }
+
+    //여행지 검색
+    public Page<TourApiEntity> searchTravels(String query, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return tourApiRepository.findByKeyword(query, pageable);
     }
 
     // 여행지 데이터베이스에서 제거
-    public void deleteTravelByName(String travelName){
+    public void deleteTravelById(Long id){
         try {
-            travelRepository.deleteByTravelName(travelName);
+            tourApiRepository.deleteById(id);
         } catch (Exception e){
             e.printStackTrace();
             throw e;
@@ -156,20 +167,20 @@ public class AdminService {
     }
 
     // 여행지 데이터베이스에서 수정페이지 이동
-    public TravelEntity getTravelById(Long travelName) {
-        return travelRepository.findById(travelName)
+    public TourApiEntity getTravelById(Long travelId) {
+        return tourApiRepository.findById(travelId)
                 .orElseThrow(() -> new RuntimeException("해당 ID의 여행지를 찾을수 없습니다."));
     }
 
     // 여행지 데이터베이스에서 수정
     public void updateTravel(TravelDTO travelDTO) {
-        TravelEntity travelEntity = travelRepository.findById(travelDTO.getTravel_no())
+        TourApiEntity travelEntity = tourApiRepository.findById(travelDTO.getTravel_no())
                 .orElseThrow(() -> new IllegalArgumentException("해당 여행지를 찾을 수 없습니다."));
-        travelEntity.setTravelName(travelDTO.getTravel_name());
-        travelEntity.setTravelText(travelDTO.getTravel_context());
-        travelEntity.setTravelXcd(travelDTO.getTravel_X_marker());
-        travelEntity.setTravelYcd(travelDTO.getTravel_Y_marker());
-        travelRepository.save(travelEntity);
+        travelEntity.setTitle(travelDTO.getTravel_name());
+        travelEntity.setAddr(travelDTO.getTravel_context());
+        travelEntity.setMapx(travelDTO.getTravel_X_marker());
+        travelEntity.setMapy(travelDTO.getTravel_Y_marker());
+        tourApiRepository.save(travelEntity);
     }
 
 }
