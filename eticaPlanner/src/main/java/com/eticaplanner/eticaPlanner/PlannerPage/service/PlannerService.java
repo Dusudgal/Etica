@@ -192,14 +192,14 @@ public class PlannerService {
         TourApiResponse.Response responseBody = new TourApiResponse.Response();
         TourApiResponse.Response.Body body = new TourApiResponse.Response.Body();
 
-        // 총 개수 및 아이템 리스트 설정
+        // 검색한 키워드에 대한 총 데이터 수
         body.setTotalCount((int) resultPage.getTotalElements());
         body.setItems(new TourApiResponse.Response.Body.Items());
         // 페이지로 불러온 데이터 DTO에 저장
         body.getItems().setItem(resultPage.getContent().stream()
                 .map(TourApiDTO::new)
                 .collect(Collectors.toList()));
-
+        // 불러온 데이터가 적으면 api를 통해서 해당 키워드로 DB에 저장
         if(body.getTotalCount() < 50){
             executorService.submit(()->{
                 try{
@@ -209,6 +209,7 @@ public class PlannerService {
                 }
             });
         }
+
         responseBody.setBody(body);
         response.setResponse(responseBody);
 

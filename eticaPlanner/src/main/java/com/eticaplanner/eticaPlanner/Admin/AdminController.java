@@ -228,6 +228,6 @@ public class AdminController {
     @PostMapping("/tour_api")
     public void  tourApi(){
         System.out.println("[AdminController] Tour_API()");
-        tourApiDBService.setServerData();
+        tourApiDBService.setServerUpdateData();
     }
 }

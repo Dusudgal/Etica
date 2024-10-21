@@ -38,6 +38,7 @@ public class PlannerController {
         mav.addObject("map_key" , map_key);
         return mav;
     }
+
     @GetMapping("PlannerSaveSuccess")
     public ModelAndView PlannerSaveSuccess(){
         System.out.println("[PlannerController] PlannerSaveSuccess");
@@ -79,7 +80,6 @@ public class PlannerController {
     public ResponseEntity<TourApiResponse> tourApiSearch(@RequestParam("keyword") String keyword, @RequestParam("page") int page) {
         System.out.println("[PlannerController] tourApiSearch");
         TourApiResponse tourApiData = planService.getTourData(keyword , page);
-        // totalCount가 0이고 items가 null인 경우 두 번째 API 호출
         if(tourApiData.getResponse().getBody().getTotalCount() == 0) {
             TourApiResponse tourApiResponse = planService.getTourApiData(apikeys.tour_apikey(), keyword, page);
             return ResponseEntity.ok(tourApiResponse);

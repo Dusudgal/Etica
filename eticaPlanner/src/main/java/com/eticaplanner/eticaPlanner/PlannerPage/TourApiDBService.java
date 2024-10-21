@@ -11,9 +11,7 @@ import org.springframework.web.client.RestTemplate;
 
 import java.net.URI;
 import java.net.URLEncoder;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
@@ -27,31 +25,36 @@ public class TourApiDBService {
     private final TourApiRepository tourApiRepository;
     //중복 키워드를 문제 없이 처리하기 위해서 만든 변수
     private final ConcurrentHashMap<String, Lock> keywordLocks = new ConcurrentHashMap<>();
+    private final ConcurrentHashMap<String, Boolean> processedKeywords = new ConcurrentHashMap<>();
 
     public TourApiDBService(ApiComponent apikey , TourApiRepository tourApiRepository) {
         this.apikey = apikey;
         this.tourApiRepository = tourApiRepository;
     }
 
-    public synchronized void setServerData(){
-        String[] SearchKeyword = new String[]{"서울", "부산", "대구", "인천", "광주", "대전", "울산", "세종", "경기", "강원", "충북", "충남", "전북", "전남", "경북", "경남", "제주"};
-        setTourData(SearchKeyword);
+    public synchronized void setServerUpdateData(){
+        String[] searchKeywords = new String[]{"서울", "부산", "대구", "인천", "광주", "대전", "울산", "세종", "경기", "강원", "충북", "충남", "전북", "전남", "경북", "경남", "제주"};
+
+        // 이미 처리된 키워드와 새로운 키워드를 합쳐서 데이터 업데이트
+        Set<String> allKeywords = ConcurrentHashMap.newKeySet();
+        allKeywords.addAll(processedKeywords.keySet());
+        Collections.addAll(allKeywords, searchKeywords);
+
+        setTourData(allKeywords.toArray(new String[0]));
     }
 
     public void setNewKeywordData(String newKeyword){
-        // 키워드에 대한 락 생성 또는 가져오기
         Lock lock = keywordLocks.computeIfAbsent(newKeyword, k -> new ReentrantLock());
-        // 락
+        // 해당 키워드를 다른 스레드에서 접근할수 없도록 락 설정
         lock.lock();
         try {
-            // 이미 처리 중인 키워드인지 체크
-            if (!lock.tryLock()) {
-                return; // 이미 처리 중인 경우 메서드 종료
+            // 이미 처리 중인 키워드인지 체크 / 키워드 없을시 null 반환
+            if (processedKeywords.putIfAbsent(newKeyword, true) != null) {
+                return;
             }
             setTourData(new String[]{newKeyword});
         } finally {
-            lock.unlock(); // 처리 완료 후 락 해제
-            keywordLocks.remove(newKeyword); // 키워드 제거
+            lock.unlock();
         }
     }
 
@@ -63,12 +66,12 @@ public class TourApiDBService {
         String Tour_key = apikey.tour_apikey();
         List<TourApiEntity> existingTourData = tourApiRepository.findAll();
 
-        // 기존 데이터의 고유 키 맵 생성
+        // 기존 데이터를 불러와서 불러오는 데이터가 DB에 존재하는지 확인하기 위한 변수
         Map<String, TourApiEntity> existingDataMap = existingTourData.stream()
                 .collect(Collectors.toMap(
-                        e -> e.getTour_title() + "_" + e.getTour_addr(), // 고유 키 생성
+                        e -> e.getTour_title() + "_" + e.getTour_addr(),
                         Function.identity(),
-                        (existing, replacement) -> existing // 기존 값 유지
+                        (existing, replacement) -> existing
                 ));
 
         int numOfRows = 30;
