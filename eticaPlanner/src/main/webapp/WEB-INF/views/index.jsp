@@ -19,6 +19,21 @@
 </head>
 <body>
     <jsp:include page="./include/header.jsp" />
+    <!-- 공지사항 팝업 -->
+    <div id="noticePopup" style="display:none;">
+        <h2>공지사항</h2>
+        <c:choose>
+            <c:when test="${not empty notice}">
+                <p><strong>제목:</strong> <c:out value="${notice.title}" /></p>
+                <p><c:out value="${notice.contents}" /></p>
+            </c:when>
+            <c:otherwise>
+                <p>공지사항이 없습니다.</p>
+            </c:otherwise>
+        </c:choose>
+        <button class="popup-close-btn" onclick="closeNoticePopup()">닫기</button>
+        <span class="popup-no-show-24" onclick="setCookieFor24Hours()">24시간 동안 보지 않기</span>
+    </div>
     <jsp:include page="./template/weather.jsp" />
     <section class="contents my-5">
         <div class="container-fluid">
@@ -73,6 +88,45 @@
     imageContainer.src = images[4];
 
     setInterval(showNextImage, 3000); // 3초마다 이미지 변경
+
+    // 공지사항 팝업 로직
+    const noticePopup = document.getElementById("noticePopup");
+
+    function showNoticePopup() {
+        const isPopupDisabled = getCookie("popupDisabled");
+
+        if (!isPopupDisabled && document.querySelector("#noticePopup p")) { // 공지사항이 있을 경우에만 팝업을 띄움
+            noticePopup.style.display = "block";
+        }
+    }
+
+    function closeNoticePopup() {
+        noticePopup.style.display = "none";
+    }
+
+    function setCookie(name, value, hours) {
+        let date = new Date();
+        date.setTime(date.getTime() + (hours * 60 * 60 * 1000));
+        document.cookie = name + "=" + value + "; expires=" + date.toUTCString() + "; path=/";
+    }
+
+    function getCookie(name) {
+        let cookieArr = document.cookie.split(";");
+        for (let i = 0; i < cookieArr.length; i++) {
+            let cookiePair = cookieArr[i].split("=");
+            if (name === cookiePair[0].trim()) {
+                return cookiePair[1];
+            }
+        }
+        return null;
+    }
+
+    function setCookieFor24Hours() {
+        setCookie("popupDisabled", "true", 24);
+        closeNoticePopup();
+    }
+
+    window.onload = showNoticePopup;
 </script>
 
 

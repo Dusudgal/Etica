@@ -1,0 +1,129 @@
+body {
+    background-color: #f4f7fc; /* 부드러운 배경색 */
+    font-family: 'Noto Sans KR', sans-serif;
+    margin: 0;
+    padding: 20px;
+}
+
+.wrap {
+    max-width: 700px; /* 넓이를 약간 더 늘림 */
+    margin: auto;
+    padding: 30px; /* 더 넓은 패딩 */
+    background-color: #ffffff;
+    border-radius: 15px; /* 더 둥글게 변경 */
+    margin-top: 50px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1); /* 박스 그림자 추가 */
+}
+
+h2 {
+    text-align: center;
+    color: #00A5FF; /* 약간 더 어두운 파란색 */
+    font-size: 24px; /* 글자 크기를 키움 */
+    margin-bottom: 20px;
+}
+
+input, textarea {
+    width: 100%;
+    border-radius: 8px; /* 더 둥글게 */
+    border: 1px solid #00BFFF;
+    padding: 12px; /* 패딩을 약간 늘림 */
+    box-sizing: border-box;
+    margin-bottom: 15px;
+    font-size: 16px;
+    transition: border-color 0.3s ease; /* 호버 시 부드러운 전환 */
+}
+
+input:focus, textarea:focus {
+    border-color: #00A5FF; /* 포커스 시 더 진한 파란색 */
+    outline: none;
+    box-shadow: 0 0 10px rgba(0, 165, 255, 0.2); /* 포커스 시 부드러운 그림자 */
+}
+
+textarea {
+    height: 120px; /* 높이를 늘림 */
+    resize: none;
+}
+
+button {
+    width: 100%;
+    background-color: #00BFFF;
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s, transform 0.2s; /* 배경색과 함께 약간의 스케일 변화 */
+}
+
+button:hover {
+    background-color: #c02a6d;
+    transform: scale(1.02); /* 호버 시 약간 커짐 */
+}
+
+.card {
+    background-color: #ffffff;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* 부드러운 그림자 */
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.card:hover {
+    transform: translateY(-5px); /* 살짝 위로 올라감 */
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2); /* 호버 시 더 강한 그림자 */
+}
+
+.username {
+    font-weight: bold;
+    color: #d63384;
+    font-size: 18px;
+}
+
+.date {
+    font-size: 14px; /* 글자 크기를 약간 키움 */
+    color: #888888; /* 더 부드러운 색상 */
+    margin-bottom: 10px;
+}
+
+.delete-btn, .update-btn {
+    margin-top: 10px;
+    padding: 8px 15px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.delete-btn {
+    background-color: #ff4d4f;
+    color: white;
+}
+
+.delete-btn:hover {
+    background-color: #c41c2e;
+    transform: scale(1.05); /* 살짝 커짐 */
+}
+
+.update-btn {
+    background-color: #00BFFF;
+    color: white;
+    margin-left: 10px; /* 버튼 간격 추가 */
+}
+
+.update-btn:hover {
+    background-color: #e59400;
+    transform: scale(1.05); /* 살짝 커짐 */
+}
+
+.edit-area {
+    display: none;
+}
+
+.edit-area input, .edit-area textarea {
+    margin-top: 10px;
+    border: 1px solid #ddd; /* 연한 경계 */
+    padding: 10px;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
