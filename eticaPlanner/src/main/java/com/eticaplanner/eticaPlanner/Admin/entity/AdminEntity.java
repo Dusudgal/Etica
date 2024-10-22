@@ -1,5 +1,6 @@
 package com.eticaplanner.eticaPlanner.Admin.entity;
 
+import com.eticaplanner.eticaPlanner.common.EncryptUtils;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -46,5 +47,9 @@ public class AdminEntity {
 
     @Column(name="admin_locktime")
     private LocalDateTime adminLocktime;
+
+    public void setAdminPw(String adminPw) {
+        this.adminPw = EncryptUtils.sha256(adminPw);
+    }
 
 }

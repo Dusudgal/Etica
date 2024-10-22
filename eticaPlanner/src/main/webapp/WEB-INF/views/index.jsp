@@ -19,7 +19,6 @@
 </head>
 <body>
     <jsp:include page="./include/header.jsp" />
-
     <!-- 공지사항 팝업 -->
     <div id="noticePopup" style="display:none;">
         <h2>공지사항</h2>
@@ -35,13 +34,22 @@
         <button class="popup-close-btn" onclick="closeNoticePopup()">닫기</button>
         <span class="popup-no-show-24" onclick="setCookieFor24Hours()">24시간 동안 보지 않기</span>
     </div>
+    <jsp:include page="./template/weather.jsp" />
     <section class="contents my-5">
         <div class="container-fluid">
             <div class="planner-container">
-                <h2>즐겁게 여행을 떠나봅시다.</h2>
+                <h2>Eitca 플래너에 오신 것을 환영합니다!</h2>
+                    <br><br>
+                    <p>Eitca 플래너는 여러분의 국내 여행을 편하게 만들기 위해 만들어진 플랫폼입니다.<br>
+                       쉽고 직관적인 인터페이스를 통해 원하는 여행지를 검색하고,<br>
+                       나만의 여행 플랜을 간편하게 작성할 수 있습니다.<br>
+                       다양한 관광지에 대한 사용자 리뷰를 통해 다른 여행자들의 경험을 참고하고,<br>
+                       더욱 알찬 여행을 계획해 보세요.<br>
+                       Eitca 플래너는 여러분의 여행을 더욱 특별하게 만들어 줄 것입니다.<br>
+                       여러분의 꿈꾸는 여행을 Eitca 플래너와 함께 시작해 보세요!<br></p>
                 <div class="planner-div">
                     <p>Etica를 통해 여행 계획을 스케줄링 해보세요.</p>
-                    <a href="/Planner/PlannerPage" class="button">Etica</a>
+                    <a href="/Planner/PlannerPage" class="button">시작하기</a>
                 </div>
             </div>
             <div id="imageContainer">
@@ -49,7 +57,6 @@
             </div>
         </div>
     </section>
-    <jsp:include page="./include/sidebar.jsp" />
     <footer>
         <jsp:include page="./include/footer.jsp" />
     </footer>

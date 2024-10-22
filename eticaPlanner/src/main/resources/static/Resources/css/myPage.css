@@ -4,8 +4,7 @@ body {
     padding: 0;
 }
 
-/* 메뉴 컨테이너 설정 */
-.menu-container {
+/* .menu-container {
     position: absolute;
     top: 20px;
     left: 20px;
@@ -15,7 +14,6 @@ body {
     z-index: 1000;
 }
 
-/* 햄버거 메뉴 스타일 */
 .hamburger-menu {
     display: flex;
     flex-direction: column;
@@ -23,7 +21,7 @@ body {
     width: 30px;
     height: 25px;
     cursor: pointer;
-    margin-bottom: 220px; /* 햄버거 메뉴와 로그인 버튼 사이의 간격 */
+    margin-bottom: 220px;
 }
 
 .hamburger-menu span {
@@ -35,8 +33,6 @@ body {
     transition: all 0.3s ease;
 }
 
-
-/* 드롭다운 메뉴 숨기기 */
 #dropdown-menu {
     max-height: 0;
     overflow: hidden;
@@ -49,7 +45,6 @@ body {
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
 }
 
-/* 메뉴 활성화 스타일 */
 .menu-open #dropdown-menu {
     max-height: 500px;
 }
@@ -73,209 +68,200 @@ body {
 
 #dropdown-menu ul li a:hover {
     background-color: #f0f0f0;
-}
+} */
 
-
-.benner {
-    width: 100%;
-    height: 60px;
-    text-align: center;
-    line-height: 100px;
-    font-size: 70px;
-    color: #F7B5CA;
-    
-}
-
-.firstul {
+.side-container {
     position: absolute;
-    border: 1px #F7B5CA solid;
+    border: 1px #87cefa solid;
     border-left: none;
     border-top-right-radius: 12px;
     border-bottom-right-radius: 12px;
-    top: 35%;
+    top: 40%;
     left: 0%;
 }
-.mypagecontents {
+
+.mypage-contents {
     list-style-type: none;
     margin: auto;
     padding: 15px;
-    
 }
-.mypagecontentsli {
+
+.mypage-item {
     padding: 10px 60px 10px 5px;
     margin-top: 5px;
-    color: #ff73a0;
+    color: #87cefa;
     cursor: pointer;
-} 
+}
 
-.information-section {
+.information-section-unique {
     display: none;
 }
 
-
-/* 임시 */
-
-.container {
+.content-container {
     display: flex;
     flex-direction: column;
     align-items: center;
     width: 500px;
     height: auto;
     padding: 30px;
-    margin-top: 60px;
-    margin-bottom: 60px;
+    margin: 60px auto; /* Adjust margin to 'auto' for horizontal centering */
     background: #f2f2f2;
     border: 3px solid #f2f2f2;
     border-radius: 20px;
 }
 
-.member-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-}
-
-.header {
-    width: 100%;
-    font-weight: 700;
-    font-size: 32px;
-    line-height: 47px;
-    color: #666;
-    text-align: center;
-    margin-bottom: 20px;
-}
-
-.user-info {
-    width: 100%;
-}
-
-.user-info-item {
-    margin-bottom: 20px;
-}
-
-.user-info-item div {
-    font-weight: 700;
-    font-size: 16px;
-    line-height: 24px;
-    color: #666;
-}
-
-.user-info input {
-    font-weight: 400;
-    font-size: 16px;
-    line-height: 24px;
-    color: #666;
-    border: none;
-    border-bottom: 1px solid #cfcfcf;
-    width: calc(100% - 120px);
-    padding: 8px;
-    box-sizing: border-box;
-}
-
-.user-info input:focus {
-    border-bottom: 1px solid #F7B5CA;
-}
-
-/* 아이디 입력란의 높이 조정 */
-.user-info-item input#loginId {
-    height: 40px; /* 비밀번호 입력란과 같은 높이 */
-}
-
-/* 중복확인 버튼 스타일 */
-#loginIdCheckBtn {
-    background-color: #F7B5CA;
-    color: #ffffff; /* 텍스트 색상 */
-    border: 1px solid #F7B5CA;
-    width: 25%;
-    margin-left: 30px;
-    cursor: pointer;
-}
-
-.label {
-    font-weight: 700;
-    font-size: 16px;
-    line-height: 24px;
-    color: #666666; /* 회색으로 변경 */
-}
-
-.input-wrapper {
-    margin-top: 5px;
-}
-
-.user-info input {
-    font-weight: 400;
-    font-size: 16px;
-    line-height: 24px;
-    color: #666666; /* 회색으로 변경 */
-    border: none;
-    border-bottom: 1px solid #cfcfcf;
-    width: 100%;
-    padding: 8px;
-    box-sizing: border-box;
-}
-
-.feedback {
-    font-size: 14px;
-    line-height: 21px;
-    margin-top: 5px;
-}
-
-.feedback.text-danger {
-    color: #ff0000;
-}
-
-.feedback.text-success {
-    color: #00ff00;
-}
-
-.gender {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 20px 0;
-}
-
-.gender input {
-    margin-right: 5px;
-}
-
-.gender label {
-    font-weight: 400;
-    font-size: 16px;
-    line-height: 24px;
-    margin-right: 20px;
-}
-
-.agree-check {
-    font-weight: 400;
-    font-size: 14px;
-    line-height: 21px;
+.info-section {
     margin-top: 20px;
 }
 
-.agree-check input {
-    margin-right: 5px;
-}
-
-#signUpForm > input::placeholder{
-    color: #D2D2D2;
-}
-
-button:not(.phonenumber-confirm):not(.sidebar button) {
+.info-table {
     width: 100%;
-    height: 50px;
-    font-weight: 400;
-    font-size: 18px;
-    line-height: 27px;
-    text-align: center;
-    color: #ffffff;
-    background: #F7B5CA;
+    border-collapse: collapse;
+}
+
+.info-table th, .info-table td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+.info-table th {
+    background-color: #f5f5f5;
+    font-weight: bold;
+}
+
+.info-table td {
+    background-color: #fff;
+}
+
+.form-row {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.form-row input {
+    margin-bottom: 10px;
+    padding: 10px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.form-row button {
+    align-self: center;
+    padding: 10px 20px;
+    background-color: #87cefa;
+    color: white;
     border: none;
-    border-radius: 10px;
+    border-radius: 5px;
     cursor: pointer;
 }
 
-.asdf {
-    border-style : solid
+.form-row button:hover {
+    background-color: #87cefa;
+}
+
+.planner-form label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    padding: 10px;
+}
+
+.information-section h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 24px;
+}
+
+.planner-form {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 8px;
+    border: #87cefa solid 1px;
+    border-radius: 10px;
+}
+
+.planner-form label {
+    flex: 1; /* Label 영역을 나머지 공간으로 정의 */
+    text-align: center; /* 텍스트 중앙 정렬 */
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.button-group {
+    display: flex;
+    gap: 10px;
+}
+
+.planner-button {
+    padding: 5px 10px;
+    text-decoration: none;
+    border: 1px solid #ccc;
+    background-color: #87cefa;
+    border-radius: 4px;
+    color: #333;
+    margin-right: 3px;
+}
+
+.planner-button:hover {
+    background-color: #e7e7e7;
+    border-color: #bbb;
+}
+
+/* Enhanced styling for look-information-section */
+#look-information-section {
+    /* Container styles */
+    padding: 20px;
+    border-radius: 15px;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    margin: 20px auto; /* Center horizontally with auto margins */
+    border: 1px solid #ddd;
+}
+
+.middle-container {
+    /* Table wrapper styles for alignment */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.middle-table {
+    /* Table styles */
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 10px; /* Add spacing between table rows */
+}
+
+.middle-table th, .middle-table td {
+    /* Cell styles */
+    padding: 12px 15px;
+    text-align: left;
+    background-color: #fafafa;
+    border-bottom: 1px solid #eee;
+    border-radius: 5px;
+}
+
+.middle-table th {
+    /* Header cell styles */
+    background-color: #f5f5f5;
+    font-weight: bold;
+    color: #555;
+}
+
+.middle-table td {
+    /* Data cell styles */
+    background-color: #fff;
+    color: #333;
+}
+
+p {
+    margin: 8px;
 }

@@ -19,7 +19,7 @@ body{
 
 .container > h2 {
     font-size:60px;
-    color: #F7B5CA;
+    color: #00BFFF;
     margin-top: -190px;
     margin-bottom: 30px;
 }
@@ -38,7 +38,7 @@ form input {
     width: 300px;
     height: 40px;
     margin-bottom:20px;
-    border-bottom: 1px solid #F7B5CA;
+    border-bottom: 1px solid #00BFFF;
 }
 
 #modifyform > div {
@@ -57,5 +57,5 @@ button {
     margin-top: 20px;
     height: 30px;
     width: 305px;
-    background-color: #F7B5CA;
+    background-color: #00BFFF;
 }

@@ -1,0 +1,22 @@
+.weather-container{
+    white-space: nowrap;
+}
+.weather-item {
+    display: inline-block;
+    vertical-align: top;
+    width: 75px;
+    border: 1px solid #87cefa;
+    padding: 4px;
+    text-align: center;
+    margin: -2px;
+    font-size: 14px;
+    border-radius: 12px;
+    background-color: #87cefa;
+}
+.weather-header {
+    background-color: #87cefa;
+    color: white;
+    font-weight: bold;
+    padding-bottom: 4px;
+    margin-bottom: 4px;
+}

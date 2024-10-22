@@ -68,7 +68,7 @@
                             mapy: touristSpot.mapy
                         };
                         const newli = document.createElement('li');
-                        createtag(newli , touristSpot.title , touristSpot.firstimage2 , `\${touristSpot.addr1} \${touristSpot.addr2}` );
+                        createtag(newli , touristSpot.title , touristSpot.firstimage , `\${touristSpot.addr1} \${touristSpot.addr2}` );
                         //버튼 생성
                         const newBtn = document.createElement('input');
                         newBtn.type = "button";
@@ -82,7 +82,7 @@
                     const newli = document.createElement('li');
                     touristUl.appendChild(newli);
                     const errmessage = document.createElement('H4');
-                    errmessage.appendChild(document.createTextNode(`검색하신 \${codeString}에 대한 정보가 없습니다.`));
+                    errmessage.appendChild(document.createTextNode(`검색하신 \${keyword}에 대한 정보가 없습니다.`));
                     newli.appendChild(errmessage);
                 }
                 updatePagination(); // 페이지 네이션

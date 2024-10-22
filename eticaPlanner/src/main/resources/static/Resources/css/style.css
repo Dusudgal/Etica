@@ -62,34 +62,6 @@ header{
     padding: 20px;
 }
 
-.sidebar {
-    width: 300px; /* 사이드바의 고정 너비 */
-    background-color: #fff; /* 반투명 배경색 */
-    padding: 20px; /* 내부 여백 */
-    border-left: 1px solid #ccc; /* 왼쪽 테두리 */
-    right: 0; /* 오른쪽으로 정렬 */
-    top: 0; /* 상단에 정렬 */
-    height: 90%; /* 전체 높이 */
-    display: none; /* 기본적으로 숨김 */
-    z-index: 1000; /* 다른 요소 위에 표시 */
-    box-shadow: 0.5px 0 3.5px rgba(0, 0, 0, 0.3);
-    border-radius: 10px 0 0 10px;
-    margin : 20px 0px 0px 0px ;
-    position: fixed;
-}
-
-.sidebar.show {
-    display: block; /* show 클래스가 있을 때 표시 */
-}
-
-.sidebar a, .sidebar button {
-    display: block; /* 링크와 버튼을 블록 요소로 만들어 줄바꿈 */
-    margin: 10px 0; /* 링크와 버튼 사이의 여백 */
-    text-decoration: none; /* 링크 밑줄 제거 */
-    color: #333 !important; /* 링크 색상 */
-}
-
-
 footer {
     height: 100px;
     text-align: center; /* 푸터 내용을 가운데 정렬 */
@@ -97,42 +69,92 @@ footer {
     margin-top : 50px;
 }
 
-#toggleSidebar{
-    cursor: pointer; /* 버튼 커서 스타일 */
-    position: fixed;
-    top: 20px; /* 위쪽에서의 거리 */
-    right: 20px; /* 오른쪽에서의 거리 */
-    z-index: 1000; /* 다른 요소 위에 표시되도록 */
-    padding: 10px 15px;
-    background-color: #f8f8f8; /* 버튼 색상 */
-    color: white; /* 글자 색상 */
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
+.weather-container{
+    white-space: nowrap;
+    margin-bottom: -30px;
+}
+.weather-item {
+    display: inline-block;
+    vertical-align: top;
+    width: 75px;
+    border: 1px solid #87cefa;
+    padding: 4px;
+    text-align: center;
+    margin: 0px;
+    font-size: 14px;
+    border-radius: 12px;
+    background-color: #87cefa;
+}
+.weather-header {
+    background-color: #87cefa;
+    color: white;
+    font-weight: bold;
+    padding-bottom: 4px;
+    margin-bottom: 4px;
 }
 
-#toggleSidebar > span{
-    margin : 2px;
+.menu-container {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    z-index: 1000;
+}
+
+.hamburger-menu {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 30px;
+    height: 25px;
+    cursor: pointer;
+    margin-bottom: 220px;
+}
+
+.hamburger-menu span {
     display: block;
-    width: 20px;
+    width: 100%;
     height: 4px;
     background-color: #333;
     border-radius: 2px;
     transition: all 0.3s ease;
 }
 
-#toggleSidebar:hover {
-    background-color: #0056b3; /* 호버 시 색상 변화 */
+#dropdown-menu {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 1s ease-out;
+    position: absolute;
+    top: 60px;
+    left: 20px;
+    width: 200px;
+    background-color: #fff;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
 }
 
-#closeSidebar{
-    display:inline-block;
-    *display:inline;  /* IE 7 이하에서 적용 */
-    background: none;
-    border: none;
+.menu-open #dropdown-menu {
+    max-height: 500px;
 }
-#closeSidebar:after {
-    display: inline-block;
-    content: "\00d7";
-    font-size:15pt;
+
+#dropdown-menu ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+#dropdown-menu ul li {
+    border-bottom: 1px solid #ddd;
+}
+
+#dropdown-menu ul li a {
+    display: block;
+    padding: 15px;
+    text-decoration: none;
+    color: #333;
+}
+
+#dropdown-menu ul li a:hover {
+    background-color: #f0f0f0;
 }

@@ -21,8 +21,8 @@
                     <input type="text" id="travel_name" name="travel_name">
                 </div>
                 <div>
-                    <label for="travel_context">여행지 설명</label>
-                    <textarea type="text" id="travel_context" name="travel_context"></textarea>
+                    <label for="travel_context">여행지 주소</label>
+                    <input type="text" id="travel_context" name="travel_context"></input>
                 </div>
                 <div>
                     <label for="travel_X-marker">여행지 X좌표</label>
@@ -34,8 +34,8 @@
                 </div>
             </form>
             <div class="button-container">
-                <button type="submit" form="travelform">추가</button>
-                <button type="submit" onclick="clearForm()">취소</button>
+                <button type="submit" form="travelform" class="add-button">추가</button>
+                <button type="submit" onclick="history.back()" class="cancel-button">취소</button>
             </div>
         </div>
     </div>
