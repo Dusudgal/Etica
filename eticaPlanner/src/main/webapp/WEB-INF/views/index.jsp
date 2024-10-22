@@ -19,6 +19,7 @@
 </head>
 <body>
     <jsp:include page="./include/header.jsp" />
+
     <!-- 공지사항 팝업 -->
     <div id="noticePopup" style="display:none;">
         <h2>공지사항</h2>
