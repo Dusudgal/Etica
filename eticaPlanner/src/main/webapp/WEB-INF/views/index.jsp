@@ -81,6 +81,45 @@
     imageContainer.src = images[4];
 
     setInterval(showNextImage, 3000); // 3초마다 이미지 변경
+
+    // 공지사항 팝업 로직
+    const noticePopup = document.getElementById("noticePopup");
+
+    function showNoticePopup() {
+        const isPopupDisabled = getCookie("popupDisabled");
+
+        if (!isPopupDisabled && document.querySelector("#noticePopup p")) { // 공지사항이 있을 경우에만 팝업을 띄움
+            noticePopup.style.display = "block";
+        }
+    }
+
+    function closeNoticePopup() {
+        noticePopup.style.display = "none";
+    }
+
+    function setCookie(name, value, hours) {
+        let date = new Date();
+        date.setTime(date.getTime() + (hours * 60 * 60 * 1000));
+        document.cookie = name + "=" + value + "; expires=" + date.toUTCString() + "; path=/";
+    }
+
+    function getCookie(name) {
+        let cookieArr = document.cookie.split(";");
+        for (let i = 0; i < cookieArr.length; i++) {
+            let cookiePair = cookieArr[i].split("=");
+            if (name === cookiePair[0].trim()) {
+                return cookiePair[1];
+            }
+        }
+        return null;
+    }
+
+    function setCookieFor24Hours() {
+        setCookie("popupDisabled", "true", 24);
+        closeNoticePopup();
+    }
+
+    window.onload = showNoticePopup;
 </script>
 
 
