@@ -38,11 +38,11 @@ public class TourApiEntity {
     }
 
     public TourApiEntity(TravelDTO travelDTO) {
-        this.img = "";
-        this.addr = travelDTO.getTravel_context();
-        this.title = travelDTO.getTravel_name();
-        this.mapx = travelDTO.getTravel_X_marker();
-        this.mapy = travelDTO.getTravel_Y_marker();
+        this.tour_img = "";
+        this.tour_addr = travelDTO.getTravel_context();
+        this.tour_title = travelDTO.getTravel_name();
+        this.tour_mapx = travelDTO.getTravel_X_marker();
+        this.tour_mapy = travelDTO.getTravel_Y_marker();
     }
 
     public void updateFrom(TourApiEntity entity) {

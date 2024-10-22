@@ -15,7 +15,7 @@ public class ApiComponent {
     @Value("${api_keys.kakao_javascriptkey}")
     private String kakao_scriptkey;
 
-    @Value("${weather.api.key}")
+    @Value("${api_keys.weather_key}")
     private String weather_key;
 
     public String map_apikey() { return kakao_scriptkey; }
