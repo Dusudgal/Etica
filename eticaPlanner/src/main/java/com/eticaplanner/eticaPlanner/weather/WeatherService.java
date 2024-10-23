@@ -70,7 +70,7 @@ public class WeatherService {
         LocalDateTime time = LocalDateTime.now();
 
         if (time.getMinute() < 30) {
-            time = time.minusHours(2);
+            time = time.minusHours(1);
         }
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH00");

@@ -37,54 +37,7 @@ public class MyPageController {
     public MyPageController(PlannerService plannerService) {
         this.plannerService = plannerService;
     }
-//    @GetMapping("/mypage")
-//    public String mypage(Model model, HttpSession session) {
-//        System.out.println("[MyPageController] mypage");
-//        String userId = (String) session.getAttribute("user_id");
-//        System.out.println(userId);
-//        if (userId == null) {
-//            return "redirect:/user/sign-in-view";
-//        }
-//
-//        UserEntity memberResult = myPageService.memberRight(userId);
-//
-//        model.addAttribute("userInfo", memberResult);
-//
-//        UserEntity user = userRepository.findByUserId(userId);
-//
-//        model.addAttribute("user", user);
-//
-//        model.addAttribute("viewName", "MyPage/myPage");
-//
-//        this.nextPage = "template/layout";
-//
-//        return this.nextPage;
-//    }
-//
-//    @PostMapping("/mypage")
-//    public String changePassword(Model model,
-//                                 @RequestParam("currentPassword") String currentPassword,
-//                                 @RequestParam("newPassword") String newPassword,
-//                                 @RequestParam("passwordConfirm") String passwordConfirm,
-//                                 HttpSession session) {
-//
-//        String userId = (String) session.getAttribute("user_id");
-//
-//        boolean changeConfirm = myPageService.changePassword(userId, currentPassword, newPassword, passwordConfirm);
-//
-//        if (changeConfirm) {
-//            model.addAttribute("message", "Successful");
-//        } else {
-//            model.addAttribute("message", "Fail");
-//        }
-//
-//        model.addAttribute("viewName", "MyPage/myPage");
-//
-//        this.nextPage = "template/layout";
-//        return this.nextPage;
-//    }
 
-    // 수정본
 
     @GetMapping("/mypage")
     public String mypage(Model model, HttpSession session) {
@@ -103,7 +56,7 @@ public class MyPageController {
         } else {
             // 카카오 사용자 정보 처리 (필요 시)
             String kakaoId = sessionInfo.getKakao_id();
-            userInfo = myPageService.memberRight(kakaoId); // 카카오 ID를 사용하여 사용자 정보를 가져옴
+            userInfo = myPageService.memberRight(kakaoId);
         }
 
         model.addAttribute("userInfo", userInfo);

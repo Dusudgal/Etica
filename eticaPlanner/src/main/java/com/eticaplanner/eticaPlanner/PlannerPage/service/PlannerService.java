@@ -59,21 +59,22 @@ public class PlannerService {
         TravelTitlePlanDTO tourTitleData = data.getTourTitleData();
         List<TravelDetailDTO> tourMemoData = data.getTourMemoData();
         result = false;
-        if(tourTitleData != null &&
-            !tourTitleData.getTour_title().isEmpty()){
+        if(tourTitleData == null && tourTitleData.getTour_title().isEmpty()){
+            return result;
+        }
+        TravelTitlePlanEntity savedata = travelTitlePlanRepository.save(TravelPlanConverter.travelTitlePlanDTOToEntity(tourTitleData , userid));
+        if(savedata.getPlanNo() == null){
+            return result;
+        }
+        List<TravelDetailPlanEntity> travelDetailPlans = TravelPlanConverter.travelDetailDTOToEntity(tourMemoData, savedata.getPlanNo(), userid);
 
-            TravelTitlePlanEntity savedata = travelTitlePlanRepository.save(TravelPlanConverter.travelTitlePlanDTOToEntity(tourTitleData , userid));
-            if(savedata.getPlanNo() != null){
-                List<TravelDetailPlanEntity> travelDetailPlans = TravelPlanConverter.travelDetailDTOToEntity(tourMemoData, savedata.getPlanNo(), userid);
-
-                // TravelDetailPlanEntity 저장
-                List<TravelDetailPlanEntity> detailSaveData = travelDetailPlanRepository.saveAll(travelDetailPlans);
-                result = true;
-            }
-            else return result;
-        } else return result;
+        // TravelDetailPlanEntity 저장
+        List<TravelDetailPlanEntity> detailSaveData = travelDetailPlanRepository.saveAll(travelDetailPlans);
+        result = true;
         return result;
     }
+        
+    
 
     public PlannerDTO SelectPlan(String userId , String planTitle) {
         System.out.println("[PlannerService] SelectPlan");

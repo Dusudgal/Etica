@@ -1,10 +1,14 @@
 package com.eticaplanner.eticaPlanner.mypage.service;
 
 import com.eticaplanner.eticaPlanner.common.EncryptUtils;
+import com.eticaplanner.eticaPlanner.kakao.entity.KakaoUserEntity;
+import com.eticaplanner.eticaPlanner.kakao.repository.KakaoUserRepository;
 import com.eticaplanner.eticaPlanner.user.entity.UserEntity;
 import com.eticaplanner.eticaPlanner.user.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 public class MyPageService {
@@ -15,6 +19,9 @@ public class MyPageService {
 
     @Autowired
     UserRepository userRepository;
+
+    @Autowired
+    KakaoUserRepository kakaoUserRepository;
 
 
     public UserEntity memberRight(String user_id) {

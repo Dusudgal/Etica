@@ -6,10 +6,12 @@ import com.eticaplanner.eticaPlanner.noticeBoard.entity.Notice;
 import com.eticaplanner.eticaPlanner.noticeBoard.repository.NoticeRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -30,7 +32,22 @@ public class NoticeService {
                 .collect(Collectors.toList());
     }
 
-    // 모든 메모를 조회하는 메서드 (필요시 MemoListResponseDto 사용)
+    // 페이지네이션된 게시글 조회
+    public List<NoticeResponseDto> getBoards(int page, int pageSize) {
+        logger.info("Fetching boards for page: {}, pageSize: {}", page, pageSize);
+
+        return noticeRepository.findAll(PageRequest.of(page, pageSize))
+                .stream()
+                .map(NoticeResponseDto::new)
+                .collect(Collectors.toList());
+    }
+
+    // 전체 메모 개수 반환
+    public int getTotalMemosCount() {
+        return (int) noticeRepository.count();
+    }
+
+    // 모든 메모를 조회하는 메서드
     public List<NoticeListResponseDto> getAllMemos() {
         List<Notice> memos = noticeRepository.findAll();
         return memos.stream()
@@ -40,7 +57,7 @@ public class NoticeService {
 
     // 게시글 생성
     public NoticeResponseDto createMemo(String adminId, String title, String contents) {
-        Notice memo = new Notice(adminId, contents, title); // "관리자 테이블에서 admin_id를 받아야함"
+        Notice memo = new Notice(adminId, contents, title);
         Notice savedMemo = noticeRepository.save(memo);
         return new NoticeResponseDto(savedMemo);
     }
@@ -69,5 +86,11 @@ public class NoticeService {
                 .orElseThrow(() -> new IllegalArgumentException("해당 ID의 메모가 없습니다."));
         noticeRepository.delete(memo);
         return memo.getId();
+    }
+
+    // 최신 공지사항 가져오기 (Optional로 수정)
+    public Optional<NoticeResponseDto> getLatestNotice() {
+        return noticeRepository.findTopByOrderByCreatedAtDesc()
+                .map(NoticeResponseDto::new);
     }
 }

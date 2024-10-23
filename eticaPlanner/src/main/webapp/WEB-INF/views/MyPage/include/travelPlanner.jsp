@@ -17,7 +17,7 @@
                             <button type="submit" class="planner-button">수정</button>
                         </form>
                         <form action="${pageContext.request.contextPath}/Planner/DeletePlan" method="POST">
-                            <input type="hidden" name="tour_title" value="${planner.tour_title}">
+                            <input type="hidden" name="planNo" value="${planner.planNo}">
                             <button type="submit" class="planner-button">삭제</button>
                         </form>
                     </div>

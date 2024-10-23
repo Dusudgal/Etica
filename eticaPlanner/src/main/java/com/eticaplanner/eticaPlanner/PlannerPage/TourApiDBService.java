@@ -112,7 +112,7 @@ public class TourApiDBService {
 
                     // 응답의 헤더가 성공인지 체크
                     if (response == null || response.getResponse() == null || response.getResponse().getHeader() == null) {
-                        System.out.println("Error: Response is null");
+                        System.out.println("Error: null");
                         break; // 응답 헤더 , response가 null인 경우 반복 종료
                     }
 
@@ -122,7 +122,7 @@ public class TourApiDBService {
 
                     // items 처리 로직 추가
                     if (items == null || items.isEmpty()) {
-                        System.out.println("Warning: No items found for keyword: " + keyword);
+                        System.out.println("Warning: " + keyword  + " data null ");
                         break; // items가 null이거나 비어있는 경우 반복 종료
                     }
 
@@ -149,7 +149,6 @@ public class TourApiDBService {
                     TourData.clear(); // 다음 페이지를 위해 초기화
                     pageNo++;
                 } catch (Exception uriException) {
-                    System.out.println(uriException.getMessage());
                     break; // 에러 발생 시 반복 종료
                 }
             } while (pageNo <= (totalCount + numOfRows - 1) / numOfRows); // 남은 페이지 수 계산

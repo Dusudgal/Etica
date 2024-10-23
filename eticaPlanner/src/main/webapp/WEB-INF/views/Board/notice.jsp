@@ -1,112 +1,14 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core" %>
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="<c:url value='/Resources/css/noticePage.css' />" type="text/css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0, minimum-scale=1.0">
     <title>공지사항 게시판</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <style>
-        body {
-            background-color: #ffffff; /* 하얀색 배경으로 변경 */
-            font-family: 'Noto Sans KR', sans-serif;
-            margin: 0;
-            padding: 20px;
-        }
-
-        .wrap {
-            max-width: 600px;
-            margin: auto;
-            padding: 20px;
-            background-color: #ffffff;
-            border-radius: 10px;
-            margin-top: 50px;
-        }
-
-        h2 {
-            text-align: center;
-            color: #00BFFF;
-        }
-
-        input, textarea {
-            width: 100%;
-            border-radius: 5px;
-            border: 1px solid #00BFFF;
-            padding: 10px;
-            box-sizing: border-box;
-            margin-bottom: 10px;
-            font-size: 16px;
-        }
-
-        textarea {
-            height: 100px;
-            resize: none;
-        }
-
-        button {
-            width: 100%;
-            background-color: #00BFFF;
-            color: white;
-            border: none;
-            padding: 10px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-            transition: background-color 0.3s;
-        }
-
-        button:hover {
-            background-color: #c02a6d;
-        }
-
-        .card {
-            background-color: #F0F8FF;
-            border-radius: 5px;
-            padding: 15px;
-            margin-bottom: 10px;
-        }
-
-        .username {
-            font-weight: bold;
-            color: #d63384;
-        }
-
-        .date {
-            font-size: 12px;
-            color: gray;
-        }
-
-        .delete-btn, .update-btn {
-            margin-top: 10px;
-            padding: 5px 10px;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        .delete-btn {
-            background-color: #ff4d4f;
-            color: white;
-        }
-
-        .delete-btn:hover {
-            background-color: #c41c2e;
-        }
-
-        .update-btn {
-            background-color: #00BFFF;
-            color: white;
-        }
-
-        .update-btn:hover {
-            background-color: #e59400;
-        }
-
-        .edit-area {
-            display: none;
-        }
-    </style>
-</head>
+    </head>
 <body>
 <jsp:include page="/WEB-INF/views/Admin/login_ok.jsp"/>
 <div class="wrap">

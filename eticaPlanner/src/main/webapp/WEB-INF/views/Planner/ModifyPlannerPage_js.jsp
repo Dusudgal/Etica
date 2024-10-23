@@ -260,7 +260,7 @@
                         window.location.href = '/user/sign-in-view';
                     } else if(result === "success") {
                         // 성공 시 페이지 리디렉션
-                        window.location.href = '/Planner/PlannerSaveSuccess';
+                        window.location.href = '/MyPage/mypage';
                     }else {
                         // 실패 시 페이지 리디렉션
                         alert("서버에 저장이 실패하셨습니다.");

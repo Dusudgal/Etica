@@ -80,12 +80,12 @@ public class PlannerController {
     public ResponseEntity<TourApiResponse> tourApiSearch(@RequestParam("keyword") String keyword, @RequestParam("page") int page) {
         System.out.println("[PlannerController] tourApiSearch");
         TourApiResponse tourApiData = planService.getTourData(keyword , page);
-        if(tourApiData.getResponse().getBody().getTotalCount() == 0) {
+        if(tourApiData.getResponse().getBody().getTotalCount() == 0) { // 해당 키워드에 대한 데이터가 없을시에
             TourApiResponse tourApiResponse = planService.getTourApiData(apikeys.tour_apikey(), keyword, page);
             return ResponseEntity.ok(tourApiResponse);
         }
 
-        return ResponseEntity.ok(tourApiData); // 전체 응답 반환
+        return ResponseEntity.ok(tourApiData); 
     }
 
     @PostMapping("ModifyPlan")
