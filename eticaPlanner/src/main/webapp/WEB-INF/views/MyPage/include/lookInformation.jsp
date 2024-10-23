@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<div id="look-information" class="information-section">
+<div id="look-information-section" class="information-section-unique">
     <div class="middle-container">
       <table class="middle-table">
         <tr>
@@ -7,8 +7,8 @@
           <td>${user.userId}</td>
         </tr>
         <tr>
-          <th>핸드폰</th>
-          <td>${user.userPhone}</td>
+          <th>닉네임</th>
+          <td>${user.userNickname}</td>
         </tr>
         <tr>
           <th>성함</th>
@@ -20,4 +20,4 @@
         </tr>
       </table>
     </div>
-  </div>
+</div>

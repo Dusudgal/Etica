@@ -21,9 +21,16 @@
 
     <div class="search-results">
         <ul class="touristSpotListUl"></ul> <!-- 검색 결과를 표시할 리스트 -->
+        <div class="searchPageing">
+            <span class="pageNumbers"></span>
+        </div>
     </div>
 
     <script>
+        let currentPage = 0;
+        let totalPages = 0;
+        let currentPageGroup = 1; // 현재 페이지 그룹
+        const pagesPerGroup = 5; // 한 그룹에 표시할 페이지 수
         const touristUl = document.querySelector('.touristSpotListUl');
         const tourSearch = document.querySelector('.touristSpotSearch');
         tourSearch.addEventListener('keyup' , (event) => {
@@ -32,9 +39,12 @@
             }
         });
         document.querySelector('.touristSpotClick').addEventListener('click' , () => {
-            findtouristSpot(tourSearch.value);
+            currentPage = 1; // 페이지 초기화
+            keyword = tourSearch.value;
+            findtouristSpot(keyword  , currentPage)
+            tourSearch.value = ""; // 검색창 초기화
         });
-
+      
         async function findtouristSpot(event){
             const encodedString = encodeURIComponent(event);
             try {

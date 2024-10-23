@@ -5,53 +5,17 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <!-- 올바른 CSS 파일 경로 설정 -->
+    <link rel="stylesheet" href="<c:url value='/Resources/css/boardPage.css' />" type="text/css">
+    <!-- 외부 CSS 파일 링크 -->
     <title>메모 게시판</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <style>
-        body {
-            background-color: #ffffff; /* 하얀색 배경 */
-        }
-        h1 {
-            color: #d5006d; /* 제목 색상 */
-            text-align: center;
-            margin-top: 20px;
-        }
-        table {
-            width: 100%;
-            margin-top: 30px;
-            border-radius: 8px;
-            overflow: hidden;
-        }
-        th, td {
-            text-align: center;
-            padding: 12px;
-            border: 1px solid #d5006d; /* 테두리 색상 */
-        }
-        th {
-            background-color: #ff8b8b; /* 헤더 배경색 */
-            color: #fff; /* 헤더 글자 색상 */
-        }
-        tr:nth-child(even) {
-            background-color: #f4c3d7; /* 짝수 행 배경색 */
-        }
-        tr:hover {
-            background-color: #ff8b8b; /* 행 호버 효과 */
-            color: #fff; /* 호버 시 글자 색상 */
-        }
-        a {
-            color: #d5006d; /* 링크 색상 */
-            text-decoration: none; /* 링크 밑줄 제거 */
-        }
-        a:hover {
-            text-decoration: underline; /* 링크 호버 시 밑줄 추가 */
-        }
-    </style>
 </head>
 <body>
 <jsp:include page="../include/header.jsp"></jsp:include>
 <div class="container">
-    <h1>메모 게시판</h1>
-    <table>
+    <h1>공지사항 게시판</h1>
+    <table class="table table-bordered table-hover">
         <thead>
         <tr>
             <th>제목</th>
@@ -61,15 +25,35 @@
         </thead>
 
         <tbody>
-        <c:forEach var="memo" items="${notices}"> <!-- 'memos'를 'notices'로 변경 -->
+        <c:forEach var="memo" items="${notices}">
             <tr>
-                <td><a href="/board/notice/${memo.id}" class="text-primary">${memo.title}</a></td> <!-- URL 수정 -->
-                <td>${memo.username}</td> <!-- 작성자 출력 -->
-                <td>${memo.createdAt}</td> <!-- 작성 시간 출력 -->
+                <td><a href="/board/notice/${memo.id}" class="text-primary">${memo.title}</a></td>
+                <td>${memo.username}</td>
+                <td>${memo.createdAt}</td>
             </tr>
         </c:forEach>
         </tbody>
     </table>
+    <nav aria-label="Page navigation">
+        <ul class="pagination justify-content-center">
+            <!-- 이전 페이지로 이동 -->
+            <li class="page-item <c:if test='${currentPage == 1}'>disabled</c:if>'">
+                <a class="page-link" href="?page=${currentPage - 1}" tabindex="-1">이전</a>
+            </li>
+
+            <!-- 페이지 번호 출력 -->
+            <c:forEach begin="1" end="${totalPages}" var="i">
+                <li class="page-item <c:if test='${currentPage == i}'>active</c:if>'">
+                    <a class="page-link" href="?page=${i}">${i}</a>
+                </li>
+            </c:forEach>
+
+            <!-- 다음 페이지로 이동 -->
+            <li class="page-item <c:if test='${currentPage == totalPages}'>disabled</c:if>'">
+                <a class="page-link" href="?page=${currentPage + 1}">다음</a>
+            </li>
+        </ul>
+    </nav>
 </div>
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>

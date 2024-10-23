@@ -3,26 +3,29 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 
-<div class="sidebar" id="sidebar">
-    <button id="closeSidebar"></button>
-    <a href="/Review/ReviewIndex">Review 버튼</a>
-    <a href="/Planner/PlannerIndex">Planner 버튼</a>
-    <a href="Admin/signin">관리자 버튼</a>
-</div>
+<div class="main-container">
+    <div class="menu-container">
+      <div class="hamburger-menu" id="hamburger-menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+    <nav id="dropdown-menu">
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/Planner/PlannerPage">Planner</a></li>
+        <li><a href="/Review/ReviewIndex">Review</a></li>
+      </ul>
+    </nav>
+  </div>
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const sidebar = document.getElementById('sidebar');
-        const toggleButton = document.getElementById('toggleSidebar');
-        const closeButton = document.getElementById('closeSidebar');
-
-        toggleButton.addEventListener('click', function() {
-            sidebar.classList.add('show'); // 사이드바를 보여줌
-            toggleButton.style.display = 'none'; // 열기 버튼 숨김
-        });
-
-        closeButton.addEventListener('click', function() {
-            sidebar.classList.remove('show'); // 사이드바 숨김
-            toggleButton.style.display = 'block'; // 열기 버튼 다시 표시
-        });
+    document.addEventListener('DOMContentLoaded', () => {
+        const hamburgerMenu = document.getElementById("hamburger-menu");
+    const dropdownMenu = document.querySelector(".main-container");
+    
+    hamburgerMenu.addEventListener("click", () => {
+        dropdownMenu.classList.toggle("menu-open");
+    });
     });
 </script>

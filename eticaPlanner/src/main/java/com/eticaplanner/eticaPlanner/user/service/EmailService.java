@@ -13,23 +13,8 @@ public class EmailService {
     @Autowired
     private JavaMailSender mailSender;
 
-//    @Autowired
-//    public EmailService(JavaMailSender mailSender) {
-//        this.mailSender = mailSender;
-//    }
-
     public void sendPasswordResetEmail(String email, String resetUrl) throws MessagingException  {
-        /*
-        // 이메일 메시지 생성
-        SimpleMailMessage message = new SimpleMailMessage();
-        message.setTo(email); // 수신자
-        message.setSubject("비밀번호 재설정 요청"); // 제목
-        message.setText("다음 링크를 클릭하여 비밀번호를 재설정하세요: " + resetUrl); // 본문 내용
 
-        // 이메일 전송
-        mailSender.send(message);
-        System.out.println("비밀번호 재설정 이메일이 전송되었습니다: " + email);
-        */
         try {
             // MimeMessage 생성
             MimeMessage mimeMessage = mailSender.createMimeMessage();

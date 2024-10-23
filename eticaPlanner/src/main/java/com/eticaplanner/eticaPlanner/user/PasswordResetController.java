@@ -83,11 +83,7 @@ public class PasswordResetController {
         if (resetToken.isExpired()) {
             return ResponseEntity.badRequest().body(Map.of("code", 400, "error_message", "토큰이 만료되었습니다."));
         }
-        /*
-        // 아이디 검증
-        UserEntity user = userRepository.findByUserId(String.valueOf(resetToken.getNo()))
-                .orElseThrow(() -> new IllegalArgumentException("유효하지 않은 사용자입니다."));
-        */
+
         // 비밀번호 해시화 및 업데이트
         UserEntity user = resetToken.getUser();
         // EncryptUtils.sha256(userDto.getUser_password());

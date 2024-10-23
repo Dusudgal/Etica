@@ -1,8 +1,10 @@
 package com.eticaplanner.eticaPlanner.noticeBoard.controller;
 
+import com.eticaplanner.eticaPlanner.Admin.entity.AdminDTo;
 import com.eticaplanner.eticaPlanner.noticeBoard.dto.NoticeRequestDto;
 import com.eticaplanner.eticaPlanner.noticeBoard.dto.NoticeResponseDto;
 import com.eticaplanner.eticaPlanner.noticeBoard.service.NoticeService;
+import jakarta.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -23,7 +25,7 @@ public class NoticeController {
     }
 
     @PostMapping("/memos")
-    public ResponseEntity<NoticeResponseDto> createMemo(@RequestBody NoticeRequestDto requestDto) {
+    public ResponseEntity<NoticeResponseDto> createMemo(@RequestBody NoticeRequestDto requestDto , HttpSession admin) {
         logger.info("Memo 생성 요청: {}", requestDto);
 
         // 유효성 검사
@@ -32,8 +34,9 @@ public class NoticeController {
             return ResponseEntity.badRequest().body(null);
         }
 
-        // 메모 생성 시 작성자를 "admin"으로 고정하여 서비스 호출
-        NoticeResponseDto memoResponse = memoService.createMemo(requestDto.getTitle(), requestDto.getContents());
+        // 메모 생성 시 작성자를 "admin_id"으로 유동적으로 하여 서비스 호출
+        AdminDTo adminDTo = (AdminDTo) admin.getAttribute("loginedAdminVo");
+        NoticeResponseDto memoResponse = memoService.createMemo(adminDTo.getAdminId(),requestDto.getTitle(), requestDto.getContents());
         logger.info("Memo 생성 성공: {}", memoResponse);
         return ResponseEntity.status(HttpStatus.CREATED).body(memoResponse);
     }

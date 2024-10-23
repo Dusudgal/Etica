@@ -4,35 +4,40 @@
 
 body {
     font-family: Arial, sans-serif;
-    margin: 0;
+    margin-top: 0;
     padding: 0;
     background-color: #f8f9fa; /* 배경색 추가 */
 }
 
 .contents {
-    max-width: 1200px;
-    margin: 0 auto;
+    max-width: 1400px;
+    margin: 0 auto; /* 중앙 정렬 */
     display: flex; /* Flexbox로 설정 */
-    justify-content: center; /* 중앙 정렬 */
-    align-items: flex-start; /* 세로 정렬을 위쪽으로 조정 */
+    flex-direction: column; /* 세로 방향으로 정렬 */
+    align-items: center; /* 중앙 정렬 */
 }
 
-.container {
+.container-fluid {
     display: flex; /* 가로 정렬 */
     flex-direction: row; /* 가로 방향으로 정렬 */
-    justify-content: space-between; /* 양쪽 끝으로 정렬 */
-    align-items: flex-end; /* 세로 정렬을 아래쪽으로 조정 */
+    height: 590px; /* 높이 설정 */
     width: 100%; /* 전체 너비로 설정 */
-    max-width: 1200px; /* 최대 너비 설정 */
+    max-width: 1400px; /* 최대 너비 설정 */
     padding: 20px; /* 패딩 추가 */
-    position: relative; /* 자식 요소의 절대 위치를 지정하기 위해 상대 위치 설정 */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.notices {
+    width: 100%; /* 공지사항 영역의 너비를 100%로 설정 */
+    margin-bottom: 20px; /* 아래쪽 여백 추가 */
 }
 
 .planner-container {
+    flex: 1; /* 나머지 공간을 차지하도록 설정 */
     display: flex;
     flex-direction: column; /* 버튼을 수직으로 배치 */
     align-items: flex-start; /* 왼쪽 정렬 */
-    margin-bottom: 20px; /* 아래쪽 여백 추가 */
+    margin-right: 20px; /* 오른쪽 여백 추가 */
 }
 
 .button {
@@ -54,7 +59,8 @@ body {
 }
 
 #imageContainer {
-    height: 400px;
+    flex: 1; /* 나머지 공간을 차지하도록 설정 */
+    height: 530px; /* 원하는 높이로 설정 */
     width: 700px; /* 원하는 너비로 설정 */
     max-width: 100%; /* 최대 너비를 100%로 설정 */
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);

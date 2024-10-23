@@ -6,39 +6,8 @@
 <head>
     <meta charset="UTF-8">
     <title>${memo.title}</title>
+    <link rel="stylesheet" href="<c:url value='/Resources/css/noticeDetail.css' />" type="text/css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <style>
-        body {
-            background-color: #ffffff; /* 배경색 하얀색 */
-        }
-        h1 {
-            color: #d5006d; /* 제목 색상 */
-            text-align: center;
-            margin-top: 20px;
-        }
-        .memo-content {
-            margin: 20px;
-            padding: 20px;
-            border: 1px solid #d5006d; /* 테두리 색상 */
-            border-radius: 8px;
-            background-color: #ffffff; /* 내용 배경색 */
-        }
-        .list-group-item {
-            border: none;
-            padding-left: 0;
-            font-weight: bold;
-        }
-        .list-group-item span {
-            font-weight: normal;
-        }
-        .memo-contents {
-            margin-top: 20px;
-            padding: 10px;
-            border-radius: 5px;
-            background-color: #f9f9f9;
-            border: 1px solid #ddd;
-        }
-    </style>
 </head>
 <body>
 <div class="container">

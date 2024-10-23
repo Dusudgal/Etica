@@ -32,6 +32,7 @@
     </div>
     <div class="container">
         <div class="row">
+            <div> 일정 <br> </div>
             <div id="dayButtons"></div>
         </div>
         <div class="row">
@@ -41,13 +42,14 @@
         <div class="row large" id="map" >지도</div>
         <div class="row">
             <div class="listSearch">
-                <div>
-                    <input class="touristSpotSearch" type="search"  placeholder="찾으시려는 관광지 키워드를 입력해주세요." />
-                </div>
+                <input class="touristSpotSearch" type="search"  placeholder="찾으시려는 관광지 키워드를 입력해주세요." />
             </div>
             <ul class="touristSpotListUl"> 
                 <!-- 관광지 정보가 스크롤 적용되는 ul 태그 -->
             </ul>
+            <div class="searchPageing">
+                <span class="pageNumbers"></span>
+            </div>
         </div>
     </div>
     <jsp:include page="PlannerPage_js.jsp"/>

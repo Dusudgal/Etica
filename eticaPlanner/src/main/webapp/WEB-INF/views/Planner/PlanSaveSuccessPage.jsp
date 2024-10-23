@@ -10,16 +10,10 @@
     <title>Etica Planner</title>
 </head>
 <body>
-    <div class="container">
-        <h1> hello main index </h1>
-        <div class="image-text-container">
-            <img src="<c:url value='/Resources/Main_ban.jpg' />" alt="Etica Planner Logo">
-            <p>Etica Planner를 찾아주셔서 감사합니다.</p>
-        </div>
-    </div>
      <div class="button-container">
          <div class="button-container">
             <h1> 플랜이 저장됐습니다. </h1>
+            <p>저희 Etica를 찾아주셔서 감사합니다.</p>
          </div>
      </div>
 </body>
