@@ -161,14 +161,15 @@ public class PlannerService {
 
             // TourApiResponse 객체로 응답 받기
             tourApiResponse = restTemplate.getForObject(uri , TourApiResponse.class);
-
-            executorService.submit(()->{
+            if(tourApiResponse.getResponse().getBody().getTotalCount() != 0 ){
+                executorService.submit(()->{
                 try{
                     tourApiDBService.setNewKeywordData(keyword);
                 }catch (Exception e){
                     System.out.println("오류 발생: " + e.getMessage());
                 }
-            });
+                });
+            }
 
             // 키워드로 검색시 데이터가 없을경우 빈파일로 처리
         } catch (RestClientException e) {
@@ -201,7 +202,7 @@ public class PlannerService {
                 .map(TourApiDTO::new)
                 .collect(Collectors.toList()));
         // 불러온 데이터가 적으면 api를 통해서 해당 키워드로 DB에 저장
-        if(body.getTotalCount() < 50){
+        if(body.getTotalCount() > 0  && body.getTotalCount() < 50 ){
             executorService.submit(()->{
                 try{
                     tourApiDBService.setNewKeywordData(keyword);
