@@ -1,12 +1,12 @@
 package com.eticaplanner.eticaPlanner.review.repository;
 
 import com.eticaplanner.eticaPlanner.review.entity.ReviewEntity;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import com.eticaplanner.eticaPlanner.review.dto.ReviewDto;
-
 import java.util.List;
-import java.util.Optional;
+
 
 @Repository
 public interface ReviewRepository extends JpaRepository<ReviewEntity, Integer> {
@@ -19,4 +19,11 @@ public interface ReviewRepository extends JpaRepository<ReviewEntity, Integer> {
     ReviewEntity findByReviewId(Integer reviewId);
 
     List<ReviewEntity> findByTourTitle(String tourTitle);
+
+    Page<ReviewEntity> findByUserId(String userId, Pageable pageable);
+
+
+    Page<ReviewEntity> findByUserIdOrderByReDateDesc(String userId, Pageable pageable);
+
+    Page<ReviewEntity> findByTourTitle(String tourTitle, Pageable pageable);
 }

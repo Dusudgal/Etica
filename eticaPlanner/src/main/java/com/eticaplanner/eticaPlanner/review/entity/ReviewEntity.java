@@ -3,7 +3,6 @@ package com.eticaplanner.eticaPlanner.review.entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-
 import java.time.LocalDateTime;
 
 @Entity
@@ -34,5 +33,7 @@ public class ReviewEntity {
 
     @Column(name = "re_edit_date")
     private LocalDateTime reEditDate; // 수정일
+
+
 
 }
