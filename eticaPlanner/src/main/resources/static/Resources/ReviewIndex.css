@@ -274,7 +274,8 @@ h1 {
     margin: 20px 0; /* 위 아래 여백 */
 }
 
-.pagination .button, .pagination .current-page {
+.pagination .button, .pagination .current-page,
+ .pageNumbers > button{
     margin: 0 5px; /* 좌우 간격 5px */
     padding: 10px 15px; /* 버튼 패딩 */
     text-decoration: none; /* 링크 밑줄 제거 */
@@ -290,10 +291,12 @@ h1 {
     background-color: #007bff; /* 현재 페이지 배경 색상 */
 }
 
-.pagination .button:hover {
+.pagination .button:hover ,
+.pageNumbers > button{
     background-color: #007bff; /* 호버 시 배경 색상 */
     color: #fff; /* 호버 시 텍스트 색상 */
 }
+
 
 
 
